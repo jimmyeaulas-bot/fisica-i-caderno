@@ -10,6 +10,9 @@
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
+  <!-- Fonte de Acessibilidade para Dislexia -->
+  <link href="https://fonts.cdnfonts.com/css/open-dyslexic" rel="stylesheet">
+
   <!-- Tailwind CSS para Estilização -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -55,6 +58,18 @@
       box-shadow: inset 0 0 40px #2a221a;
     }
     
+    /* Regras de Acessibilidade (Dislexia) */
+    .dyslexia-mode {
+      font-family: 'Open-Dyslexic', 'Comic Sans MS', sans-serif !important;
+      letter-spacing: 0.12em !important;
+      word-spacing: 0.22em !important;
+      line-height: 1.85 !important;
+    }
+    .dyslexia-mode .katex {
+      letter-spacing: normal !important;
+      word-spacing: normal !important;
+    }
+    
     /* Correção do KaTeX no Modo Escuro */
     .dark .katex { color: #f3f4f6 !important; }
     
@@ -95,9 +110,15 @@
 </head>
 <body class="bg-stone-100 text-stone-900 dark:bg-stone-950 dark:text-stone-100 min-h-screen transition-colors duration-200">
 
+  <!-- RÉGUA DE LEITURA PARA DISLEXIA -->
+  <div id="reading-ruler" class="hidden fixed left-0 w-full h-10 pointer-events-none z-50 bg-yellow-400/20 border-y-2 border-yellow-400/60 shadow-[0_0_15px_rgba(250,204,21,0.4)] transition-opacity duration-150"></div>
+
   <!-- TELA 1: CRIAÇÃO DO HERÓI -->
   <div id="login-screen" class="min-h-screen flex items-center justify-center p-4 relative">
-    <div class="absolute top-4 right-4">
+    <div class="absolute top-4 right-4 flex items-center gap-2">
+      <button onclick="toggleDyslexiaMode()" id="dyslexia-btn-init" class="text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-100 transition px-3 py-1.5 text-xs bg-white dark:bg-stone-900 rounded-full border border-stone-200 dark:border-stone-800 shadow flex items-center gap-1.5 font-bold" title="Alternar Fonte Acessível">
+        <i class="fa-solid fa-font"></i> Fonte Acessível
+      </button>
       <button onclick="toggleTheme()" class="text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-100 transition px-3 py-1.5 text-xs bg-white dark:bg-stone-900 rounded-full border border-stone-200 dark:border-stone-800 shadow flex items-center gap-1.5 font-bold">
         <i class="fa-solid fa-circle-half-stroke"></i> Tema
       </button>
@@ -109,7 +130,7 @@
       <p class="text-xs text-stone-600 dark:text-stone-400 uppercase tracking-widest mb-6">Trilha de Aprendizagem de Física (1º Ano)</p>
       
       <div class="mb-6 text-left">
-        <label class="block text-sm font-bold mb-2 text-stone-700 dark:text-stone-300">Seu nome de Herói ou Heroína:</label>
+        <label class="block text-sm font-bold mb-2 text-stone-700 dark:text-stone-300">Como os escribas devem chamar você?</label>
         <div class="relative">
           <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-stone-500">
             <i class="fa-solid fa-user-shield"></i>
@@ -211,13 +232,22 @@
             <span class="text-xs text-stone-400">ouro</span>
           </div>
           
+          <!-- Suíte de Acessibilidade Superior -->
           <div class="flex items-center gap-2">
             <!-- Botão de reiniciar progresso -->
             <button onclick="confirmResetProgress()" class="text-stone-400 hover:text-red-400 transition px-2 py-1 text-sm bg-stone-800 rounded border border-stone-700" title="Reiniciar Trilha">
               <i class="fa-solid fa-arrow-rotate-left text-xs"></i>
             </button>
-            <button onclick="toggleTheme()" class="text-stone-400 hover:text-white transition px-2 py-1 text-sm bg-stone-800 rounded border border-stone-700">
-              <i class="fa-solid fa-circle-half-stroke"></i>
+            <!-- Fonte Dislexia -->
+            <button onclick="toggleDyslexiaMode()" id="dyslexia-btn" class="text-stone-400 hover:text-white transition px-2 py-1 text-sm bg-stone-800 rounded border border-stone-700" title="Alternar Fonte Acessível">
+              <i class="fa-solid fa-font text-xs"></i>
+            </button>
+            <!-- Régua de Leitura -->
+            <button onclick="toggleReadingRuler()" id="ruler-btn" class="text-stone-400 hover:text-white transition px-2 py-1 text-sm bg-stone-800 rounded border border-stone-700" title="Alternar Régua de Leitura">
+              <i class="fa-solid fa-grip-lines text-xs"></i>
+            </button>
+            <button onclick="toggleTheme()" class="text-stone-400 hover:text-white transition px-2 py-1 text-sm bg-stone-800 rounded border border-stone-700" title="Alternar Tema Escuro">
+              <i class="fa-solid fa-circle-half-stroke text-xs"></i>
             </button>
           </div>
         </div>
@@ -248,10 +278,19 @@
             <div class="flex items-center justify-between p-2 rounded bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
               <div class="text-xs">
                 <span class="font-bold block text-stone-800 dark:text-stone-200">🧪 Elixir de Vida (+50 HP)</span>
-                <span class="text-[10px] text-stone-500">Recupere suas energias vitais.</span>
+                <span class="text-[10px] text-stone-500">Recupere suas forças para combater.</span>
               </div>
               <button onclick="buyItem('potion')" class="bg-yellow-500 hover:bg-yellow-600 text-stone-950 font-extrabold text-xs py-1.5 px-3 rounded shadow transition">
                 15 <i class="fa-solid fa-coins"></i>
+              </button>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
+              <div class="text-xs">
+                <span class="font-bold block text-stone-800 dark:text-stone-200">🔍 Runas de Conselhos</span>
+                <span class="text-[10px] text-stone-500">Revela instantaneamente a dica.</span>
+              </div>
+              <button onclick="buyItem('hint')" class="bg-yellow-500 hover:bg-yellow-600 text-stone-950 font-extrabold text-xs py-1.5 px-3 rounded shadow transition">
+                5 <i class="fa-solid fa-coins"></i>
               </button>
             </div>
           </div>
@@ -293,13 +332,13 @@
 
           <!-- Zona de Validação da Cópia do Caderno -->
           <div class="bg-amber-50 dark:bg-stone-900/60 border-2 border-dashed border-medieval-gold p-6 rounded-lg text-center mt-6">
-            <h4 class="font-extrabold text-lg text-medieval-amber dark:text-medieval-gold mb-2">📜 Registro para o Caderno (Validação)</h4>
+            <h4 class="font-extrabold text-lg text-medieval-amber dark:text-medieval-gold mb-2">📜 Registro para o Caderno (Passo de Visto)</h4>
             <p class="text-xs text-stone-600 dark:text-stone-400 max-w-md mx-auto mb-4">
-              Antes de ingressar no combate e desafiar o guardião mecânico, você deve copiar os quadros demarcados (<strong>Conceito Crítico <span class="text-blue-600">■</span></strong>, <strong>Dica de Mestre <span class="text-yellow-600">■</span></strong> e <strong>Exemplo de Resolução <span class="text-purple-600">■</span></strong>) em seu caderno físico.
+              Para desbloquear a Arena de Combate e enfrentar os monstros, registre os conceitos-chave desta aula em seu caderno físico. Apresente-o ao Mestre da Guilda (Professor) ou assine a autodeclaração para ganhar o visto.
             </p>
             <div id="visto-action-area" class="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
-              <button onclick="requestVisto()" class="flex-1 bg-medieval-amber hover:bg-amber-800 text-white font-bold py-2.5 px-4 rounded text-sm transition">
-                <i class="fa-solid fa-pen-nib mr-2"></i> Solicitar Visto do Caderno
+              <button onclick="requestVisto()" class="flex-1 bg-medieval-amber hover:bg-amber-800 text-white font-bold py-2 px-4 rounded text-sm transition">
+                <i class="fa-solid fa-pen-nib mr-2"></i> Solicitar Visto
               </button>
             </div>
           </div>
@@ -325,7 +364,6 @@
               
               <div class="flex items-center gap-4 z-10">
                 <div id="boss-sprite" class="text-5xl md:text-6xl p-2 bg-stone-800 rounded-lg relative">
-                  <!-- Resolvido: Utilizando span exclusivo para o Emoji do Chefe sem destruir elementos filhos -->
                   <span id="boss-emoji">🛡️</span>
                   <div id="combat-slash" class="hidden absolute inset-0 flex items-center justify-center text-red-600 text-4xl slash-effect">💥</div>
                 </div>
@@ -338,7 +376,7 @@
               <!-- HP do Monstro -->
               <div class="w-full md:w-64 z-10">
                 <div class="flex justify-between text-[11px] font-bold mb-1 text-stone-300">
-                  <span>Energia de Coesão</span>
+                  <span>HP do Guardião</span>
                   <span id="boss-hp-text">100/100</span>
                 </div>
                 <div class="w-full bg-stone-800 h-3 rounded overflow-hidden p-[2px] border border-stone-700">
@@ -351,18 +389,13 @@
             <div class="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-lg p-5">
               <div class="flex justify-between items-center mb-4">
                 <span class="text-xs bg-medieval-amber/10 dark:bg-medieval-gold/10 text-medieval-amber dark:text-medieval-gold px-2.5 py-1 rounded font-bold">
-                  Desafio <span id="current-question-num">1</span> de 3
+                  Problema <span id="current-question-num">1</span> de 3
                 </span>
-                <div class="flex items-center gap-2">
-                  <span id="question-xp-indicator" class="text-xs text-amber-500 font-extrabold bg-amber-500/10 px-2 py-1 rounded">
-                    Recompensa: 20 XP
-                  </span>
-                  <span id="current-question-difficulty" class="text-xs text-stone-500 font-bold">Fácil</span>
-                </div>
+                <span id="current-question-difficulty" class="text-xs text-stone-500 font-bold">Fácil</span>
               </div>
 
-              <div id="question-text" class="text-base md:text-lg text-stone-800 dark:text-stone-100 math-render mb-6 font-semibold leading-relaxed">
-                Pergunta aqui...
+              <div id="question-text" class="text-base md:text-lg text-stone-800 dark:text-stone-100 math-render mb-6 font-semibold">
+                Pergunta matemática de combate aqui...
               </div>
 
               <!-- Opções de Resposta -->
@@ -371,11 +404,11 @@
               </div>
 
               <!-- Barra de Dica integrada -->
-              <div class="flex flex-col gap-2 border-t border-stone-150 dark:border-stone-800 pt-4">
+              <div class="flex items-center justify-between border-t border-stone-200 dark:border-stone-800 pt-4">
                 <button onclick="revealHint()" class="text-xs font-bold text-stone-500 dark:text-stone-400 hover:text-medieval-amber transition flex items-center gap-1">
-                  <i class="fa-solid fa-lightbulb"></i> Consultar Runas de Dica (Penaliza parte do XP do combate)
+                  <i class="fa-solid fa-lightbulb"></i> Ver dica da questão (Gasta 5 moedas de ouro)
                 </button>
-                <div id="hint-display" class="hidden p-3 bg-yellow-500/10 border border-yellow-500/20 rounded text-xs text-stone-600 dark:text-stone-400 italic math-render">
+                <div id="hint-display" class="hidden text-xs text-stone-600 dark:text-stone-400 max-w-md text-right italic math-render">
                   <!-- Dica -->
                 </div>
               </div>
@@ -385,9 +418,9 @@
           <!-- Combate Concluído -->
           <div id="combate-concluido" class="hidden text-center py-12">
             <span class="text-6xl block mb-4">🏆</span>
-            <h3 class="text-2xl font-bold text-medieval-amber dark:text-medieval-gold">Guardião Superado!</h3>
+            <h3 class="text-2xl font-bold text-medieval-amber dark:text-medieval-gold">Guardião Derrotado!</h3>
             <p class="text-sm text-stone-600 dark:text-stone-400 max-w-md mx-auto mt-2">
-              Seu conhecimento físico desmantelou o maquinário de defesa do guardião. As resoluções do Professor foram registradas no livro de forma definitiva.
+              Você provou sua mestria analítica e livrou o reino de mais uma ameaça intelectual. O pergaminho com a resolução detalhada de todos os problemas foi destravado!
             </p>
             <button onclick="switchTab('resolucao')" class="mt-6 bg-medieval-amber hover:bg-amber-800 text-white font-bold py-2.5 px-6 rounded shadow transition">
               Acessar Resoluções da Aula <i class="fa-solid fa-circle-chevron-right ml-1"></i>
@@ -401,11 +434,11 @@
             <span class="text-5xl block mb-4">🛡️</span>
             <h3 class="text-xl font-bold text-stone-800 dark:text-stone-200">Resoluções Trancadas!</h3>
             <p class="text-sm text-stone-600 dark:text-stone-400 max-w-md mx-auto mt-2">
-              Você deve esgotar os HP do guardião na Arena de Combate para que a fumaça mágica se dissipe e mostre as resoluções de cada enigma.
+              Derrote o monstro desta masmorra na Arena de Combate para obter acesso ao gabarito analítico comentado pelo Professor da Guilda.
             </p>
           </div>
 
-          <div id="resolucao-ativa" class="hidden math-render space-y-6">
+          <div id="resolucao-ativa" class="hidden math-render">
             <!-- Conteúdo de Gabarito Comentado -->
           </div>
         </div>
@@ -421,26 +454,26 @@
       </button>
       <h3 class="text-xl font-extrabold text-medieval-amber mb-3 text-center"><i class="fa-solid fa-pen-nib mr-1"></i> Visto do Mestre</h3>
       <p class="text-xs text-stone-600 dark:text-stone-400 mb-4 text-center">
-        Apresente as caixas anotadas no seu caderno de Física ao seu Mestre da Guilda (Professor) para autenticação rápida, ou valide de forma autônoma.
+        O seu mestre de guilda (professor) deve inspecionar o seu caderno para autorizar a batalha. Digite a senha mágica ou selecione a autocertificação para avançar.
       </p>
 
       <div class="space-y-4">
         <!-- Código do Professor -->
         <div class="border border-amber-200 dark:border-stone-800 p-3.5 rounded bg-amber-50/50 dark:bg-stone-900/40">
-          <label class="block text-xs font-bold text-stone-700 dark:text-stone-300 mb-2">Opção A: Código de Visto do Professor</label>
+          <label class="block text-xs font-bold text-stone-700 dark:text-stone-300 mb-2">Opção A: Código Secreto do Mestre</label>
           <div class="flex gap-2">
             <input type="password" id="professor-code" placeholder="Ex: PHYSICA" class="flex-1 px-3 py-1.5 rounded border border-amber-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-sm focus:outline-none text-stone-900 dark:text-stone-100">
-            <button onclick="submitProfessorCode()" class="bg-medieval-amber hover:bg-amber-800 text-white font-bold text-xs px-4 rounded transition">Liberar</button>
+            <button onclick="submitProfessorCode()" class="bg-medieval-amber hover:bg-amber-800 text-white font-bold text-xs px-4 rounded transition">Aplicar</button>
           </div>
-          <span class="text-[10px] text-stone-500 block mt-1">Código de homologação padrão: <strong class="text-medieval-amber">PHYSICA</strong></span>
+          <span class="text-[10px] text-stone-500 block mt-1">Dica de Desenvolvimento: O código padrão é <strong class="text-medieval-amber">PHYSICA</strong></span>
         </div>
 
         <!-- Autocertificação -->
         <div class="border border-stone-200 dark:border-stone-800 p-3.5 rounded bg-white dark:bg-stone-900/40">
-          <label class="block text-xs font-bold text-stone-700 dark:text-stone-300 mb-1">Opção B: Juramento de Honra</label>
-          <p class="text-[10px] text-stone-500 mb-3">Se você está estudando de modo autônomo, declare seu compromisso real.</p>
+          <label class="block text-xs font-bold text-stone-700 dark:text-stone-300 mb-1">Opção B: Autocertificação de Honra</label>
+          <p class="text-[10px] text-stone-500 mb-3">Estuda por conta própria? Declare seu compromisso e prossiga.</p>
           <button onclick="signHonra()" class="w-full bg-stone-800 hover:bg-stone-900 dark:bg-stone-700 dark:hover:bg-stone-600 text-white text-xs font-bold py-2 px-4 rounded transition">
-            <i class="fa-solid fa-ribbon mr-1"></i> Juro que copiei todas as três caixas no meu caderno
+            <i class="fa-solid fa-ribbon mr-1"></i> Juro pela minha honra que registrei no caderno
           </button>
         </div>
       </div>
@@ -453,7 +486,7 @@
       <span class="text-6xl block mb-4">💀</span>
       <h3 class="text-2xl font-extrabold text-red-600 mb-2">Suas forças esgotaram!</h3>
       <p class="text-xs text-stone-600 dark:text-stone-400 mb-6">
-        Sua barreira de energia dissipou-se com os erros. Adquira elixires de regeneração com moedas, ou realize o rito de restauração resolvendo cálculo rápido.
+        Seus pontos de vida (HP) chegaram ao fim. Você pode reabastecer suas forças na loja da guilda comprando poções de vida com suas moedas acumuladas, ou realizar um rito rápido de cura intelectual.
       </p>
 
       <div class="flex flex-col sm:flex-row gap-3">
@@ -473,7 +506,7 @@
       <span class="text-5xl block mb-3">🪄</span>
       <h3 class="text-xl font-extrabold text-green-700 dark:text-green-500 mb-2">Canalização de Energia</h3>
       <p class="text-xs text-stone-600 dark:text-stone-400 mb-4">
-        Responda à equação aritmética de foco mental para restaurar metade dos seus pontos de HP totais.
+        Responda corretamente esta operação básica de aritmética para recuperar instantaneamente +50 de HP e continuar a jornada.
       </p>
 
       <div class="bg-white dark:bg-stone-900 border p-4 rounded-lg mb-4 text-xl font-bold text-stone-850 dark:text-stone-100">
@@ -499,7 +532,7 @@
     <h2 id="cert-hero-name" class="text-2xl font-extrabold border-b border-stone-300 max-w-md mx-auto pb-1 mb-6 text-stone-900">NOME DO HERÓI</h2>
     
     <p class="text-sm max-w-lg mx-auto leading-relaxed mb-8">
-      concluiu todas as etapas da masmorra de estudos de Física, derrotando com bravura os guardiões das etapas de <strong class="text-medieval-amber font-bold">Fundamentos, Grandezas, Vetores, Cinemática Básica, Leis de Newton e Dinâmica</strong>, demonstrando proficiência analítica integral.
+      concluiu todas as etapas da masmorra de estudos de Física, derrotando com bravura os guardiões das etapas de Metodologia, Grandezas, Notação Científica, Gráficos, Propriedades da Matéria, Trajetória, Movimento Uniforme, Vetores, Leis de Newton e Atrito/EPIs, demonstrando proficiência analítica integral.
     </p>
 
     <div class="flex justify-between items-end mt-12 text-xs">
@@ -517,90 +550,95 @@
 
   <!-- LÓGICA DO SISTEMA -->
   <script>
-    // Correção de Escape de LaTeX: Todas as contrabarras (\) foram devidamente escapadas como (\\) para evitar travamentos de sintaxe no JavaScript.
+    // ESTRUTURA DE DADOS PRINCIPAL
     const classesData = [
       {
         id: 1,
         title: "Metodologia e Fenômenos Físicos",
         boss: { name: "O Espectro da Mutação", maxHp: 60, hp: 60, img: "👻" },
         bimestre: "1º Bimestre",
-        difficulty: "Fácil",
         teoria: `
           <p class="mb-4">A Física estuda as regras básicas do Universo. Para assegurar que as hipóteses sejam pautadas em fatos empíricos e não em crenças, utilizamos o método padrão das ciências naturais.</p>
           
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: O Método Científico</h4>
-            <p class="text-sm mb-2">Estrutura sistemática de investigação:</p>
+            <p class="text-sm mb-2">A Física estuda a natureza. Para não dependermos de "achismos", usamos o <strong>Método Científico</strong>:</p>
             <ol class="list-decimal pl-5 space-y-1 text-sm text-blue-900 dark:text-blue-300">
-              <li><strong>Observação:</strong> Identificação de um fato na natureza.</li>
-              <li><strong>Hipótese:</strong> Tentativa de explicação racional teórica.</li>
-              <li><strong>Experimentação:</strong> Coleta empírica de medições sob controle laboratorial.</li>
-              <li><strong>Conclusão:</strong> Confirmação analítica ou refutação lógica da teoria.</li>
+              <li><strong>Observação:</strong> Notar algo curioso (Ex: O gelo derrete mais rápido no metal do que na madeira).</li>
+              <li><strong>Hipótese:</strong> Uma tentativa de explicação (Ex: O metal conduz calor melhor).</li>
+              <li><strong>Experimentação:</strong> Testar na prática medindo o tempo.</li>
+              <li><strong>Conclusão:</strong> Confirmar ou refutar a hipótese com base nos números.</li>
             </ol>
           </div>
 
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Transformações da Matéria</h4>
+            <p class="text-sm mb-2">Tudo que acontece ao nosso redor é um fenômeno:</p>
             <ul class="list-disc pl-5 space-y-1 text-sm text-blue-900 dark:text-blue-300">
-              <li><strong>Fenômeno Físico:</strong> A estrutura molecular da substância <strong>NÃO</strong> é alterada. Ex: gelo derretendo ($H_2O$ líquida continua sendo molécula de água).</li>
-              <li><strong>Fenômeno Químico:</strong> Ocorre modificação na composição molecular íntima da matéria. Ex: combustão de papel (celulose vira cinzas, gás carbônico e água).</li>
+              <li><strong>Fenômeno Físico:</strong> A estrutura molecular da substância <strong>NÃO</strong> é alterada. Se você amassar um papel ou derreter gelo, continua sendo papel e água.</li>
+              <li><strong>Fenômeno Químico:</strong> Ocorre modificação na composição molecular íntima da matéria. Se você queimar o papel, ele vira cinzas e fumaça (reação química).</li>
             </ul>
           </div>
 
           <div class="bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Identificação Fácil</h4>
-            <p class="text-sm italic">"Para saber se é físico, imagine a reversão. Mudar de estado (sólido/líquido/gasoso) ou de tamanho é sempre físico. Criou fumaça, calor espontâneo ou mudou a estrutura íntima de forma definitiva? Químico!"</p>
+            <p class="text-sm italic">"Para saber se é físico, imagine a reversão. Mudar de estado (sólido/liquido/gasoso) ou de tamanho é sempre físico. Criou fumaça, calor espontâneo ou mudou a estrutura íntima de forma definitiva? Químico!"</p>
           </div>
 
           <div class="bg-purple-50 dark:bg-purple-950/30 border-l-4 border-purple-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-purple-850 dark:text-purple-300 mb-2">🟪 Exemplo de Resolução Passo a Passo</h4>
-            <p class="text-sm mb-2"><strong>Problema:</strong> Congelar 100g de água líquida expande seu volume, quebrando o recipiente. Trata-se de fenômeno físico ou químico?</p>
+            <p class="text-sm mb-2"><strong>Problema (Análise de Experimento):</strong> Um aluno observou que 100g de água líquida, ao ser congelada, virou 100g de gelo, mas o volume aumentou (estourando a garrafa no congelador). Isso é um fenômeno físico ou químico?</p>
             <p class="text-sm font-semibold text-purple-900 dark:text-purple-300">
-              Resolução: Trata-se de um fenômeno <strong>Físico</strong>. A mudança de estado líquida-sólida altera a geometria de empacotamento cristalino do $H_2O$, aumentando seu volume macroscópico, contudo, a identidade molecular e a massa conservam-se intocadas.
+              Resolução: É um fenômeno <strong>Físico</strong>. A substância continua sendo $H_2O$. Apenas o estado de agregação mudou. A massa se conservou, mostrando que nenhuma matéria nova foi criada.
             </p>
           </div>
         `,
         questions: [
           {
+            difficulty: "Fácil",
             text: "Ferver água para preparar café constitui qual classe de fenômeno e por qual razão?",
             options: [
-              "Químico, visto que o aquecimento altera a fórmula química íntima do $H_2O$.",
-              "Físico, pois apenas altera o estado físico da matéria de líquido para gasoso, conservando as moléculas de $H_2O$.",
-              "Químico, porque o café dissolve-se no vapor impossibilitando a reversão física.",
-              "Físico, posto que o volume total de água desaparece sem conservação de massa."
+              "Físico, pois a composição química do $H_2O$ permanece inalterada.",
+              "Químico, pois o calor altera permanentemente a estrutura molecular da água.",
+              "Físico, porque a água desaparece e deixa de existir.",
+              "Químico, pois o vapor d'água não pode retornar ao estado líquido."
             ],
-            correct: 1,
-            hint: "A água líquida evapora sob calefação mas as moléculas do vapor ainda são formadas por dois átomos de hidrogênio e um de oxigênio."
+            correct: 0,
+            hint: "O vapor d'água ainda é feito de moléculas de água. Nenhuma ligação intramolecular foi rompida para formar outra substância."
           },
           {
+            difficulty: "Fácil",
             text: "Dentro do Método Científico estruturado, qual etapa sucede imediatamente a proposição teórica de uma Hipótese?",
             options: [
-              "Análise de Conclusões definitivas.",
-              "Coleta de Dados de Observação inicial.",
-              "Experimentação e realização de testes empíricos controlados.",
-              "Publicação de uma nova Lei Física absoluta."
+              "Conclusão",
+              "Observação",
+              "Experimentação",
+              "Divulgação Científica"
             ],
             correct: 2,
-            hint: "Para determinar se uma hipótese racional tem fundamento real, o cientista realiza testes práticos repetíveis."
+            hint: "Após propor uma explicação teórica, o cientista realiza testes práticos para ver se os números confirmam a hipótese."
           },
           {
+            difficulty: "Fácil",
             text: "A oxidação de um prego metálico de ferro exposto à umidade do ar constitui um fenômeno de natureza:",
             options: [
               "Física, já que o prego retém o mesmo volume geométrico original.",
-              "Química, pois átomos de ferro reagem com o oxigênio atmosférico gerando nova substância (óxido de ferro).",
+              "Química, pois ocorre uma reação de oxidação formando uma nova substância (óxido de ferro).",
               "Física, dado que a alteração de tonalidade é meramente óptica e reversível com facilidade.",
               "Química e Física simultaneamente, pois o prego desaparece por completo do espaço físico."
             ],
             correct: 1,
-            hint: "O ferro metálico ($Fe$) reage intimamente gerando um composto poroso de coloração avermelhada que possui propriedades químicas distintas."
+            hint: "A ferrugem possui propriedades químicas totalmente diferentes do ferro metálico brilhante original."
           }
         ],
         gabarito: `
-          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Resoluções Analíticas - Período 1:</h4>
+          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Gabarito Passo a Passo - Aula 1:</h4>
           <div class="space-y-4 text-sm text-stone-700 dark:text-stone-300">
-            <p><strong>Questão 1:</strong> A vaporização é uma transição de fase física. As interações intermoleculares rompem-se pelo ganho de calor, contudo a estrutura interna das moléculas continua sendo $H_2O$.</p>
-            <p><strong>Questão 2:</strong> O Método Científico requer o teste sistemático. Feita a conjectura (hipótese), procede-se aos experimentos laboratoriais controlados.</p>
-            <p><strong>Questão 3:</strong> A oxidação metálica é uma reação química (Fenômeno Químico), alterando covalentemente o ferro puro em óxido de ferro hidratado.</p>
+            <p><strong>Exercício 1:</strong> Físico (a água só virou vapor, não mudou a molécula de $H_2O$). A agitação térmica afasta as moléculas, vencendo as ligações de hidrogênio intermoleculares, mas a molécula de água permanece quimicamente intacta.</p>
+            <p><strong>Exercício 2:</strong> Experimentação. Após propor uma conjectura teórica (hipótese), é fundamental testá-la sob parâmetros de controle em laboratório para recolher evidências numéricas reais.</p>
+            <p><strong>Exercício 3:</strong> Químico (ferrugem é oxidação, material novo). O ferro metálico ($Fe$) reage com oxigênio ($O_2$) e água ($H_2O$) no ambiente, gerando uma nova estrutura molecular com características totalmente diferentes, a ferrugem (óxido de ferro hidratado).</p>
+            <p><strong>Exercício 4:</strong> Observação/Coleta de Dados. A medição da temperatura da sala com um termômetro é um ato de registro empírico direto, que constitui a fase de observação e levantamento de dados do método científico.</p>
+            <p><strong>Exercício 5:</strong> Porque analisa o movimento e forças (mecânica). Embora a combustão interna seja um processo químico, o aproveitamento dessa energia mecânica para rotacionar engrenagens e rodas é explicado pelas forças, torques e leis de movimento da Física.</p>
           </div>
         `
       },
@@ -609,13 +647,17 @@
         title: "Grandezas Físicas e o SI",
         boss: { name: "O Titã dos Padrões", maxHp: 60, hp: 60, img: "⚙️" },
         bimestre: "1º Bimestre",
-        difficulty: "Fácil",
         teoria: `
           <p class="mb-4">Para descrever os fenômenos com clareza na ciência ou na indústria, precisamos realizar medições rigorosas de grandezas físicas.</p>
           
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Grandezas e Unidades Fundamentais</h4>
-            <p class="text-sm mb-2">Grandezas são atributos que podem ser mensurados. O Sistema Internacional (SI) padroniza três unidades mecânicas fundamentais:</p>
+            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Grandezas Físicas</h4>
+            <p class="text-sm">Grandeza é tudo aquilo que pode ser <strong>medido</strong>. Sentimentos (amor, dor) não são grandezas físicas porque não têm unidade de medida. Tempo, massa, comprimento e temperatura são! Elas se dividem em Básicas (fundamentais) e Derivadas (são misturas das básicas, como a Velocidade, que mistura Comprimento e Tempo).</p>
+          </div>
+
+          <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
+            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: O Sistema Internacional de Unidades (SI)</h4>
+            <p class="text-sm">Para não haver confusão na indústria e na ciência (ex: polegadas vs. centímetros), o mundo padronizou o SI. As 3 unidades fundamentais da mecânica são:</p>
             <ul class="list-disc pl-5 space-y-1 text-sm text-blue-900 dark:text-blue-300">
               <li><strong>Comprimento:</strong> Metro ($m$).</li>
               <li><strong>Massa:</strong> Quilograma ($kg$).</li>
@@ -625,66 +667,73 @@
 
           <div class="bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Conversão de Velocidade</h4>
-            <p class="text-sm font-semibold mb-1">Para transitar entre as escalas de velocidade:</p>
-            <div class="text-center bg-stone-100 dark:bg-stone-850 py-2 rounded font-mono text-sm border">
+            <p class="text-sm font-semibold mb-2">Para transitar entre as escalas de velocidade:</p>
+            <div class="text-center bg-stone-100 dark:bg-stone-900 py-2 rounded font-mono text-sm border border-stone-200 dark:border-stone-800">
               km/h &nbsp; $\\xrightarrow{\\div 3,6}$ &nbsp; m/s &nbsp;&nbsp;&nbsp;&nbsp; m/s &nbsp; $\\xrightarrow{\\times 3,6}$ &nbsp; km/h
             </div>
           </div>
 
           <div class="bg-purple-50 dark:bg-purple-950/30 border-l-4 border-purple-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-purple-850 dark:text-purple-300 mb-2">🟪 Exemplo de Resolução Passo a Passo</h4>
-            <p class="text-sm mb-2"><strong>Problema:</strong> Um motor desloca uma esteira a $18\\text{ km/h}$. Calcule esta velocidade no Sistema Internacional (SI).</p>
+            <p class="text-sm mb-2"><strong>Problema:</strong> Um motor elétrico gira uma esteira a uma velocidade de $18\\text{ km/h}$. Qual é a velocidade dessa esteira no Sistema Internacional (SI)?</p>
             <p class="text-sm font-semibold text-purple-900 dark:text-purple-300">
               Resolução:<br>
               A unidade SI para velocidade é metros por segundo ($m/s$).<br>
+              Como estamos indo de km/h para m/s, dividimos:<br>
               $$v = \\frac{18\\text{ km/h}}{3,6} = 5\\text{ m/s}$$
             </p>
           </div>
         `,
         questions: [
           {
-            text: "Selecione as grandezas fundamentais e suas respectivas unidades oficiais padronizadas pelo Sistema Internacional (SI):",
+            difficulty: "Fácil",
+            text: "Qual das seguintes alternativas apresenta as unidades oficiais padrão de massa e tempo no Sistema Internacional (SI)?",
             options: [
-              "Massa em Gramas ($g$) e Tempo em Minutos ($min$).",
-              "Massa em Quilogramas ($kg$) e Tempo em Segundos ($s$).",
-              "Comprimento em Centímetros ($cm$) e Força em Gramas.",
-              "Massa em Toneladas ($t$) e Tempo em Horas ($h$)."
+              "Grama ($g$) e Minuto ($min$)",
+              "Quilograma ($kg$) e Segundo ($s$)",
+              "Tonelada ($t$) e Hora ($h$)",
+              "Quilograma ($kg$) e Minuto ($min$)"
             ],
             correct: 1,
             hint: "O SI adota o sistema MKS (Metro, Quilograma, Segundo)."
           },
           {
-            text: "Um protótipo veicular de ensaio dinâmico atinge o patamar de velocidade estável de $108\\text{ km/h}$. Qual o valor desta medição no SI?",
+            difficulty: "Fácil",
+            text: "Um veículo de testes atinge a velocidade estável de $108\\text{ km/h}$. Qual é essa velocidade quando convertida para metros por segundo ($m/s$)?",
             options: [
-              "$10,8\\text{ m/s}$",
               "$30\\text{ m/s}$",
+              "$10,8\\text{ m/s}$",
               "$38,8\\text{ m/s}$",
               "$300\\text{ m/s}$"
             ],
-            correct: 1,
-            hint: "Aplique a regra do fator divisor universal: divida $108$ por $3,6$."
+            correct: 0,
+            hint: "Para converter de km/h para m/s, divida por 3,6."
           },
           {
-            text: "Sendo estabelecido que 1 polegada equivale precisamente a $2,54\\text{ cm}$, determine o valor de extensão linear de uma linha de 10 polegadas expresso em metros:",
+            difficulty: "Fácil",
+            text: "Converta $3\\text{ minutos}$ para a unidade de tempo oficial do Sistema Internacional (SI).",
             options: [
-              "$25,4\\text{ m}$",
-              "$2,54\\text{ m}$",
-              "$0,254\\text{ m}$",
-              "$0,0254\\text{ m}$"
+              "$3\\text{ s}$",
+              "$300\\text{ s}$",
+              "$180\\text{ s}$",
+              "$120\\text{ s}$"
             ],
             correct: 2,
-            hint: "Multiplique 10 por 2,54 para achar o valor em centímetros. Em seguida, divida por 100 para converter centímetros para metros."
+            hint: "Um minuto tem exatamente 60 segundos. Multiplique o tempo por 60."
           }
         ],
         gabarito: `
-          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Resoluções Analíticas - Período 2:</h4>
+          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Gabarito Passo a Passo - Aula 2:</h4>
           <div class="space-y-4 text-sm text-stone-700 dark:text-stone-300">
-            <p><strong>Questão 1:</strong> No SI, a massa oficial padrão é o quilograma ($kg$) e o tempo padrão é medido em segundos ($s$).</p>
-            <p><strong>Questão 2:</strong> Conversão padrão:<br>
-            $$v = \\frac{108}{3,6} = 30\\text{ m/s}$$</p>
-            <p><strong>Questão 3:</strong> Operações aritméticas:<br>
-            $$10\\text{ polegadas} = 10 \\times 2,54\\text{ cm} = 25,4\\text{ cm}$$
-            $$25,4\\text{ cm} = \\frac{25,4}{100} = 0,254\\text{ m}$$</p>
+            <p><strong>Exercício 1:</strong> A beleza não possui um instrumento de medição física universal nem unidade de medida estabelecida pela convenção de pesos e medidas.</p>
+            <p><strong>Exercício 2:</strong> $\\text{kg}$ (quilograma) e $\\text{s}$ (segundo) são os pilares de base do SI.</p>
+            <p><strong>Exercício 3:</strong> Convertendo minutos para segundos:<br>
+            $$3 \\times 60\\text{ s/min} = \\boldsymbol{180\\text{ s}}$$</p>
+            <p><strong>Exercício 4:</strong> Para converter a velocidade do veículo de $\\text{km/h}$ para $\\text{m/s}$:<br>
+            $$\\frac{108}{3,6} = \\boldsymbol{30\\text{ m/s}}$$</p>
+            <p><strong>Exercício 5:</strong> Convertendo 10 polegadas:<br>
+            $$10 \\times 2,54\\text{ cm} = 25,4\\text{ cm}$$
+            $$25,4\\text{ cm} = \\boldsymbol{0,254\\text{ m}}$$</p>
           </div>
         `
       },
@@ -693,42 +742,41 @@
         title: "Notação Científica, Algarismos e O.G.",
         boss: { name: "O Colosso dos Números", maxHp: 60, hp: 60, img: "🌌" },
         bimestre: "1º Bimestre",
-        difficulty: "Fácil",
         teoria: `
           <p class="mb-4">O estudo da Física descreve escalas imensas (como galáxias) e escalas microscópicas (como átomos). A notação científica ajuda a abreviar esses valores.</p>
           
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Estrutura da Notação Científica</h4>
-            <p class="text-sm mb-2">Escrevemos o valor no formato:</p>
-            <p class="text-center font-bold text-sm bg-stone-100 dark:bg-stone-850 py-1.5 rounded mb-2">
+            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Notação Científica e Algarismos Significativos</h4>
+            <p class="text-sm mb-2">A Física lida com o tamanho do universo e do átomo. Formato obrigatório:</p>
+            <p class="text-center font-bold text-sm bg-stone-100 dark:bg-stone-900 py-1.5 rounded mb-2 border border-stone-200 dark:border-stone-800 text-stone-850 dark:text-stone-200">
               $N \\times 10^n \\quad \\text{onde} \\quad 1 \\le N < 10$
             </p>
-            <p class="text-xs">Deslocando a vírgula para a <strong>esquerda</strong>, o expoente $n$ aumenta. Deslocando para a <strong>direita</strong>, o expoente $n$ diminui.</p>
+            <p class="text-xs"><strong>Regra da Vírgula:</strong> Para a esquerda (Soma no expoente). Para a direita (Subtrai).</p>
+            <p class="text-sm mt-3"><strong>Algarismos Significativos (A.S.):</strong> Nenhuma régua é perfeita. Os A.S. são todos os números que você tem certeza, <strong>mais um</strong> (o duvidoso). Ex: $1,45\\text{ m}$ (O "1" e o "4" são certos. O "5" é o seu chute refinado. Temos 3 A.S.).</p>
           </div>
 
           <div class="bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Ordem de Grandeza (O.G.)</h4>
-            <p class="text-sm mb-1">Para determinar a potência de dez mais próxima de um número no formato $N \\times 10^n$:</p>
-            <ul class="list-disc pl-5 text-xs space-y-0.5">
-              <li>Se $N < 3,16$, a O.G. é a potência original: $10^n$.</li>
-              <li>Se $N \\ge 3,16$ (que é $\\sqrt{10}$), somamos $+1$ ao expoente: $10^{n+1}$.</li>
-            </ul>
+            <p class="text-sm mb-1">É a potência de 10 mais próxima de um número no formato $N \\times 10^n$:</p>
+            <p class="text-xs">Se $N \\ge 3,16$ (que é $\\sqrt{10}$), somamos $+1$ ao expoente: $10^{n+1}$. Se for menor, mantemos a potência original: $10^n$.</p>
           </div>
 
           <div class="bg-purple-50 dark:bg-purple-950/30 border-l-4 border-purple-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-purple-850 dark:text-purple-300 mb-2">🟪 Exemplo de Resolução Passo a Passo</h4>
-            <p class="text-sm mb-2"><strong>Problema:</strong> O raio médio da Terra é $6.400.000\\text{ m}$. Converta para notação científica e determine sua Ordem de Grandeza (O.G.).</p>
+            <p class="text-sm mb-2"><strong>Problema:</strong> O raio da Terra é de $6.400.000\\text{ m}$. Escreva em notação científica e determine a ordem de grandeza.</p>
             <p class="text-sm font-semibold text-purple-900 dark:text-purple-300">
               Resolução:<br>
-              Ajustando a vírgula 6 posições para a esquerda: $6,4 \\times 10^6\\text{ m}$.<br>
-              Como a mantissa $N = 6,4$ é maior que $3,16$, adicionamos 1 ao expoente:<br>
+              A vírgula invisível no final anda 6 casas para a esquerda até o $6,4$.<br>
+              Notação: $6,4 \\times 10^6\\text{ m}$.<br>
+              Como $6,4 \\ge 3,16$, somamos 1 ao expoente:<br>
               $$\\text{O.G.} = 10^{6+1} = 10^7$$
             </p>
           </div>
         `,
         questions: [
           {
-            text: "Indique a representação correta de $3.000$ em notação científica:",
+            difficulty: "Fácil",
+            text: "Escreva o número $3.000$ em notação científica:",
             options: [
               "$3 \\times 10^3$",
               "$3 \\times 10^2$",
@@ -736,10 +784,11 @@
               "$0,3 \\times 10^4$"
             ],
             correct: 0,
-            hint: "Mova a vírgula imaginária de modo a obter uma mantissa $1 \\le N < 10$."
+            hint: "Desloque a vírgula para a esquerda até que reste apenas o número 3."
           },
           {
-            text: "A espessura de um filamento capilar é de cerca de $0,00005\\text{ m}$. Converta o valor para notação científica e determine sua respectiva Ordem de Grandeza (O.G.):",
+            difficulty: "Fácil",
+            text: "A espessura média de um fio de cabelo é cerca de $0,00005\\text{ m}$. Escreva esse valor em notação científica e determine sua Ordem de Grandeza (O.G.):",
             options: [
               "$5 \\times 10^{-5}\\text{ m}$ e O.G. $10^{-5}$",
               "$5 \\times 10^{-5}\\text{ m}$ e O.G. $10^{-4}$",
@@ -747,30 +796,29 @@
               "$0,5 \\times 10^{-4}\\text{ m}$ e O.G. $10^{-5}$"
             ],
             correct: 1,
-            hint: "Mova a vírgula para a direita até atingir o 5. O expoente será negativo. Compare o 5 com o divisor padrão de 3,16."
+            hint: "Como a mantissa $5$ é maior que $3,16$, somamos 1 ao expoente: $10^{-5+1}$."
           },
           {
-            text: "Duas balanças de laboratório medem a massa de uma amostra. A de alta precisão indica $2,00\\text{ kg}$, enquanto a comum indica $2\\text{ kg}$. Sob a perspectiva da Física Teórica, qual a diferença essencial entre estas leituras?",
+            difficulty: "Fácil",
+            text: "Na medida de um cabo de aço registrada como $15,2\\text{ metros}$, qual é o algarismo duvidoso?",
             options: [
-              "Nenhuma diferença, já que na matemática $2,00$ possui rigorosamente o mesmo valor numérico de $2$.",
-              "A medida de $2,00\\text{ kg}$ tem 3 algarismos significativos e exprime maior certeza instrumental, reduzindo a incerteza da medição.",
-              "A medida de $2\\text{ kg}$ possui menor margem de erro por possuir menos números decimais e ser mais direta.",
-              "A notação decimal serve apenas para simplificar cálculos, sem correlação com a precisão física do experimento."
+              "$1$",
+              "$5$",
+              "$2$",
+              "Não há algarismo duvidoso nessa medição."
             ],
-            correct: 1,
-            hint: "Os zeros à direita de uma casa decimal indicam que o instrumento experimental é capaz de realizar a medição daquela fração decimal com segurança."
+            correct: 2,
+            hint: "O algarismo duvidoso é sempre o último algarismo significativo à direita, representando a estimativa do operador."
           }
         ],
         gabarito: `
-          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Resoluções Analíticas - Período 3:</h4>
+          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Gabarito Passo a Passo - Aula 3:</h4>
           <div class="space-y-4 text-sm text-stone-700 dark:text-stone-300">
-            <p><strong>Questão 1:</strong> Deslocando a vírgula 3 casas decimais para a esquerda:<br>
-            $$3.000 = 3 \\times 10^3$$</p>
-            <p><strong>Questão 2:</strong> Convertendo $0,00005$ para notação, deslocamos a vírgula 5 casas à direita:<br>
-            $$5 \\times 10^{-5}\\text{ m}$$
-            Dado que $5 \\ge 3,16$, incrementamos o expoente em uma unidade:<br>
-            $$\\text{O.G.} = 10^{-5 + 1} = 10^{-4}$$</p>
-            <p><strong>Questão 3:</strong> Em Física, a escrita de zeros após a vírgula em medições experimentais não é ornamental. Significa que o instrumento é preciso o bastante para garantir a estabilidade daquelas frações decimais de medida.</p>
+            <p><strong>Exercício 1:</strong> Deslocando a vírgula para a esquerda três casas até restar apenas a mantissa $3$ (que está entre $1$ e $10$), multiplicamos pela potência correspondente: $3.000 = \\boldsymbol{3 \\times 10^3}$.</p>
+            <p><strong>Exercício 2:</strong> Para o valor $0,0045$, deslocamos a vírgula 3 casas para a direita para obter a mantissa $4,5$: $\\boldsymbol{4,5 \\times 10^{-3}}$.</p>
+            <p><strong>Exercício 3:</strong> Em $15,2\\text{ m}$, o algarismo duvidoso é o $\\boldsymbol{2}$. Os algarismos $1$ e $5$ são completamente seguros e baseados na graduação da escala, enquanto o último dígito é a estimativa final do operador.</p>
+            <p><strong>Exercício 4:</strong> Para a espessura de $0,00005\\text{ m}$, movemos a vírgula 5 casas para a direita para atingir a mantissa $5$: $5 \\times 10^{-5}\\text{ m}$. Dado que a mantissa $5 \\ge 3,16$, adicionamos $+1$ no expoente para obter a Ordem de Grandeza: $\\text{O.G.} = 10^{-5 + 1} = \\boldsymbol{10^{-4}\\text{ m}}$.</p>
+            <p><strong>Exercício 5:</strong> A balança de $2,00\\text{ kg}$ garante exatidão em $\\boldsymbol{3\\text{ Algarismos Significativos}}$ (todos têm significado físico, mostrando maior precisão do instrumento), enquanto a de $2\\text{ kg}$ possui apenas $1\\text{ Algarismo Significativo}$. O impacto é que o primeiro instrumento é cem vezes mais sensível.</p>
           </div>
         `
       },
@@ -779,77 +827,80 @@
         title: "Linguagem Científica e Gráficos",
         boss: { name: "A Quimera dos Eixos", maxHp: 80, hp: 80, img: "📈" },
         bimestre: "1º Bimestre",
-        difficulty: "Média",
         teoria: `
           <p class="mb-4">O comportamento de variáveis correlacionadas na Física é ilustrado por meio de tabelas e projeções gráficas cartesianas.</p>
           
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Estrutura de Eixos Cartesianos</h4>
-            <p class="text-sm">Em fenômenos físicos temporais:</p>
+            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Lendo Gráficos e Tabelas</h4>
+            <p class="text-sm">Num plano cartesiano:</p>
             <ul class="list-disc pl-5 text-sm text-blue-900 dark:text-blue-300 space-y-1 mt-1">
-              <li><strong>Eixo X (Horizontal / Abscissas):</strong> Aloca a <strong>Variável Independente</strong> (Ex: o Tempo $t$, que flui de maneira autônoma).</li>
-              <li><strong>Eixo Y (Vertical / Ordenadas):</strong> Aloca a <strong>Variável Dependente</strong> (Ex: a Posição $S$ ou Força $F$, cujo comportamento depende do instante analisado).</li>
+              <li><strong>Eixo X (Horizontal - Abscissas):</strong> Variável Independente (Ex: Tempo. O tempo passa independente do que você faça).</li>
+              <li><strong>Eixo Y (Vertical - Ordenadas):</strong> Variável Dependente (Ex: Temperatura. Ela muda dependendo do tempo de aquecimento).</li>
             </ul>
+            <p class="text-xs mt-2">Se o gráfico é uma <strong>reta subindo</strong>, as grandezas são Diretamente Proporcionais. Se é uma <strong>curva descendo</strong>, são Inversamente Proporcionais.</p>
           </div>
 
           <div class="bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Interpretação de Rampas</h4>
-            <p class="text-sm italic">"Rampas retas ascendentes que partem da origem revelam proporcionalidade linear direta. A inclinação desta rampa matemática é obtida pela divisão $\\Delta Y / \\Delta X$ e frequentemente representa outra grandeza do sistema."</p>
+            <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Proporção Linear</h4>
+            <p class="text-sm italic">"Rampas retas que partem de (0,0) indicam que se você duplicar o valor de X, o valor correspondente de Y também duplicará automaticamente."</p>
           </div>
 
           <div class="bg-purple-50 dark:bg-purple-950/30 border-l-4 border-purple-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-purple-850 dark:text-purple-300 mb-2">🟪 Exemplo de Resolução Passo a Passo</h4>
-            <p class="text-sm mb-2"><strong>Problema:</strong> Um gráfico de vazão de água relaciona o Volume em litros ($Y$) pelo Tempo em minutos ($X$). A reta passa por $(0,0)$ e pelo ponto $(5, 20)$. O que isso significa e qual a vazão em L/min?</p>
+            <p class="text-sm mb-2"><strong>Problema:</strong> Um gráfico de Volume da água ($Y$) vs Tempo de torneira aberta ($X$) mostra uma reta que sai do ponto $(0,0)$ e passa pelo ponto $(5, 20)$. O que isso significa e qual a taxa de vazão?</p>
             <p class="text-sm font-semibold text-purple-900 dark:text-purple-300">
               Resolução:<br>
-              Indica grandezas diretamente proporcionais. A inclinação do gráfico fornece a vazão:<br>
-              $$\\text{Inclinação} = \\frac{\\Delta Y}{\\Delta X} = \\frac{20\\text{ Litros}}{5\\text{ minutos}} = 4\\text{ L/min}$$
+              Significa que as grandezas são diretamente profissionais (se o tempo dobra, a água dobra). A vazão é a divisão do Y pelo X (inclinação):<br>
+              $$\\text{Vazão} = \\frac{20\\text{ Litros}}{5\\text{ minutos}} = 4\\text{ L/min}$$
             </p>
           </div>
         `,
         questions: [
           {
-            text: "Em qual eixo de representação gráfica de evolução temporal costumamos posicionar a grandeza Tempo ($t$)?",
+            difficulty: "Fácil",
+            text: "Em qual eixo de um gráfico cartesiano de evolução temporal costumamos colocar o Tempo ($t$)?",
             options: [
-              "Eixo das Ordenadas (Eixo Y vertical), por ser independente.",
-              "Eixo das Abscissas (Eixo X horizontal), por ser a variável independente.",
-              "No topo como escala multiplicadora externa de apoio.",
-              "Em qualquer eixo, dependendo apenas do valor do coeficiente linear."
+              "Eixo Y (Ordenadas), por ser uma variável dependente.",
+              "Eixo X (Abscissas), por ser a variável independente.",
+              "No centro, como coordenada neutra.",
+              "No eixo secundário de escala logarítmica."
             ],
             correct: 1,
-            hint: "O tempo passa sem depender de forças ou posições; é a variável que rege a escala horizontal de acompanhamento."
+            hint: "A variável independente (aquela que flui autonomamente, como o tempo) fica na horizontal."
           },
           {
-            text: "Uma tabela experimental aponta que um veículo com velocidade estável avança $50\\text{ km}$ ao final de 1 hora de trajeto, e $100\\text{ km}$ ao fim de 2 horas. Mantida a proporcionalidade linear direta, qual o avanço esperado para 3 horas?",
+            difficulty: "Fácil",
+            text: "Uma tabela experimental aponta que em 1 hora um carro anda 50 km, e em 2 horas anda 100 km. Mantida essa proporcionalidade direta, qual a distância esperada em 3 horas?",
             options: [
-              "$125\\text{ km}$",
+              "$120\\text{ km}$",
               "$150\\text{ km}$",
               "$200\\text{ km}$",
-              "$300\\text{ km}$"
+              "$250\\text{ km}$"
             ],
             correct: 1,
-            hint: "A velocidade é constante. Calcule o incremento linear somando a distância constante para cada hora adicional."
+            hint: "A razão da distância pelo tempo é constante ($50\\text{ km/h}$). Multiplique essa taxa por 3."
           },
           {
-            text: "A Lei de Hooke descreve a tração de sistemas elásticos. Um experimento gera um gráfico de Força ($F$) no eixo Y vs Deformação ($x$) no eixo X. Se a reta do gráfico atravessa $(0,0)$ e o par $(2\\text{ m}, 10\\text{ N})$, determine a constante elástica $k$ da mola ($k = F/x$):",
+            difficulty: "Desafiador",
+            text: "A Lei de Hooke (força em molas) gera um gráfico onde a Força ($F$) está no eixo $Y$ e a Deformação ($x$) no eixo $X$. Se a reta passa pelos pontos $(0,0)$ e $(2\\text{ m}, 10\\text{ N})$, determine a constante elástica da mola (que é a inclinação $F/x$):",
             options: [
-              "$20\\text{ N/m}$",
               "$5\\text{ N/m}$",
-              "$8\\text{ N/m}$",
+              "$20\\text{ N/m}$",
+              "$2\\text{ N/m}$",
               "$0,2\\text{ N/m}$"
             ],
-            correct: 1,
-            hint: "Use os valores de força no eixo Y ($10\\text{ N}$) e de deformação no eixo X ($2\\text{ m}$) para calcular a taxa de inclinação."
+            correct: 0,
+            hint: "A constante elástica da mola é determinada pela inclinação do gráfico, ou seja, dividindo-se o valor da força no eixo $Y$ pela respectiva deformação no eixo $X$ ($k = F/x$)."
           }
         ],
         gabarito: `
-          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Resoluções Analíticas - Período 4:</h4>
+          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Gabarito Passo a Passo - Aula 4:</h4>
           <div class="space-y-4 text-sm text-stone-700 dark:text-stone-300">
-            <p><strong>Questão 1:</strong> Em gráficos físicos temporais, o eixo das abscissas (X) é adotado para o tempo, que atua como variável independente.</p>
-            <p><strong>Questão 2:</strong> Proporção direta:<br>
-            $$d = 50\\text{ km/h} \\times 3\\text{ h} = 150\\text{ km}$$</p>
-            <p><strong>Questão 3:</strong> Constante elástica da mola:<br>
-            $$k = \\frac{F}{x} = \\frac{10\\text{ N}}{2\\text{ m}} = 5\\text{ N/m}$$</p>
+            <p><strong>Exercício 1:</strong> O tempo flui de modo autônomo, agindo como a causa das demais variações. Por convenção científica, variáveis independentes ocupam a abscissa (Eixo $\\boldsymbol{X}$).</p>
+            <p><strong>Exercício 2:</strong> Uma linha reta ascendente da esquerda para a direita indica uma relação de proporcionalidade $\\boldsymbol{Direta}$ (se uma grandeza aumenta, a outra aumenta de forma linear).</p>
+            <p><strong>Exercício 3:</strong> Calculando a taxa constante de deslocamento: $v = \\frac{50\\text{ km}}{1\\text{ h}} = 50\\text{ km/h}$. Em 3 horas de movimento linear direto: $d = 50\\text{ km/h} \\times 3\\text{ h} = \\boldsymbol{150\\text{ km}}$.</p>
+            <p><strong>Exercício 4:</strong> A razão direta é obtida dividindo-se o valor de $Y$ pelo valor correspondente de $X$: $\\frac{150\\text{ m}}{3\\text{ s}} = \\boldsymbol{50\\text{ m/s}}$.</p>
+            <p><strong>Exercício 5:</strong> A constante elástica ou a taxa de inclinação de uma função linear que passa por $(0,0)$ e pelo par ordenado $(x, y)$ é dada pelo quociente simples entre a ordenada e a abscissa: $k = \\frac{F}{x} = \\frac{10\\text{ N}}{2\\text{ m}} = \\boldsymbol{5\\text{ N/m}}$.</p>
           </div>
         `
       },
@@ -858,86 +909,89 @@
         title: "Matéria, Energia e Propriedades",
         boss: { name: "O Golem de Chumbo", maxHp: 80, hp: 80, img: "🧱" },
         bimestre: "1º Bimestre",
-        difficulty: "Média",
         teoria: `
           <p class="mb-4">O comportamento térmico e volumétrico das substâncias depende do estado de agregação mecânica de suas moléculas.</p>
           
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Agregação da Matéria</h4>
+            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Estados de Agregação da Matéria</h4>
+            <p class="text-sm">O estado (Sólido, Líquido, Gasoso) depende da <strong>Energia Térmica</strong> (agitação):</p>
             <ul class="list-disc pl-5 text-sm text-blue-900 dark:text-blue-300 space-y-1">
-              <li><strong>Sólido:</strong> Elevada força de coesão molecular. Forma e volume rigidamente constantes.</li>
-              <li><strong>Líquido:</strong> Força de atração intermediária. Moléculas deslizam mantendo volume fixo, porém a forma molda-se ao recipiente.</li>
-              <li><strong>Gasoso:</strong> Baixa coesão molecular. Ocupa todo o volume disponível de forma caótica.</li>
+              <li><strong>Sólido:</strong> Moléculas presas, vibrando juntas. Forma e volume fixos.</li>
+              <li><strong>Líquido:</strong> Moléculas escorregam. Volume fixo, mas a forma é a do recipiente.</li>
+              <li><strong>Gasoso:</strong> Caos total. Moléculas soltas. Ocupam todo o volume possível.</li>
             </ul>
           </div>
 
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Densidade</h4>
-            <p class="text-sm">Razão matemática que dita a concentração de massa em um dado volume:</p>
-            <p class="text-center font-bold text-sm bg-stone-100 dark:bg-stone-850 py-1.5 rounded my-2">
+            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: A Propriedade da Densidade</h4>
+            <p class="text-sm mb-2">Por que uma âncora afunda e um navio gigante flutua? A resposta é a Densidade ($d$):</p>
+            <p class="text-center font-bold text-sm bg-stone-100 dark:bg-stone-900 py-1.5 rounded mb-2 border border-stone-200 dark:border-stone-800 text-stone-850 dark:text-stone-200">
               $d = \\frac{m}{V}$
             </p>
-            <p class="text-xs">Se a densidade do corpo for inferior à do líquido circundante (água $\\approx 1,0\\text{ g/cm}^3$), ele flutua. Caso contrário, afunda.</p>
-          </div>
-
-          <div class="bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Unidades de Densidade</h4>
-            <p class="text-sm italic">"Cuidado com as unidades nas conversões de laboratório. Multiplicar $\\text{g/cm}^3$ por 1000 fornece o valor em $\\text{kg/m}^3$ (Unidade do SI)."</p>
+            <p class="text-xs">Se a densidade do objeto for menor que a do fluido (água = $1,0\\text{ g/cm}^3$), ele flutua. Caso contrário, afunda.</p>
           </div>
 
           <div class="bg-purple-50 dark:bg-purple-950/30 border-l-4 border-purple-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-purple-850 dark:text-purple-300 mb-2">🟪 Exemplo de Resolução Passo a Passo</h4>
-            <p class="text-sm mb-2"><strong>Problema:</strong> Um tarugo de alumínio de $540\\text{ g}$ possui volume de $200\\text{ cm}^3$. Determine sua densidade.</p>
+            <p class="text-sm mb-2"><strong>Problema:</strong> Uma peça industrial de alumínio tem massa de $540\\text{ g}$ e ocupa um volume de $200\\text{ cm}^3$. Ela flutua ou afunda na água?</p>
             <p class="text-sm font-semibold text-purple-900 dark:text-purple-300">
               Resolução:<br>
-              $$d = \\frac{m}{V} = \\frac{540\\text{ g}}{200\\text{ cm}^3} = 2,7\\text{ g/cm}^3$$
-              Como a densidade obtida é maior que a da água ($1,0\\text{ g/cm}^3$), o tarugo afunda se imerso.
+              Calcular a densidade da peça:<br>
+              $$d = \\frac{m}{V} = \\frac{540\\text{ g}}{200\\text{ cm}^3} = 2,7\\text{ g/cm}^3$$<br>
+              Como $2,7$ é maior que $1,0$ (água), a peça <strong>afunda</strong>.
             </p>
           </div>
         `,
         questions: [
           {
+            difficulty: "Fácil",
             text: "Em qual estado físico de agregação as moléculas constituintes possuem o maior grau de energia térmica cinética (agitação)?",
             options: [
-              "Estado Sólido.",
-              "Estado Líquido.",
-              "Estado Gasoso.",
-              "Estado Gelatinoso Seco."
+              "Sólido",
+              "Líquido",
+              "Gasoso",
+              "Misto"
             ],
             correct: 2,
-            hint: "O calor rompe as amarras entre as moléculas, deixando-as livres para se mover com alta energia."
+            hint: "No estado gasoso, as forças de coesão são fracas, permitindo que as moléculas se movam livremente em alta velocidade."
           },
           {
-            text: "Um cilindro industrial armazena $50\\text{ cm}^3$ de mercúrio líquido de densidade igual a $13,6\\text{ g/cm}^3$. Calcule a massa deste volume de líquido:",
+            difficulty: "Fácil",
+            text: "Qual a densidade de um cubo de plástico com $200\\text{ g}$ de massa e $200\\text{ cm}^3$ de volume? Ele flutua ou afunda na água (densidade de $1,0\\text{ g/cm}^3$)?",
             options: [
-              "$680\\text{ g}$",
-              "$272\\text{ g}$",
-              "$3,68\\text{ g}$",
-              "$68\\text{ g}$"
+              "Densidade de $1,0\\text{ g/cm}^3$, permanecendo em flutuação limiar na água.",
+              "Densidade de $2,0\\text{ g/cm}^3$, afundando rapidamente.",
+              "Densidade de $0,5\\text{ g/cm}^3$, flutuando acima da metade.",
+              "Densidade de $10\\text{ g/cm}^3$, afundando instantaneamente."
             ],
             correct: 0,
-            hint: "Isole a variável massa na equação da densidade: $m = d \\times V$."
+            hint: "A densidade é a massa dividida pelo volume ($d = m/V$). Se for exatamente igual à da água ($1,0\\text{ g/cm}^3$), ele flutua em equilíbrio limiar."
           },
           {
-            text: "Três líquidos imiscíveis são derramados em um proveta: Água ($1,0\\text{ g/cm}^3$), Óleo ($0,8\\text{ g/cm}^3$) e Xarope ($1,3\\text{ g/cm}^3$). Qual será a ordem exata de disposição das camadas, de baixo para cima?",
+            difficulty: "Fácil",
+            text: "Três líquidos imiscíveis são derramados em um copo: Água ($1,0\\text{ g/cm}^3$), Óleo ($0,8\\text{ g/cm}^3$) e Xarope ($1,3\\text{ g/cm}^3$). Qual será a ordem exata de disposição das camadas, de baixo para cima?",
             options: [
-              "Óleo na base, Água na faixa central, Xarope no topo.",
-              "Xarope na base, Água na faixa central, Óleo no topo.",
-              "Água na base, Óleo na faixa central, Xarope no topo.",
-              "Xarope na base, Óleo na faixa central, Água no topo."
+              "Óleo na base, Água no meio, Xarope no topo.",
+              "Xarope na base, Água no meio, Óleo no topo.",
+              "Água na base, Óleo no meio, Xarope no topo.",
+              "Xarope na base, Óleo no meio, Água no topo."
             ],
             correct: 1,
-            hint: "Líquidos mais densos (maior massa por unidade de volume) afundam, assentando na base, enquanto os menos densos flutuam."
+            hint: "Os líquidos mais densos afundam (ficam na base) e os menos densos flutuam (ficam no topo)."
           }
         ],
         gabarito: `
-          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Resoluções Analíticas - Período 5:</h4>
+          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Gabarito Passo a Passo - Aula 5:</h4>
           <div class="space-y-4 text-sm text-stone-700 dark:text-stone-300">
-            <p><strong>Questão 1:</strong> No estado gasoso, as forças intermoleculares são mínimas, permitindo máxima agitação térmica.</p>
-            <p><strong>Questão 2:</strong> Massa de mercúrio:<br>
-            $$m = d \\times V = 13,6\\text{ g/cm}^3 \\times 50\\text{ cm}^3 = 680\\text{ g}$$</p>
-            <p><strong>Questão 3:</strong> Os líquidos se organizam de acordo com a densidade relative decrescente:<br>
-            Xarope ($1,3\\text{ g/cm}^3$) fica no fundo; Água ($1,0\\text{ g/cm}^3$) fica no meio; Óleo ($0,8\\text{ g/cm}^3$) flutua no topo.</p>
+            <p><strong>Exercício 1:</strong> No estado gasoso, as moléculas não mantêm forças de atração mútua organizadas, apresentando máxima velocidade cinética média.</p>
+            <p><strong>Exercício 2:</strong> Dividindo a massa de plástico pelo seu volume:<br>
+            $$d = \\frac{200\\text{ g}}{200\\text{ cm}^3} = \\boldsymbol{1,0\\text{ g/cm}^3}$$<br>
+            Por possuir densidade idêntica à da água pura, o cubo de plástico permanecerá em equilíbrio estável e flutuação limiar no líquido.</p>
+            <p><strong>Exercício 3:</strong> O gás de cozinha não tem forma nem volume próprios, adaptando-se e expandindo-se para ocupar todas as extremidades do botijão que o contém.</p>
+            <p><strong>Exercício 4:</strong> Isolando a massa na fórmula de densidade:<br>
+            $$m = d \\times V = 13,6\\text{ g/cm}^3 \\times 50\\text{ cm}^3 = \\boldsymbol{680\\text{ g}}$$</p>
+            <p><strong>Exercício 5:</strong> Empilhamento por densidade decrescente de baixo para cima:<br>
+            Xarope ($1,3\\text{ g/cm}^3$) assenta no fundo; Água ($1,0\\text{ g/cm}^3$) repousa no meio; Óleo ($0,8\\text{ g/cm}^3$) flutua no topo. Os líquidos mais densos descem e os menos densos flutuam.</p>
           </div>
         `
       },
@@ -946,83 +1000,78 @@
         title: "Referencial, Posição e Trajetória",
         boss: { name: "O Fantasma da Trajetória", maxHp: 100, hp: 100, img: "👣" },
         bimestre: "2º Bimestre",
-        difficulty: "Média",
         teoria: `
           <p class="mb-4">O movimento de um corpo não é absoluto. A sua descrição matemática depende inteiramente do ponto de observação adotado.</p>
           
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Conceitos Espaciais Clássicos</h4>
-            <ul class="list-disc pl-5 text-sm text-blue-900 dark:text-blue-300 space-y-1">
-              <li><strong>Referencial:</strong> Corpo de análise adotado a partir do qual as posições são mapeadas.</li>
-              <li><strong>Trajetória:</strong> Linha geométrica que descreve o caminho percorrido por um móvel.</li>
-              <li><strong>Distância Percorrida:</strong> Escalar que acumula todo o percurso (soma de todos os passos).</li>
-              <li><strong>Deslocamento ($\\Delta S$):</strong> Vetor reta conectando a Posição Inicial ($S_0$) à Posição Final ($S$). 
+            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Movimento e Referencial</h4>
+            <p class="text-sm">Não existe movimento ou repouso absoluto. Tudo depende do <strong>Referencial</strong> (quem está olhando). Imagine que você está sentado em um trem a 100 km/h. Para a pessoa na estação, você está em movimento. Para a poltrona ao seu lado, você está em repouso.</p>
+            <ul class="list-disc pl-5 mt-2 text-sm text-blue-900 dark:text-blue-300 space-y-1">
+              <li><strong>Trajetória:</strong> É o "desenho" (linha) que o corpo faz ao se mover.</li>
+              <li><strong>Distância Percorrida:</strong> Tudo que o hodômetro do carro marca (total de passos).</li>
+              <li><strong>Deslocamento ($\\Delta S$):</strong> É a reta que conecta o Início ao Fim.
                 $$\\Delta S = S_f - S_i$$
               </li>
             </ul>
           </div>
 
-          <div class="bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Diferença Crítica</h4>
-            <p class="text-sm italic">"Dê uma volta completa em torno de uma praça circular e termine no mesmo ponto de partida: sua distância percorrida é o perímetro, mas seu deslocamento é zero!"</p>
-          </div>
-
           <div class="bg-purple-50 dark:bg-purple-950/30 border-l-4 border-purple-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-purple-850 dark:text-purple-300 mb-2">🟪 Exemplo de Resolução Passo a Passo</h4>
-            <p class="text-sm mb-2"><strong>Problema:</strong> Um operador de máquina parte de $S_i = 0\\text{ m}$, avança até a posição $50\\text{ m}$, e retorna até parar em $S_f = 20\\text{ m}$. Calcule o deslocamento do operador.</p>
+            <p class="text-sm mb-2"><strong>Problema:</strong> Um operador de empilhadeira sai do estoque (posição $0\\text{ m}$), vai até a doca (posição $50\\text{ m}$) e depois volta para pegar uma caixa no corredor principal (posição $20\\text{ m}$). Qual foi a distância total andada e o deslocamento?</p>
             <p class="text-sm font-semibold text-purple-900 dark:text-purple-300">
               Resolução:<br>
-              O deslocamento avalia exclusivamente as posições final e inicial:<br>
+              Distância total: Foi do 0 ao 50 (andou 50m) e depois voltou do 50 ao 20 (andou 30m). Total: $50\\text{ m} + 30\\text{ m} = 80\\text{ m}$.<br>
+              Deslocamento: Importa apenas Início (0) e Fim (20).<br>
               $$\\Delta S = S_f - S_i = 20\\text{ m} - 0\\text{ m} = 20\\text{ m}$$
-              A distância total percorrida seria de $50\\text{ m} + 30\\text{ m} = 80\\text{ m}$.
             </p>
           </div>
         `,
         questions: [
           {
-            text: "Você está sentado em sua cadeira escolar de forma estacionária. É correto afirmar que você está em repouso em relação ao Sol?",
+            difficulty: "Fácil",
+            text: "Um piloto dá 20 voltas completas em uma pista oval de corridas e para exatamente no mesmo ponto de largada. Qual foi o seu deslocamento vetorial final?",
             options: [
-              "Sim, pois sua velocidade medida em relação à sala é rigorosamente zero.",
-              "Não, pois o planeta Terra realiza translação ao redor do Sol a alta velocidade, arrastando você consigo.",
-              "Sim, visto que o Sol se encontra muito distante para influenciar nosso movimento.",
-              "Não, visto que o Sol realiza rotação diária ao redor da Terra."
+              "Igual ao perímetro total das 20 voltas.",
+              "Zero, pois as posições inicial e final coincidem.",
+              "Diferente de zero, acumulado ao longo da trajetória.",
+              "Não é possível determinar sem o raio da pista."
             ],
             correct: 1,
-            hint: "Lembre-se que repouso e movimento são conceitos relativos e dependem do referencial adotado."
+            hint: "O deslocamento avalia apenas a variação de posição entre o ponto inicial e o ponto final: $\\Delta S = S_f - S_i$."
           },
           {
-            text: "Um trem cargueiro desloca-se linearmente do quilômetro $10$ de uma ferrovia até atingir o quilômetro $90$. Qual o módulo de seu deslocamento?",
+            difficulty: "Fácil",
+            text: "Um trem de carga viaja em linha reta, partindo da marcação de quilômetro $10\\text{ km}$ ($S_i$) e parando no quilômetro $90\\text{ km}$ ($S_f$). Qual foi o deslocamento realizado por esse trem?",
             options: [
               "$100\\text{ km}$",
               "$80\\text{ km}$",
-              "$-80\\text{ km}$",
-              "$90\\text{ km}$"
+              "$90\\text{ km}$",
+              "$10\\text{ km}$"
             ],
             correct: 1,
-            hint: "O deslocamento é calculado pela diferença simples: Posição Final menos Posição Inicial."
+            hint: "O deslocamento é a posição final menos a inicial ($\\Delta S = S_f - S_i$)."
           },
           {
-            text: "Uma formiga percorre $3\\text{ m}$ para o Norte e, em seguida, dobra e avança $4\\text{ m}$ para o Leste. Determine a distância percorrida e o módulo do deslocamento vetorial, respectivamente:",
+            difficulty: "Fácil",
+            text: "Uma formiga anda $3\\text{ metros}$ para o Norte e, em seguida, vira $90^\\circ$ e caminha $4\\text{ metros}$ para o Leste. Qual é o módulo do deslocamento vetorial resultante em linha reta?",
             options: [
-              "$7\\text{ m}$ e $7\\text{ m}$",
-              "$7\\text{ m}$ e $5\\text{ m}$",
-              "$5\\text{ m}$ e $7\\text{ m}$",
-              "$1\\text{ m}$ e $5\\text{ m}$"
+              "$7\\text{ m}$",
+              "$5\\text{ m}$",
+              "$1\\text{ m}$",
+              "$12\\text{ m}$"
             ],
             correct: 1,
-            hint: "A distância é a soma escalar simples de todos os metros percorridos. O deslocamento é a reta hipotenusa que fecha o triângulo retângulo (Teorema de Pitágoras)."
+            hint: "O vetor deslocamento fecha o triângulo retângulo. Utilize o Teorema de Pitágoras ($H^2 = CO^2 + CA^2$)."
           }
         ],
         gabarito: `
-          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Resoluções Analíticas - Período 6:</h4>
+          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Gabarito Passo a Passo - Aula 6:</h4>
           <div class="space-y-4 text-sm text-stone-700 dark:text-stone-300">
-            <p><strong>Questão 1:</strong> Adotando o Sol como referencial, a Terra executa translação, logo todos os corpos na superfície terrestre encontram-se em movimento.</p>
-            <p><strong>Questão 2:</strong> Deslocamento linear simples:<br>
-            $$\\Delta S = S_f - S_i = 90 - 10 = 80\\text{ km}$$</p>
-            <p><strong>Questão 3:</strong> Distância escalar total:<br>
-            $$d = 3\\text{ m} + 4\\text{ m} = 7\\text{ m}$$
-            Deslocamento vetorial via hipotenusa:<br>
-            $$|\\Delta S|^2 = 3^2 + 4^2 \\implies |\\Delta S| = \\sqrt{25} = 5\\text{ m}$$</p>
+            <p><strong>Exercício 1:</strong> Sim. Sob a perspectiva do Sol como referencial fixo, a Terra translada em órbita elíptica em alta velocidade, de modo que a sala de aula e qualquer pessoa sentada nela estão em constante movimento em relação ao Sol.</p>
+            <p><strong>Exercício 2:</strong> Sim, o deslocamento final é nulo ($\\boldsymbol{0}$). O deslocamento avalia apenas a variação de posição entre o ponto inicial e final. Como as posições inicial e final coincidem após voltas completas, $\\Delta S = S_f - S_i = 0$.</p>
+            <p><strong>Exercício 3:</strong> Subtração espacial simples para encontrar a variação de posição: $\\Delta S = S_f - S_i = 90\\text{ km} - 10\\text{ km} = \\boldsymbol{80\\text{ km}}$.</p>
+            <p><strong>Exercício 4:</strong> Trajetória circular. Como o ponteiro dos segundos realiza uma revolução completa e retorna exatamente à mesma marcação inicial ao fim de 1 minuto ($60\\text{ s}$), o seu vetor deslocamento final é $\\boldsymbol{0}$.</p>
+            <p><strong>Exercício 5:</strong> Como os movimentos são ortogonais ($90^\\circ$), formam os catetos de um triângulo retângulo. O deslocamento em linha reta é a hipotenusa: $d^2 = 3^2 + 4^2 \\implies d = \\sqrt{9 + 16} = \\sqrt{25} = \\boldsymbol{5\\text{ m}}$.</p>
           </div>
         `
       },
@@ -1031,27 +1080,24 @@
         title: "Movimento Retilíneo Uniforme (MRU)",
         boss: { name: "A Locomotiva Veloz", maxHp: 100, hp: 100, img: "🚂" },
         bimestre: "2º Bimestre",
-        difficulty: "Média",
         teoria: `
           <p class="mb-4">O MRU é a forma de deslocamento retilíneo onde o móvel não sofre variação de velocidade, cobrindo distâncias equivalentes em tempos iguais.</p>
           
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Equação Horária da Posição</h4>
-            <p class="text-sm mb-2">O MRU possui aceleração nula ($a = 0$) e velocidade constante ($v = \\text{cte}$). A posição é dada pela função:</p>
-            <p class="text-center font-bold text-sm bg-stone-100 dark:bg-stone-850 py-1.5 rounded my-2">
-              $S = S_0 + v \\cdot t$
-            </p>
-            <p class="text-xs">Onde: $S$ é a posição final, $S_0$ a posição inicial, $v$ a velocidade e $t$ o tempo.</p>
-          </div>
-
-          <div class="bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Mnemônico</h4>
-            <p class="text-sm italic">"Para memorizar a função horária do MRU com rapidez, lembre-se da palavra <strong>SORVETE</strong> ($S = S_0 + v \\cdot t$)."</p>
+            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Velocidade Média e o MRU</h4>
+            <p class="text-sm">O <strong>MRU</strong> acontece quando algo viaja em linha reta e com <strong>Velocidade Constante</strong> (não acelera, nem freia). Ex: Uma esteira industrial trabalhando num ritmo constante.</p>
+            <ul class="list-disc pl-5 mt-2 text-sm text-blue-900 dark:text-blue-300 space-y-1">
+              <li><strong>Fórmula da Velocidade:</strong> $v = \\frac{\\Delta S}{\\Delta t}$ (Deslocamento dividido pelo Tempo).</li>
+              <li><strong>Função Horária da Posição (MRU):</strong>
+                $$S = S_0 + v \\cdot t$$
+                <em>Mnemônico:</em> Fórmula do <strong>Sorvete</strong>! ($S$ = Posição final, $S_0$ = Posição inicial, $v$ = Velocidade, $t$ = Tempo).
+              </li>
+            </ul>
           </div>
 
           <div class="bg-purple-50 dark:bg-purple-950/30 border-l-4 border-purple-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-purple-850 dark:text-purple-300 mb-2">🟪 Exemplo de Resolução Passo a Passo</h4>
-            <p class="text-sm mb-2"><strong>Problema:</strong> Um robô industrial parte da posição $10\\text{ m}$ e se move em linha reta com velocidade constante de $2\\text{ m/s}$. Onde ele estará após $5\\text{ segundos}$?</p>
+            <p class="text-sm mb-2"><strong>Problema:</strong> Um robô de carga parte da posição $10\\text{ m}$ e se move numa fábrica em MRU com velocidade de $2\\text{ m/s}$. Onde ele estará após $5\\text{ segundos}$?</p>
             <p class="text-sm font-semibold text-purple-900 dark:text-purple-300">
               Resolução:<br>
               Mapeando os termos: $S_0 = 10\\text{ m}$, $v = 2\\text{ m/s}$ e $t = 5\\text{ s}$.<br>
@@ -1062,29 +1108,32 @@
         `,
         questions: [
           {
-            text: "No contexto do Movimento Retilíneo Uniforme (MRU), o que ocorre com a velocidade do objeto?",
+            difficulty: "Fácil",
+            text: "No contexto do Movimento Retilíneo Uniforme (MRU), o que caracteriza o comportamento da velocidade e da aceleração?",
             options: [
-              "Aumenta de forma exponencial à medida que o tempo transcorre.",
-              "Diminui gradativamente sob atrito constante até cessar o movimento.",
-              "Mantém-se constante no decorrer de todo o tempo analisado.",
-              "Varia de modo senoidal dependendo do coeficiente linear espacial."
+              "A velocidade varia linearmente e a aceleração é constante.",
+              "A velocidade é constante e a aceleração é nula.",
+              "A velocidade aumenta gradualmente devido ao motor.",
+              "A velocidade é nula e a aceleração é constante."
             ],
-            correct: 2,
-            hint: "O termo 'Uniforme' significa que a taxa de variação da posição com o tempo (velocidade) não se altera."
+            correct: 1,
+            hint: "Uniforme significa que a velocidade não muda. Se ela não muda, não há aceleração."
           },
           {
-            text: "Um carrinho trafega por uma guia com função posicional descrita por $S = 5 + 3 \\cdot t$ (SI). Determine a sua posição no instante de tempo de $4\\text{ s}$:",
+            difficulty: "Fácil",
+            text: "Dada a função horária de posição $S = 5 + 3 \\cdot t$ (com unidades no SI), determine a posição desse objeto no instante de tempo $t = 4\\text{ segundos}$:",
             options: [
               "$12\\text{ m}$",
               "$17\\text{ m}$",
-              "$32\\text{ m}$",
-              "$23\\text{ m}$"
+              "$20\\text{ m}$",
+              "$8\\text{ m}$"
             ],
             correct: 1,
-            hint: "Substitua a variável de tempo $t$ por $4$ na função fornecida."
+            hint: "Substitua o valor de $t = 4$ na equação $S = 5 + 3 \\cdot t$ e lembre-se de resolver a multiplicação antes da adição."
           },
           {
-            text: "Dois blocos partem de trilhos retos paralelos. O bloco A move-se conforme $S_A = 6 \\cdot t$, e o bloco B se move conforme $S_B = 20 + 2 \\cdot t$ (SI). Determine o instante exato de tempo ($t$) no qual o bloco A interceptará o bloco B:",
+            difficulty: "Fácil",
+            text: "Dois carrinhos de testes estão em um trilho reto. O carro A move-se conforme $S_A = 6 \\cdot t$ e o carro B conforme $S_B = 20 + 2 \\cdot t$ (SI). Em qual instante de tempo ($t$) o carro A interceptará o carro B?",
             options: [
               "$2\\text{ s}$",
               "$4\\text{ s}$",
@@ -1092,17 +1141,20 @@
               "$10\\text{ s}$"
             ],
             correct: 2,
-            hint: "No ponto de interceptação, as posições dos dois blocos são iguais ($S_A = S_B$). Iguale as funções e isole a variável $t$."
+            hint: "No ponto de encontro, iguale as posições dos carrinhos ($S_A = S_B$) e resolva a equação de primeiro grau para isolar o tempo."
           }
         ],
         gabarito: `
-          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Resoluções Analíticas - Período 7:</h4>
+          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Gabarito Passo a Passo - Aula 7:</h4>
           <div class="space-y-4 text-sm text-stone-700 dark:text-stone-300">
-            <p><strong>Questão 1:</strong> No MRU, por definição fundamental, a velocidade vetorial permanece constante e a aceleração é zero.</p>
-            <p><strong>Questão 2:</strong> Aplicação da função horária:<br>
-            $$S = 5 + 3 \\times 4 = 5 + 12 = 17\\text{ m}$$</p>
-            <p><strong>Questão 3:</strong> Resolução analítica para encontro:<br>
-            $$S_A = S_B \\implies 6t = 20 + 2t \\implies 4t = 20 \\implies t = \\frac{20}{4} = 5\\text{ s}$$</p>
+            <p><strong>Exercício 1:</strong> No MRU, a velocidade permanece estritamente constante ao longo de todo o tempo, implicando uma taxa de aceleração nula ($a=0$).</p>
+            <p><strong>Exercício 2:</strong> Na função posicional $S = 5 + 3 \\cdot t$, a posição inicial é o termo independente $\\boldsymbol{S_0 = 5\\text{ m}}$ e a velocidade constante é o coeficiente do tempo $\\boldsymbol{v = 3\\text{ m/s}}$.</p>
+            <p><strong>Exercício 3:</strong> Calculando a velocidade média pela definição básica:<br>
+            $$v = \\frac{\\Delta S}{\\Delta t} = \\frac{100\\text{ km}}{2\\text{ h}} = \\boldsymbol{50\\text{ km/h}}$$</p>
+            <p><strong>Exercício 4:</strong> Utilizando a função horária $S = 5 + 3 \\cdot t$, substituímos $t = 4\\text{ s}$:<br>
+            $$S = 5 + 3 \\cdot (4) = 5 + 12 = \\boldsymbol{17\\text{ m}}$$</p>
+            <p><strong>Exercício 5:</strong> Encontro dos móveis correspondente à igualdade de posições:<br>
+            $$S_A = S_B \\implies 6t = 20 + 2t \\implies 4t = 20 \\implies t = \\frac{20}{4} = \\boldsymbol{5\\text{ s}}$$</p>
           </div>
         `
       },
@@ -1111,33 +1163,28 @@
         title: "Vetores e 1ª Lei de Newton (Inércia)",
         boss: { name: "A Esfinge da Inércia", maxHp: 120, hp: 120, img: "🦁" },
         bimestre: "2º Bimestre",
-        difficulty: "Média",
         teoria: `
           <p class="mb-4">Para descrever as interações mecânicas, precisamos distinguir grandezas que dependem de orientação espacial daquelas que não dependem.</p>
           
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Classificação de Grandezas</h4>
             <ul class="list-disc pl-5 text-sm text-blue-900 dark:text-blue-300 space-y-1">
-              <li><strong>Grandezas Escalares:</strong> Definidas plenamente apenas por valor numérico e unidade de medida. Ex: Massa (5 kg), Tempo (2 h).</li>
-              <li><strong>Grandezas Vetoriais:</strong> Exigem módulo (valor), direção (horizontal/vertical) e sentido (esquerda/direita). Ex: Força ($\\vec{F}$), Velocidade ($\\vec{v}$).</li>
+              <li><strong>Escalares:</strong> Só precisam de um número e unidade. Ex: Massa (5kg), Tempo (2h).</li>
+              <li><strong>Vetoriais:</strong> Precisam de Número, <strong>Direção</strong> (horizontal/vertical) e <strong>Sentido</strong> (esquerda/direita). Ex: Força ($\\vec{F}$), Velocidade ($\\vec{v}$).</li>
             </ul>
           </div>
 
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: A 1ª Lei de Newton (Inércia)</h4>
+            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: As Leis de Newton e a Inércia</h4>
             <p class="text-sm italic text-blue-900 dark:text-blue-300">
-              "Todo corpo persevera em seu estado de repouso ou de movimento retilíneo uniforme, a menos que seja compelido a alterar seu estado por forças impressas sobre ele."
+              "Um corpo em repouso tende a continuar em repouso, e um corpo em movimento tende a continuar em movimento retilíneo uniforme, a menos que uma força atue sobre ele."
             </p>
-          </div>
-
-          <div class="bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Sentido Prático</h4>
-            <p class="text-sm italic">"Ao frear abruptamente, os passageiros de um veículo parecem ser projetados para a frente. O que ocorre na verdade é que eles tendem a reter sua velocidade inicial por inércia."</p>
+            <p class="text-xs mt-2"><strong>Exemplo prático:</strong> Quando o ônibus freia bruscamente, seu corpo é "jogado" para a frente, pois por inércia, ele quer continuar viajando na velocidade do ônibus!</p>
           </div>
 
           <div class="bg-purple-50 dark:bg-purple-950/30 border-l-4 border-purple-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-purple-850 dark:text-purple-300 mb-2">🟪 Exemplo de Resolução Passo a Passo</h4>
-            <p class="text-sm mb-2"><strong>Problema:</strong> Dois cabos puxam horizontalmente um bloco de ferro: um exerce $5\\text{ N}$ para a direita e o outro $3\\text{ N}$ para a esquerda. Qual é a força resultante no bloco?</p>
+            <p class="text-sm mb-2"><strong>Problema:</strong> Dois cabos de aço puxam horizontalmente uma caixa: um exerce força de $5\\text{ N}$ para a direita e o outro de $3\\text{ N}$ para a esquerda. Qual é a força resultante exercida sobre a caixa?</p>
             <p class="text-sm font-semibold text-purple-900 dark:text-purple-300">
               Resolução:<br>
               Como as forças atuam na mesma direção (horizontal) mas sentidos opostos, subtraímos os módulos:<br>
@@ -1147,7 +1194,8 @@
         `,
         questions: [
           {
-            text: "A temperatura de uma caldeira industrial ($36^\\circ\\text{C}$) e a força que atua na elevação de um bloco metálico são classificadas, respectivamente, como grandezas:",
+            difficulty: "Fácil",
+            text: "A temperatura corporal de um operador ($36^\\circ\\text{C}$) e a força mecânica aplicada para empurrar uma caixa são grandezas classificadas, respectivamente, como:",
             options: [
               "Vetorial e Escalar.",
               "Escalar e Vetorial.",
@@ -1155,38 +1203,41 @@
               "Ambas Vetoriais."
             ],
             correct: 1,
-            hint: "Para a temperatura, basta o valor e a unidade. Para a força, precisamos saber em qual direção e sentido ela atua."
+            hint: "Grandezas escalares precisam apenas de valor e unidade (temperatura). Grandezas vetoriais exigem módulo, direção e sentido (força)."
           },
           {
-            text: "Duas forças horizontais de sentidos opostos tracionam um bloco: uma força de $5\\text{ N}$ para a DIREITA e outra de $3\\text{ N}$ para a ESQUERDA. Qual a força resultante atuando no corpo?",
+            difficulty: "Fácil",
+            text: "De acordo com a 1ª Lei de Newton (Princípio da Inércia), se nenhuma força resultante agir sobre um skate que está inicialmente parado, o que ocorrerá com ele?",
             options: [
-              "$8\\text{ N}$ com sentido para a direita.",
-              "$2\\text{ N}$ com sentido para a direita.",
-              "$2\\text{ N}$ com sentido para a esquerda.",
-              "$1,5\\text{ N}$ com sentido vertical ascendente."
+              "Entrará em movimento com velocidade constante.",
+              "Permanecerá parado em seu estado de repouso.",
+              "Deslocar-se-á em movimento acelerado.",
+              "Curvar-se-á gradualmente para a esquerda."
             ],
             correct: 1,
-            hint: "As forças atuam na mesma linha de ação. Subtraia os módulos, pois possuem sentidos opostos."
+            hint: "Pela inércia, um corpo em repouso tende a persistir em repouso a menos que uma força externa o force a mudar de estado."
           },
           {
-            text: "Por qual razão os propulsores das sondas espaciais de exploração interestelar não necessitam permanecer ligados continuamente para manter sua rota estável e retilínea no vácuo espacial?",
+            difficulty: "Fácil",
+            text: "Dois cabos de aço puxam horizontalmente uma caixa: o cabo A aplica uma força de $5\\text{ N}$ para a DIREITA e o cabo B aplica $3\\text{ N}$ para a ESQUERDA. Qual é a força resultante exercida sobre a caixa?",
             options: [
-              "Devido à ação de atração constante da 3ª Lei de Newton.",
-              "Pelo Princípio da Inércia (1ª Lei), que garante a persistência do estado de movimento na ausência de forças dissipativas externas.",
-              "Porque a gravidade do espaço interestelar empurra continuamente os corpos em linha reta.",
-              "O motor armazena a velocidade adquirida na combustão química primária sob a forma de energia magnética."
+              "$8\\text{ N}$ para a esquerda.",
+              "$2\\text{ N}$ para a direita.",
+              "$2\\text{ N}$ para a esquerda.",
+              "$15\\text{ N}$ para cima."
             ],
             correct: 1,
-            hint: "No vácuo espacial profundo, as forças externas de resistência (como o atrito atmosférico) são desprezíveis."
+            hint: "Como as forças atuam na mesma direção mas em sentidos opostos, subtraímos os módulos. O sentido da resultante será o da maior força."
           }
         ],
         gabarito: `
-          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Resoluções Analíticas - Período 8:</h4>
+          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Gabarito Passo a Passo - Aula 8:</h4>
           <div class="space-y-4 text-sm text-stone-700 dark:text-stone-300">
-            <p><strong>Questão 1:</strong> A temperatura é definida por valor numérico (Escalar). A força requer módulo, direção e sentido (Vetorial).</p>
-            <p><strong>Questão 2:</strong> Subtração vetorial linear:<br>
-            $$F_r = 5\\text{ N} - 3\\text{ N} = 2\\text{ N (para a direita)}$$</p>
-            <p><strong>Questão 3:</strong> Pela 1ª Lei de Newton, se a resultante das forças externas aplicadas em um corpo em movimento retilíneo é nula, este mantém seu movimento sem necessidade de novas forças.</p>
+            <p><strong>Exercício 1:</strong> A temperatura necessita apenas de valor numérico e unidade ($\\boldsymbol{Escalar}$), não possuindo orientação espacial.</p>
+            <p><strong>Exercício 2:</strong> A força aplicada exige um valor, uma direção (ex: reta que empurra) e um sentido (ex: para frente), sendo portanto uma grandeza $\\boldsymbol{Vetorial}$.</p>
+            <p><strong>Exercício 3:</strong> De acordo com a Primeira Lei de Newton (Inércia), o skate conservará integralmente seu estado original de repouso, $\\boldsymbol{permanecendo\\ parado}$, a menos que uma força resultante externa atue sobre ele.</p>
+            <p><strong>Exercício 4:</strong> Como os vetores de força estão na mesma direção (horizontal) mas em sentidos opostos, fazemos a subtração simples de suas intensidades: $F_r = 5\\text{ N} - 3\\text{ N} = \\boldsymbol{2\\text{ N}}$. O sentido da força resultante é o da força de maior intensidade, ou seja, $\\boldsymbol{para\\ a\\ direita}$.</p>
+            <p><strong>Exercício 5:</strong> No vácuo do espaço sideral, onde forças de atrito viscoso e gravidade resistente são insignificantes, o objeto estelar em deslocamento uniforme retilíneo não requer motores ativos para persistir em movimento, perpetuando-se por $\\boldsymbol{Inércia}$ (1ª Lei de Newton).</p>
           </div>
         `
       },
@@ -1195,58 +1246,52 @@
         title: "2ª e 3ª Leis de Newton",
         boss: { name: "O Dragão de Newton", maxHp: 150, hp: 150, img: "🐉" },
         bimestre: "2º Bimestre",
-        difficulty: "Desafiadora",
         teoria: `
           <p class="mb-4">As interações mecânicas determinam o movimento por meio de leis de causa e efeito (força e aceleração) e de reciprocidade física.</p>
           
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: Equação Fundamental</h4>
-            <p class="text-sm mb-2"><strong>2ª Lei (Dinâmica):</strong> A força resultante imprime aceleração proporcional ao corpo:</p>
-            <p class="text-center font-bold text-sm bg-stone-100 dark:bg-stone-850 py-1.5 rounded my-2">
+            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: As Leis Dinâmicas</h4>
+            <ul class="list-disc pl-5 text-sm text-blue-900 dark:text-blue-300 space-y-1 mb-2">
+              <li><strong>2ª Lei (Princípio Fundamental da Dinâmica):</strong> Força gera aceleração proporcional.</li>
+              <li><strong>3ª Lei (Ação e Reação):</strong> Para toda força que você aplica, existe uma reação de igual valor, mesma direção, mas sentido oposto.</li>
+            </ul>
+            <p class="text-sm font-bold mt-2">Cálculo da Força Resultante (2ª Lei):</p>
+            <p class="text-center font-bold text-sm bg-stone-100 dark:bg-stone-900 py-1.5 rounded my-1 border border-stone-200 dark:border-stone-800 text-stone-850 dark:text-stone-200">
               $F_r = m \\cdot a$
             </p>
-            <p class="text-sm mt-3 mb-2"><strong>Força Peso:</strong> Aceleração gravitacional da Terra sobre a massa:</p>
-            <p class="text-center font-bold text-sm bg-stone-100 dark:bg-stone-850 py-1.5 rounded my-2">
+            <p class="text-xs"><em>Mnemônico:</em> Física Meu Amor. ($F$ em Newtons, $m$ em kg, $a$ em $m/s^2$).</p>
+            <p class="text-sm font-bold mt-2">Força Peso ($P$): É a força com que a Terra nos puxa.</p>
+            <p class="text-center font-bold text-sm bg-stone-100 dark:bg-stone-900 py-1.5 rounded my-1 border border-stone-200 dark:border-stone-800 text-stone-850 dark:text-stone-200">
               $P = m \\cdot g \\quad (g \\approx 10\\text{ m/s}^2)$
             </p>
           </div>
 
-          <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: A 3ª Lei (Ação e Reação)</h4>
-            <p class="text-sm italic text-blue-900 dark:text-blue-300">
-              "Para toda ação existe sempre uma reação oposta e de igual intensidade; as ações mútuas de dois corpos um sobre o outro são sempre iguais e dirigidas em sentidos opostos."
-            </p>
-          </div>
-
-          <div class="bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Anulação de Pares</h4>
-            <p class="text-sm italic">"As forças de ação e reação possuem módulos perfeitamente idênticos, mas nunca se anulam mutuamente. Elas atuam sempre em corpos diferentes!"</p>
-          </div>
-
           <div class="bg-purple-50 dark:bg-purple-950/30 border-l-4 border-purple-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-purple-850 dark:text-purple-300 mb-2">🟪 Exemplo de Resolução Passo a Passo</h4>
-            <p class="text-sm mb-2"><strong>Problema:</strong> Um tarugo de metal de $20\\text{ kg}$ é empurrado em uma prensa com aceleração de $3\\text{ m/s}^2$. Qual é a força resultante aplicada e qual é o Peso do tarugo?</p>
+            <p class="text-sm mb-2"><strong>Problema:</strong> Um bloco de metal de massa $20\\text{ kg}$ precisa ser empurrado em uma indústria com uma aceleração de $3\\text{ m/s}^2$. Qual a força necessária? Qual é o Peso desse bloco?</p>
             <p class="text-sm font-semibold text-purple-900 dark:text-purple-300">
               Resolução:<br>
-              Aceleração aplicada: $F_r = m \\cdot a = 20 \\times 3 = 60\\text{ N}$.<br>
-              Força Peso (gravidade terrestre $g = 10\\text{ m/s}^2$): $P = m \\cdot g = 20 \\times 10 = 200\\text{ N}$.
+              Força Resultante: $F_r = m \\cdot a = 20 \\times 3 = 60\\text{ N}$.<br>
+              Peso (Gravidade $g = 10$): $P = m \\cdot g = 20 \\times 10 = 200\\text{ N}$.
             </p>
           </div>
         `,
         questions: [
           {
-            text: "Um operário empurra um armário horizontalmente aplicando uma força de $10\\text{ N}$ para a direita. Com qual força o armário reage sobre as suas mãos de acordo com a 3ª Lei de Newton?",
+            difficulty: "Fácil",
+            text: "Um operário empurra uma caixa aplicando uma força de $10\\text{ N}$ para a direita. Com qual força a caixa reage sobre as suas mãos, de acordo com o Princípio da Ação e Reação (3ª Lei)?",
             options: [
-              "Com $0\\text{ N}$, posto que o armário encontra-se imóvel e inerte.",
-              "Com $10\\text{ N}$ de intensidade e sentido voltado para a esquerda.",
-              "Com $20\\text{ N}$ de intensidade e sentido para a direita.",
-              "Com $5\\text{ N}$ de intensidade vertical descendente de reação."
+              "$0\\text{ N}$, pois a caixa não tem inteligência para reagir.",
+              "$10\\text{ N}$ de intensidade e sentido voltado para a esquerda.",
+              "$20\\text{ N}$ de intensidade e sentido para a direita.",
+              "$5\\text{ N}$ de intensidade vertical descendente."
             ],
             correct: 1,
-            hint: "Pares de ação e reação possuem rigorosamente o mesmo módulo, porém sentidos opostos."
+            hint: "As forças de ação e reação possuem sempre o mesmo módulo e direção, mas sentidos opostos, atuando em corpos distintos."
           },
           {
-            text: "Um motor de acoplamento linear imprime uma força mecânica de $500\\text{ N}$ em uma massa de carga de $1.000\\text{ kg}$. Desconsiderando o atrito, qual aceleração o corpo adquire?",
+            difficulty: "Fácil",
+            text: "Um pequeno motor industrial imprime uma força de $500\\text{ N}$ sobre uma carga de massa $1.000\\text{ kg}$. Desprezando o atrito, qual é o módulo da aceleração adquirida pela carga?",
             options: [
               "$2\\text{ m/s}^2$",
               "$0,5\\text{ m/s}^2$",
@@ -1254,30 +1299,29 @@
               "$50\\text{ m/s}^2$"
             ],
             correct: 1,
-            hint: "Utilize a 2ª Lei de Newton isolando o termo da aceleração: $a = F_r / m$."
+            hint: "Aplique a 2ª Lei de Newton ($F_r = m \\cdot a$) isolando o termo da aceleração: $a = F_r / m$."
           },
           {
-            text: "Um astronauta possui massa total de $100\\text{ kg}$ paramentado. Considerando a aceleração gravitacional da Terra como $10\\text{ m/s}^2$ e a da Lua como $1,6\\text{ m/s}^2$, determine os respectivos pesos do astronauta e o comportamento de sua massa nesses dois astros:",
+            difficulty: "Fácil",
+            text: "Um astronauta paramentado possui massa de $100\\text{ kg}$. Considerando a gravidade da Terra como $10\\text{ m/s}^2$ e a da Lua como $1,6\\text{ m/s}^2$, o que ocorre com o peso e a massa dele nesses corpos celestes?",
             options: [
-              "Peso na Terra: $100\\text{ N}$; Peso na Lua: $16\\text{ N}$; A sua massa diminui na Lua por causa da flutuação.",
-              "Peso na Terra: $1.000\\text{ N}$; Peso na Lua: $160\\text{ N}$; A sua massa é constante e permanece $100\\text{ kg}$.",
-              "Peso na Terra: $1.000\\text{ N}$; Peso na Lua: $160\\text{ N}$; A sua massa diminui para $16\\text{ kg}$ na Lua.",
-              "Peso na Terra: $100\\text{ N}$; Peso na Lua: $160\\text{ N}$; A sua massa dobra no espaço sideral."
+              "Seu peso é $100\\text{ N}$ na Terra e $16\\text{ N}$ na Lua, e sua massa diminui na Lua.",
+              "Seu peso é $1.000\\text{ N}$ na Terra e $160\\text{ N}$ na Lua, e sua massa permanece constante em $100\\text{ kg}$.",
+              "Seu peso é $1.000\\text{ N}$ na Terra e $160\\text{ N}$ na Lua, e sua massa diminui para $16\\text{ kg}$ na Lua.",
+              "Massa e peso são idênticos em ambos os astros."
             ],
             correct: 1,
-            hint: "Massa é a medida quantitativa de matéria e não muda com a localidade espacial. O Peso é a força gravitacional ($P = m \\cdot g$)."
+            hint: "A massa é a quantidade de matéria e não muda. O peso é a força de atração gravitacional ($P = m \\cdot g$)."
           }
         ],
         gabarito: `
-          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Resoluções Analíticas - Período 9:</h4>
+          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Gabarito Passo a Passo - Aula 9:</h4>
           <div class="space-y-4 text-sm text-stone-700 dark:text-stone-300">
-            <p><strong>Questão 1:</strong> Pelo princípio de Ação e Reação, se o operário exerce força de 10 N para a direita, as mãos deste sofrem força simétrica de 10 N para a esquerda.</p>
-            <p><strong>Questão 2:</strong> Segunda Lei de Newton:<br>
-            $$a = \\frac{F_r}{m} = \\frac{500\\text{ N}}{1000\\text{ kg}} = 0,5\\text{ m/s}^2$$</p>
-            <p><strong>Questão 3:</strong> Cálculos de força peso:<br>
-            $$P_{\\text{Terra}} = 100 \\times 10 = 1000\\text{ N}$$
-            $$P_{\\text{Lua}} = 100 \\times 1,6 = 160\\text{ N}$$
-            A massa é intrínseca à matéria do astronauta, mantendo-se fixa em $100\\text{ kg}$.</p>
+            <p><strong>Exercício 1:</strong> A unidade oficial de medida de força no Sistema Internacional é o $\\boldsymbol{Newton\\ (N)}$.</p>
+            <p><strong>Exercício 2:</strong> De acordo com a 3ª Lei de Newton (Ação e Reação), a força de reação terá exatamente a mesma intensidade ($\\boldsymbol{10\\text{ N}}$) e mesma direção, porém em $\\boldsymbol{sentido\\ oposto}$ (para a esquerda).</p>
+            <p><strong>Exercício 3:</strong> Peso é o produto da massa pela aceleração gravitacional local: $P = m \\cdot g = 60\\text{ kg} \\times 10\\text{ m/s}^2 = \\boldsymbol{600\\text{ N}}$.</p>
+            <p><strong>Exercício 4:</strong> Pela 2ª Lei de Newton, temos $F_r = m \\cdot a$. Isolando a aceleração: $a = \\frac{F_r}{m} = \\frac{500\\text{ N}}{1.000\\text{ kg}} = \\boldsymbol{0,5\\text{ m/s}^2}$.</p>
+            <p><strong>Exercício 5:</strong> Peso na Terra: $P_{\\text{Terra}} = 100\\text{ kg} \\times 10\\text{ m/s}^2 = \\boldsymbol{1.000\\text{ N}}$. Peso na Lua: $P_{\\text{Lua}} = 100\\text{ kg} \\times 1,6\\text{ m/s}^2 = \\boldsymbol{160\\text{ N}}$. A massa do astronauta é uma propriedade intrínseca da matéria e $\\boldsymbol{não\\ muda}$ no espaço, permanecendo estável em $\\boldsymbol{100\\text{ kg}}$.</p>
           </div>
         `
       },
@@ -1286,85 +1330,87 @@
         title: "Atrito, Segurança e EPIs",
         boss: { name: "A Hydra do Desgaste", maxHp: 150, hp: 150, img: "⛓️" },
         bimestre: "2º Bimestre",
-        difficulty: "Desafiadora",
         teoria: `
           <p class="mb-4">O atrito atua como uma força resistiva gerada pela rugosidade superficial microscópica dos materiais em contato.</p>
           
           <div class="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-blue-850 dark:text-blue-300 mb-2">🟦 Registro para o Caderno: A Força de Atrito</h4>
-            <p class="text-sm">A força de atrito ($F_{at}$) opõe-se à tendência de deslizamento de um corpo sobre uma superfície. Sem ela, calçados escorregariam e eixos de transmissão deslizariam sem transmitir energia cinética de rotação.</p>
+            <p class="text-sm">O atrito é a força "do contra". Ele atua opondo-se ao movimento. Sem ele, não conseguiríamos andar (escorregaríamos) e carros não conseguiriam frear. Na indústria, peças desgastam por causa do atrito, exigindo lubrificação.</p>
           </div>
 
           <div class="bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-500 p-4 mb-4 rounded-r shadow-sm">
-            <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Análise de Riscos Corporativos</h4>
-            <p class="text-sm">Os equipamentos de segurança individual relacionam-se de forma direta com as leis de Newton:</p>
-            <ul class="list-disc pl-5 text-xs text-yellow-900 dark:text-yellow-300 space-y-1">
-              <li><strong>Cinto de Segurança:</strong> Em colisões, o veículo cessa movimento mas o corpo tende a manter a velocidade por Inércia (1ª Lei). O cinto aplica a força contrária necessária para desacelerar o corpo.</li>
-              <li><strong>Botinas de Segurança de Borracha:</strong> Maximizam o coeficiente de atrito mecânico com os pisos industriais, minimizando deslizamentos e quedas.</li>
+            <h4 class="font-bold text-yellow-850 dark:text-yellow-300 mb-2">🟨 Dica do Mestre: Segurança no Trabalho e Inércia (Análise de Risco)</h4>
+            <p class="text-sm">Por que usamos <strong>Cinto de Segurança</strong> e <strong>Botinas com solado de borracha</strong>?</p>
+            <ul class="list-disc pl-5 text-xs text-yellow-900 dark:text-yellow-300 space-y-1 mt-1">
+              <li><strong>O Cinto:</strong> Numa batida, o carro para, mas seu corpo tende a continuar em movimento por Inércia (1ª Lei). O cinto cria uma força para segurar você.</li>
+              <li><strong>O Solado:</strong> Aumenta o Atrito com o chão da fábrica para evitar que trabalhadores escorreguem em pisos molhados (óleo/água).</li>
             </ul>
           </div>
 
           <div class="bg-purple-50 dark:bg-purple-950/30 border-l-4 border-purple-500 p-4 mb-4 rounded-r shadow-sm">
             <h4 class="font-bold text-purple-850 dark:text-purple-300 mb-2">🟪 Exemplo de Resolução Passo a Passo</h4>
-            <p class="text-sm mb-2"><strong>Problema:</strong> Uma caixa de $50\\text{ kg}$ é puxada por um guincho com força de $400\\text{ N}$. O atrito com o piso é de $100\\text{ N}$. Determine a acoraxeração resultante da caixa.</p>
+            <p class="text-sm mb-2"><strong>Problema:</strong> Uma caixa de $50\\text{ kg}$ sofre um atrito pesado no chão. Um trator puxa ela para frente com Força de Tração de $400\\text{ N}$, mas o chão aplica Atrito de $100\\text{ N}$ para trás. Qual é a aceleração da caixa?</p>
             <p class="text-sm font-semibold text-purple-900 dark:text-purple-300">
               Resolução:<br>
-              A força resultante é a tração menos a força dissipativa de atrito:<br>
-              $$F_r = F_{\\text{guincho}} - F_{at} = 400\\text{ N} - 100\\text{ N} = 300\\text{ N}$$
-              Calculando a aceleração adquirida:<br>
-              $$F_r = m \\cdot a \\implies 300 = 50 \\cdot a \\implies a = 6\\text{ m/s}^2$$
+              Tira o atrito da força do trator para achar a força resultant:<br>
+              $$F_r = 400\\text{ N} - 100\\text{ N} = 300\\text{ N}$$<br>
+              Aplica a 2ª Lei de Newton:<br>
+              $$F_r = m \\cdot a \\implies 300 = 50 \\cdot a \\implies a = \\frac{300}{50} = 6\\text{ m/s}^2$$
             </p>
           </div>
         `,
         questions: [
           {
-            text: "Qual das Leis de Newton justifica fisicamente a necessidade imperativa da instalação e uso do cinto de segurança em transportes terrestres?",
+            difficulty: "Fácil",
+            text: "Qual das Leis de Newton justifica fisicamente a obrigatoriedade do uso do cinto de segurança em veículos para evitar acidentes?",
             options: [
-              "A 2ª Lei de Newton (Princípio Fundamental da Dinâmica).",
-              "A 1ª Lei de Newton (Princípio da Inércia).",
-              "A 3ª Lei de Newton (Princípio da Ação e Reação).",
-              "A Lei de Gravitação do Sistema Solar."
+              "A 2ª Lei de Newton (Dinâmica).",
+              "A 1ª Lei de Newton (Inércia).",
+              "A 3ª Lei de Newton (Ação e Reação).",
+              "A Lei de Gravitação Universal."
             ],
             correct: 1,
-            hint: "O cinto impede que os passageiros continuem viajando em movimento retilíneo uniforme caso o automóvel colida."
+            hint: "Quando o veículo colide e para, o corpo do passageiro tende a continuar em movimento retilíneo uniforme com a velocidade que já possuía."
           },
           {
-            text: "Um mecânico derrama óleo lubrificante sintético nas engrenagens e canais de rolamento de uma prensa de estampar. Qual o objetivo dinâmico desta manutenção técnica?",
+            difficulty: "Fácil",
+            text: "No chão de uma fábrica, qual é o objetivo de se utilizar calçados de segurança com solado de borracha antiderrapante sob a ótica física?",
             options: [
-              "Aumentar a massa e o peso cinético das engrenagens da máquina.",
-              "Reduzir o atrito entre as peças metálicas para diminuir o desgaste e perdas de potência por calor.",
-              "Gerar aceleração infinita na rampa de inércia do maquinário.",
-              "Fazer com que a força de tração fique alinhada com o vetor vertical."
+              "Aumentar a massa e a inércia do trabalhador para dificultar empurrões.",
+              "Minimizar as forças gravitacionais de atração com o piso de concreto.",
+              "Aumentar a força de atrito com o piso para evitar escorregamentos e quedas.",
+              "Diminuir o desgaste molecular da borracha."
             ],
-            correct: 1,
-            hint: "A lubrificação preenche as irregularidades das superfícies em contato, diminuindo a oposição física ao deslizamento."
+            correct: 2,
+            hint: "A rugosidade da borracha aumenta o coeficiente de atrito mecânico, impedindo o deslizamento das superfícies em contato."
           },
           {
-            text: "Um trator traciona uma caixa metálica de $50\\text{ kg}$ sobre o solo plano de uma oficina aplicando uma força de $400\\text{ N}$. Sabendo que a força de atrito contrária exercida pelo piso áspero é estável em $100\\text{ N}$, qual a aceleração resultante adquirida pelo sistema?",
+            difficulty: "Intermediário",
+            text: "Se você e seus colegas puxam uma corda (força de Tração) para a esquerda com $200\\text{ N}$ e a equipe rival puxa para a direita com $250\\text{ N}$, qual é o vetor força resultante (módulo e sentido)?",
             options: [
-              "$8\\text{ m/s}^2$",
-              "$6\\text{ m/s}^2$",
-              "$2\\text{ m/s}^2$",
-              "$10\\text{ m/s}^2$"
+              "$450\\text{ N}$ para a direita.",
+              "$50\\text{ N}$ para a direita.",
+              "$50\\text{ N}$ para a esquerda.",
+              "$0\\text{ N}$, pois as forças se equilibram."
             ],
             correct: 1,
-            hint: "Subtraia a força de atrito da força aplicada para encontrar a força resultante. Depois use a fórmula $F_r = m \\cdot a$."
+            hint: "Como as forças atuam na mesma direção mas em sentidos opostos, subtraímos os valores. O sentido final é o do grupo que puxa mais forte."
           }
         ],
         gabarito: `
-          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Resoluções Analíticas - Período 10:</h4>
+          <h4 class="font-bold text-lg mb-3 text-amber-800 dark:text-amber-400">Gabarito Passo a Passo - Aula 10:</h4>
           <div class="space-y-4 text-sm text-stone-700 dark:text-stone-300">
-            <p><strong>Questão 1:</strong> Por inércia (1ª Lei), ao frear o carro, o corpo tende a reter o movimento. O cinto atua exercendo a força necessária para reter o passageiro.</p>
-            <p><strong>Questão 2:</strong> Os lubrificantes separam as superfícies rugosas, gerando uma camada de menor atrito e minimizando as perdas cinéticas na prensa.</p>
-            <p><strong>Questão 3:</strong> Dedução dinâmica:<br>
-            $$F_r = F_{\\text{tração}} - F_{at} = 400 - 100 = 300\\text{ N}$$
-            $$a = \\frac{F_r}{m} = \\frac{300}{50} = 6\\text{ m/s}^2$$</p>
+            <p><strong>Exercício 1:</strong> A Força de Atrito ($\\vec{F}_{at}$) atua opondo-se à tendência de deslizamento entre duas superfícies, exercendo papel de $\\boldsymbol{frear}$ ou impedir o movimento relativo.</p>
+            <p><strong>Exercício 2:</strong> A $\\boldsymbol{1^\\text{a}\\text{ Lei de Newton (Inércia)}}$ justifica o uso do cinto. Numa batida, o veículo para repentinamente, mas por inércia o corpo dos ocupantes tende a manter a velocidade original, sendo contido pela força de restrição do cinto.</p>
+            <p><strong>Exercício 3:</strong> O óleo age como lubrificante líquido, preenchendo as rugosidades microscópicas do metal e diminuindo o contato direto sólido-sólido, o que $\\boldsymbol{diminui}$ significativamente a força de atrito.</p>
+            <p><strong>Exercício 4:</strong> Adição vetorial em sentidos opostos: $F_r = 250\\text{ N (direita)} - 200\\text{ N (esquerda)} = \\boldsymbol{50\\text{ N}}$. Como o sentido do maior vetor é para a direita, a resultante aponta $\\boldsymbol{para\\ a\\ direita}$.</p>
+            <p><strong>Exercício 5:</strong> Pneus novos possuem sulcos profundos projetados para drenar a água sob a borracha em dias de chuva. Pneus lisos ("carecas") não conseguem expulsar a água, formando uma camada líquida entre a borracha e o asfalto (aquaplanagem). Isso reduz o atrito a quase zero, impedindo que forças externas realizem curvas ou frenagens seguras, de modo que o carro segue descontrolado por inércia.</p>
           </div>
         `
       }
     ];
 
-    // ESTADO DO JOGO
+    // ESTADO DA APLICAÇÃO (GAME STATE)
     let hero = {
       name: "",
       class: "Warrior",
@@ -1380,10 +1426,12 @@
 
     let activeQuestIndex = 0;
     let activeTab = "teoria";
-    let questStates = []; 
+    let questStates = []; // Registra se visto obtido, se boss morto, etc.
     let currentQuestionIndex = 0;
     let activeQuickMathAnswer = 0;
-    let currentQuestionMaxXp = 20;
+
+    let dyslexiaActive = false;
+    let rulerActive = false;
 
     // GERENCIAMENTO DE PERSISTÊNCIA (SALVAR/CARREGAR JOGO)
     function saveProgress() {
@@ -1441,6 +1489,7 @@
       const selectedClass = document.querySelector('input[name="hero-class"]:checked').value;
       hero.class = selectedClass;
 
+      // Configuração inicial por Arquétipo
       if (selectedClass === "Warrior") {
         hero.maxHp = 150;
         hero.hp = 150;
@@ -1451,7 +1500,7 @@
       } else if (selectedClass === "Mage") {
         hero.maxHp = 100;
         hero.hp = 100;
-        hero.xpMultiplier = 1.5; 
+        hero.xpMultiplier = 1.5; // Multiplicador de estudo
         hero.goldMultiplier = 1.0;
         document.getElementById("hero-avatar-display").innerText = "🧙‍♂️";
         document.getElementById("hero-class-display").innerText = "Mago das Funções";
@@ -1459,11 +1508,12 @@
         hero.maxHp = 110;
         hero.hp = 110;
         hero.xpMultiplier = 1.1;
-        hero.goldMultiplier = 1.5; 
+        hero.goldMultiplier = 1.5; // Multiplicador de pilhagem/ouro
         document.getElementById("hero-avatar-display").innerText = "🗡️";
         document.getElementById("hero-class-display").innerText = "Ladino dos Algoritmos";
       }
 
+      // Inicializa estados das missões
       questStates = classesData.map(c => ({
         id: c.id,
         visto: false,
@@ -1472,31 +1522,34 @@
         currentQuestion: 0
       }));
 
+      // Esconde login, exibe app
       document.getElementById("login-screen").classList.add("hidden");
       document.getElementById("app-screen").classList.remove("hidden");
 
       updateHeaderStatus();
       renderQuestMap();
       loadQuest(0);
-      saveProgress(); // Salva estado inicial criado
+      saveProgress(); // Salva estado inicial
     }
 
-    // ATUALIZAR STATUS
+    // ATUALIZAR STATUS NO TOPO DO APP
     function updateHeaderStatus() {
       document.getElementById("hero-name-display").innerText = hero.name;
       document.getElementById("hero-level").innerText = hero.level;
       document.getElementById("hero-gold").innerText = Math.round(hero.gold);
       
+      // HP Bar
       document.getElementById("hp-text").innerText = `${hero.hp}/${hero.maxHp}`;
       const hpPercentage = Math.max(0, (hero.hp / hero.maxHp) * 100);
       document.getElementById("hp-bar").style.width = `${hpPercentage}%`;
 
+      // XP Bar
       document.getElementById("xp-text").innerText = `${hero.xp}/${hero.nextLevelXp}`;
       const xpPercentage = Math.min(100, (hero.xp / hero.nextLevelXp) * 100);
       document.getElementById("xp-bar").style.width = `${xpPercentage}%`;
     }
 
-    // RENDERIZAR MAPA DE PERÍODOS
+    // CONSTRUIR LISTA LATERAL DE MISSÕES (QUESTS)
     function renderQuestMap() {
       const container = document.getElementById("quest-list");
       container.innerHTML = "";
@@ -1535,24 +1588,26 @@
       });
     }
 
-    // CARREGAR ETAPA ESPECÍFICA
+    // CARREGAR UMA MISSÃO ESPECÍFICA
     function loadQuest(index) {
       activeQuestIndex = index;
       const quest = classesData[index];
       const state = questStates[index];
 
+      // Atualiza aba e botões
       switchTab("teoria");
 
+      // Preenche textos da aula
       document.getElementById("quest-bimestre").innerText = quest.bimestre;
       document.getElementById("quest-title").innerText = quest.title;
       document.getElementById("quest-content").innerHTML = quest.teoria;
-      document.getElementById("quest-difficulty-tag").innerText = quest.difficulty;
 
+      // Área do Visto
       const vistoArea = document.getElementById("visto-action-area");
       if (state.visto) {
         vistoArea.innerHTML = `
           <div class="text-green-600 dark:text-green-400 font-bold text-sm flex items-center gap-1.5 justify-center">
-            <i class="fa-solid fa-circle-check"></i> Runas de Visto validadas para este caderno! Arena desbloqueada.
+            <i class="fa-solid fa-circle-check"></i> Visto do Mestre Garantido! Arena de combate desbloqueada.
           </div>
         `;
       } else {
@@ -1563,6 +1618,7 @@
         `;
       }
 
+      // Configurar Arena de Combate
       if (!state.visto) {
         document.getElementById("combate-bloqueado").classList.remove("hidden");
         document.getElementById("combate-ativo").classList.add("hidden");
@@ -1576,12 +1632,14 @@
         document.getElementById("combate-ativo").classList.remove("hidden");
         document.getElementById("combate-concluido").classList.add("hidden");
         
+        // Setup do Boss
         document.getElementById("boss-name").innerText = quest.boss.name;
         document.getElementById("boss-emoji").innerText = quest.boss.img;
         updateBossHpBar();
         loadQuestion(state.currentQuestion);
       }
 
+      // Configurar Gabarito
       if (state.completed) {
         document.getElementById("resolucao-bloqueada").classList.add("hidden");
         document.getElementById("resolucao-ativa").classList.remove("hidden");
@@ -1591,9 +1649,10 @@
         document.getElementById("resolucao-ativa").classList.add("hidden");
       }
 
+      // Atualiza o mapa de classes e as fórmulas matemáticas via KaTeX
       renderQuestMap();
       triggerKaTeX();
-      saveProgress(); // Armazena a mudança de etapa ativa visitada
+      saveProgress(); // Salva estado da página visitada
     }
 
     // TRANSIÇÃO DE ABAS
@@ -1608,6 +1667,7 @@
       const btnCombate = document.getElementById("tab-btn-combate");
       const btnResolucao = document.getElementById("tab-btn-resolucao");
 
+      // Esconder todos
       tabTeoria.classList.add("hidden");
       tabCombate.classList.add("hidden");
       tabResolucao.classList.add("hidden");
@@ -1632,53 +1692,59 @@
       triggerKaTeX();
     }
 
+    // REQUISITAR VISTO DO CADERNO (CHAMAR MODAL)
     function requestVisto() {
       openModal("modal-visto");
     }
 
+    // VALIDAR CÓDIGO DO PROFESSOR (VISTO)
     function submitProfessorCode() {
       const code = document.getElementById("professor-code").value.trim().toUpperCase();
       if (code === "PHYSICA" || code === "MATHGARD" || code === "ETEC2026") {
         guaranteeVisto();
         closeModal("modal-visto");
       } else {
-        alert("Código incorreto ou inválido.");
+        alert("Runas de assinatura incorretas! Tente novamente ou use a declaração de honra.");
       }
     }
 
+    // AUTO-ASSINATURA DE HONRA
     function signHonra() {
-      if (confirm("Declara solenemente que copiou os quadros destacados de Física em seu caderno?")) {
+      if (confirm("Você promete de fato que copiou os conceitos-chave no seu caderno físico? O conhecimento é seu escudo real.")) {
         guaranteeVisto();
         closeModal("modal-visto");
       }
     }
 
+    // CONCEDER VISTO AO ALUNO
     function guaranteeVisto() {
       const state = questStates[activeQuestIndex];
       state.visto = true;
+      
+      // Concede recompensa por registrar teoria
       gainXp(15);
       gainGold(5);
+
+      // Recarrega quest ativa para aplicar mudanças de visualização
       loadQuest(activeQuestIndex);
     }
 
-    // CARREGAR QUESTÃO NA ARENA
+    // CARREGAR QUESTÃO NA ARENA DE COMBATE
     function loadQuestion(qIndex) {
       const quest = classesData[activeQuestIndex];
       const state = questStates[activeQuestIndex];
       state.currentQuestion = qIndex;
       currentQuestionIndex = qIndex;
 
-      // Reseta recompensa de XP base
-      currentQuestionMaxXp = 20;
-      updateXpIndicator();
-
       const question = quest.questions[qIndex];
       document.getElementById("current-question-num").innerText = qIndex + 1;
-      document.getElementById("current-question-difficulty").innerText = quest.difficulty;
+      document.getElementById("current-question-difficulty").innerText = question.difficulty;
       document.getElementById("question-text").innerHTML = question.text;
 
+      // Reset Dica
       document.getElementById("hint-display").classList.add("hidden");
 
+      // Gerar opções
       const optionsContainer = document.getElementById("question-options");
       optionsContainer.innerHTML = "";
 
@@ -1691,31 +1757,10 @@
       });
 
       triggerKaTeX();
-      saveProgress(); // Registra qual pergunta está ativa
+      saveProgress(); // Salva progresso na pergunta ativa
     }
 
-    function updateXpIndicator() {
-      document.getElementById("question-xp-indicator").innerText = `Recompensa: ${currentQuestionMaxXp} XP`;
-    }
-
-    // REVELAR DICA (PENALIZAÇÃO DE XP ARCADO)
-    function revealHint() {
-      const quest = classesData[activeQuestIndex];
-      const question = quest.questions[currentQuestionIndex];
-      const hintDisplay = document.getElementById("hint-display");
-
-      if (currentQuestionMaxXp === 20) {
-        currentQuestionMaxXp = 12; // Perda de XP parcial
-        updateXpIndicator();
-      }
-
-      hintDisplay.innerHTML = question.hint;
-      hintDisplay.classList.remove("hidden");
-      triggerKaTeX();
-      saveProgress();
-    }
-
-    // SELECIONAR E AVALIAR RESPOSTA
+    // SELECIONAR E AVALIAR RESPOSTA NA ARENA
     function selectAnswer(optIndex) {
       const quest = classesData[activeQuestIndex];
       const question = quest.questions[currentQuestionIndex];
@@ -1732,7 +1777,8 @@
       const quest = classesData[activeQuestIndex];
       const state = questStates[activeQuestIndex];
       
-      const damage = quest.boss.maxHp / 3; // 3 perguntas por boss
+      // O monstro toma dano correspondente a 1/3 da vida máxima dele por acerto (3 perguntas)
+      const damage = quest.boss.maxHp / 3;
       state.bossHp = Math.max(0, state.bossHp - damage);
 
       const sprite = document.getElementById("boss-sprite");
@@ -1747,8 +1793,8 @@
 
       updateBossHpBar();
 
-      // Fornece recompensa com base no XP residual
-      gainXp(currentQuestionMaxXp);
+      // Recompensas imediatas
+      gainXp(10);
       gainGold(4);
 
       if (state.bossHp <= 0) {
@@ -1782,10 +1828,11 @@
       if (hero.hp <= 0) {
         openModal("modal-defeat");
       } else {
-        alert("Cálculo divergente da física orbital! Você sofreu um recuo de energia. Use a dica para revisar.");
+        alert("Resposta Incorreta! O monstro golpeou você. Veja a dica ou tente outra alternativa.");
       }
     }
 
+    // ATUALIZAR BARRA DE VIDA DO MONSTRO
     function updateBossHpBar() {
       const quest = classesData[activeQuestIndex];
       const state = questStates[activeQuestIndex];
@@ -1794,13 +1841,43 @@
       document.getElementById("boss-hp-bar").style.width = `${hpPercentage}%`;
     }
 
+    // EXIBIR DICA DA PERGUNTA
+    function revealHint() {
+      const quest = classesData[activeQuestIndex];
+      const question = quest.questions[currentQuestionIndex];
+      const hintDisplay = document.getElementById("hint-display");
+
+      if (hero.class === "Mage" || hero.gold >= 5) {
+        if (hero.class !== "Mage") {
+          hero.gold -= 5;
+        }
+        updateHeaderStatus();
+        hintDisplay.innerHTML = question.hint;
+        hintDisplay.classList.remove("hidden");
+        triggerKaTeX();
+        saveProgress();
+      } else {
+        alert("Você não possui moedas de ouro suficientes para comprar este conselho arcano!");
+      }
+    }
+
+    // COMPRAR ITEM NA LOJA
     function buyItem(item) {
       if (item === "potion") {
         if (hero.gold >= 15) {
           hero.gold -= 15;
           hero.hp = Math.min(hero.maxHp, hero.hp + 50);
           updateHeaderStatus();
-          alert("Elixir consumido! +50 Pontos de Vida.");
+          alert("Elixir consumido! +50 Pontos de Vida (HP).");
+          saveProgress();
+        } else {
+          alert("Ouro insuficiente para comprar o elixir de cura.");
+        }
+      } else if (item === "hint") {
+        if (hero.gold >= 5) {
+          hero.gold -= 5;
+          updateHeaderStatus();
+          alert("Runas de conselho compradas! Use-as clicando em 'Ver dica da questão' na Arena.");
           saveProgress();
         } else {
           alert("Ouro insuficiente.");
@@ -1808,6 +1885,7 @@
       }
     }
 
+    // MECÂNICA DE DERROTA E CURA
     function healFromShop() {
       if (hero.gold >= 15) {
         hero.gold -= 15;
@@ -1816,7 +1894,7 @@
         closeModal("modal-defeat");
         saveProgress();
       } else {
-        alert("Ouro insuficiente! Realize o Rito de Cura Rápida.");
+        alert("Sua bolsa está vazia! Realize a Cura Rápida resolvendo desafios aritméticos fundamentais.");
       }
     }
 
@@ -1837,14 +1915,15 @@
         hero.hp = Math.round(hero.maxHp * 0.5); 
         updateHeaderStatus();
         document.getElementById("quick-cura-screen").classList.add("hidden");
-        alert("Cura de emergência concedida!");
+        alert("Cura mental bem sucedida! Suas energias foram restauradas.");
         saveProgress();
       } else {
-        alert("Fluxo instável de energia. Tente de novo.");
+        alert("Resposta errada. O fluxo de foco falhou! Tente novamente.");
         triggerQuickCura();
       }
     }
 
+    // SISTEMA DE GANHO DE XP E RECOMPENSAS
     function gainXp(amount) {
       hero.xp += Math.round(amount * hero.xpMultiplier);
       if (hero.xp >= hero.nextLevelXp) {
@@ -1853,28 +1932,31 @@
         hero.nextLevelXp = Math.round(hero.nextLevelXp * 1.5);
         hero.maxHp = Math.round(hero.maxHp * 1.15);
         hero.hp = hero.maxHp; 
-        alert(`✨ PASSAGEM DE NÍVEL! Você atingiu o Nível ${hero.level}!`);
+        alert(`✨ EVOLUÇÃO! Você atingiu o Nível ${hero.level}! Seu HP máximo aumentou.`);
       }
       updateHeaderStatus();
       saveProgress();
     }
 
+    // SISTEMA DE GANHO DE OURO
     function gainGold(amount) {
       hero.gold += Math.round(amount * hero.goldMultiplier);
       updateHeaderStatus();
       saveProgress();
     }
 
+    // VERIFICA SE TODAS AS QUESTS FORAM CONCLUÍDAS
     function checkGlobalCompletion() {
       const allDone = questStates.every(state => state.completed);
       if (allDone) {
         setTimeout(() => {
-          alert("⚔️ PARABÉNS! Você concluiu toda a jornada de estudos em Física! Seu pergaminho de mestre foi gerado.");
+          alert("⚔️ PARABÉNS! Você concluiu toda a sua jornada de estudos de Física e desmantelou o maquinário de defesa de PhysicaGard! Gerando o seu pergaminho de mestre...");
           showCertificate();
         }, 800);
       }
     }
 
+    // EXIBIR CERTIFICADO PARA IMPRESSÃO
     function showCertificate() {
       document.getElementById("cert-hero-name").innerText = hero.name;
       const certArea = document.getElementById("certificate-print-area");
@@ -1883,8 +1965,8 @@
       const activeQuestContent = document.getElementById("quest-content");
       activeQuestContent.innerHTML = `
         <div class="text-center bg-green-500/10 p-6 rounded-lg border-2 border-green-500 my-4">
-          <h2 class="text-2xl font-bold text-green-700 dark:text-green-400 mb-2">🎉 Trilha de Física Completa!</h2>
-          <p class="text-xs mb-4">Você superou todos os enigmas de cinemática e dinâmica mecânica.</p>
+          <h2 class="text-2xl font-bold text-green-700 dark:text-green-400 mb-2">🎉 Jornada Completa!</h2>
+          <p class="text-xs mb-4">Você se provou um legítimo sábio analítico em PhysicaGard. Gere seu diploma físico e assine-o.</p>
           <button onclick="window.print()" class="bg-medieval-amber hover:bg-amber-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg">
             <i class="fa-solid fa-print mr-2"></i> Imprimir Pergaminho de Maestria
           </button>
@@ -1893,13 +1975,79 @@
       switchTab("teoria");
     }
 
+    // ALTERNAR FONTE ACESSÍVEL (DISLEXIA)
+    function toggleDyslexiaMode() {
+      dyslexiaActive = !dyslexiaActive;
+      applyDyslexiaStyle();
+    }
+
+    function applyDyslexiaStyle() {
+      const body = document.body;
+      const btnInit = document.getElementById("dyslexia-btn-init");
+      const btnApp = document.getElementById("dyslexia-btn");
+
+      if (dyslexiaActive) {
+        body.classList.add("dyslexia-mode");
+        if (btnInit) btnInit.classList.add("bg-medieval-amber", "text-white");
+        if (btnApp) btnApp.classList.add("bg-medieval-amber", "text-white");
+      } else {
+        body.classList.remove("dyslexia-mode");
+        if (btnInit) btnInit.classList.remove("bg-medieval-amber", "text-white");
+        if (btnApp) btnApp.classList.remove("bg-medieval-amber", "text-white");
+      }
+      localStorage.setItem("physicagard-dyslexia", dyslexiaActive ? "active" : "inactive");
+    }
+
+    // ALTERNAR RÉGUA DE LEITURA (DISLEXIA)
+    function toggleReadingRuler() {
+      rulerActive = !rulerActive;
+      const ruler = document.getElementById("reading-ruler");
+      const btnApp = document.getElementById("ruler-btn");
+
+      if (rulerActive) {
+        ruler.classList.remove("hidden");
+        if (btnApp) btnApp.classList.add("bg-medieval-amber", "text-white");
+      } else {
+        ruler.classList.add("hidden");
+        if (btnApp) btnApp.classList.remove("bg-medieval-amber", "text-white");
+      }
+      localStorage.setItem("physicagard-ruler", rulerActive ? "active" : "inactive");
+    }
+
+    // MOVIMENTO DA RÉGUA DE LEITURA
+    window.addEventListener("mousemove", (e) => {
+      if (rulerActive) {
+        const ruler = document.getElementById("reading-ruler");
+        if (ruler) {
+          ruler.style.top = `${e.clientY - 20}px`;
+        }
+      }
+    });
+
+    window.addEventListener("touchmove", (e) => {
+      if (rulerActive && e.touches.length > 0) {
+        const ruler = document.getElementById("reading-ruler");
+        if (ruler) {
+          ruler.style.top = `${e.touches[0].clientY - 20}px`;
+        }
+      }
+    });
+
+    // MODAL HELPERS
     function openModal(id) {
       const modal = document.getElementById(id);
       modal.classList.remove("hidden");
       modal.classList.add("flex");
     }
 
-    // Gerenciador de tema persistente
+    // CORREÇÃO: Fechamento correto da função closeModal que estava incompleta
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    // MUDAR TEMA CLARO/ESCURO
     function toggleTheme() {
       document.documentElement.classList.toggle("dark");
       const isDark = document.documentElement.classList.contains("dark");
@@ -1908,7 +2056,7 @@
 
     // CARREGAMENTO DE PERSISTÊNCIA INICIAL
     window.addEventListener("DOMContentLoaded", () => {
-      // 1. Carrega tema escuro/claro
+      // 1. Carrega preferência de tema
       const savedTheme = localStorage.getItem("physicagard-theme");
       if (savedTheme === "dark") {
         document.documentElement.classList.add("dark");
@@ -1920,16 +2068,23 @@
         }
       }
 
-      // 2. Carrega progresso da trilha
+      // 2. Carrega preferências de acessibilidade
+      const savedDyslexia = localStorage.getItem("physicagard-dyslexia");
+      if (savedDyslexia === "active") {
+        dyslexiaActive = true;
+        applyDyslexiaStyle();
+      }
+
+      const savedRuler = localStorage.getItem("physicagard-ruler");
+      if (savedRuler === "active") {
+        toggleReadingRuler(); // Ativa novamente
+      }
+
+      // 3. Carrega progresso do jogo
       loadProgress();
     });
 
-    function closeModal(id) {
-      const modal = document.getElementById(id);
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    }
-
+    // GATILHO DE RENDERIZAÇÃO DO KATEX
     function triggerKaTeX() {
       if (typeof renderMathInElement === "function") {
         const containers = document.querySelectorAll(".math-render");
