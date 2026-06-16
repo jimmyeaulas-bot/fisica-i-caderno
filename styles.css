@@ -1,0 +1,129 @@
+:root[data-theme="light"] {
+    --bg-body: #f4f7f6;
+    --bg-header: #ffffff;
+    --text-main: #333333;
+    --text-secondary: #666666;
+    --bg-box: #e8f4fd;
+    --border-box: #3498db;
+    --bg-quiz: #ffffff;
+    --btn-quiz-bg: #ecf0f1;
+    --btn-quiz-text: #333333;
+}
+
+:root[data-theme="dark"] {
+    --bg-body: #121212;
+    --bg-header: #1e1e1e;
+    --text-main: #e0e0e0;
+    --text-secondary: #aaaaaa;
+    --bg-box: #1e272e;
+    --border-box: #3498db;
+    --bg-quiz: #1e1e1e;
+    --btn-quiz-bg: #333333;
+    --btn-quiz-text: #e0e0e0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    padding-top: 90px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* --- CABEÇALHO E PROGRESSO --- */
+.progress-header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    background-color: var(--bg-header);
+    padding: 15px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+.header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+#theme-toggle { background: none; border: 1px solid var(--text-secondary); color: var(--text-main); padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; }
+.progress-container { width: 100%; background-color: #555; border-radius: 10px; height: 10px; overflow: hidden; }
+.progress-bar { height: 100%; width: 0%; background-color: #4CAF50; transition: width 0.5s ease-in-out; }
+#progress-text { font-size: 0.9rem; color: var(--text-secondary); font-weight: bold; }
+
+/* --- CONTEÚDO --- */
+#app-container { max-width: 650px; margin: 0 auto; padding: 20px; }
+.module { display: none; }
+.module.active { display: block; }
+.step { display: none; animation: slideIn 0.4s ease; }
+.step.active { display: block; }
+
+@keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+h1, h2 { color: var(--text-main); margin-bottom: 15px; }
+h1 { border-bottom: 2px solid #e74c3c; padding-bottom: 5px; }
+h2 { font-size: 1.2rem; margin-top: 15px; color: #3498db; }
+
+p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 15px; text-align: justify; }
+
+.info-box { background-color: var(--bg-box); border-left: 4px solid var(--border-box); padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+.info-box ul { margin-left: 20px; margin-top: 10px; }
+.info-box li { margin-bottom: 8px; }
+
+/* --- BOTÕES --- */
+.btn-next-step, .btn-next-module { display: block; width: 100%; padding: 15px; margin-top: 20px; margin-bottom: 30px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s; }
+.btn-next-step:active { transform: scale(0.98); }
+.btn-next-step { background-color: #3498db; color: white; }
+.btn-next-module { background-color: #2ecc71; color: white; font-size: 1.2rem; }
+
+/* --- QUIZ E GABARITO --- */
+.quiz-box { background-color: var(--bg-quiz); border: 2px dashed #f39c12; padding: 15px; border-radius: 10px; margin-top: 20px; }
+.btn-quiz { display: block; width: 100%; padding: 12px; margin-bottom: 10px; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; background-color: var(--btn-quiz-bg); color: var(--btn-quiz-text); }
+.feedback { font-weight: bold; text-align: center; margin-top: 10px; }
+.feedback.correct { color: #2ecc71; }
+.feedback.wrong { color: #e74c3c; }
+
+.gabarito-box { display: none; background-color: #e8f8f5; border-left: 4px solid #1abc9c; padding: 15px; margin-top: 15px; border-radius: 5px; animation: fadeIn 0.4s ease; }
+.gabarito-box p { color: #333; margin-bottom: 8px; }
+
+/* --- DESENHOS (SVG) E FÓRMULAS --- */
+.svg-container { width: 100%; overflow-x: auto; background-color: var(--bg-header); border: 1px solid var(--border-box); border-radius: 8px; padding: 10px; margin: 15px 0; text-align: center; }
+svg text { fill: var(--text-main); font-family: inherit; font-size: 14px; }
+svg line, svg path, svg polyline { stroke: var(--text-main); }
+
+/* Fundo claro obrigatório apenas no gráfico complexo para garantir legibilidade dos eixos */
+.svg-bg-white { background-color: #ffffff !important; }
+
+/* Nova caixa de fórmula para o KaTeX */
+.formula-box { background-color: var(--bg-quiz); border-left: 4px solid #e74c3c; padding: 15px; margin: 15px 0; border-radius: 4px; text-align: center; font-size: 1.2rem; overflow-x: auto; }
+
+/* --- TABELAS --- */
+table { width: 100%; max-width: 400px; margin: 15px auto; border-collapse: collapse; background-color: var(--bg-header); color: var(--text-main); }
+table th, table td { border: 1px solid var(--text-secondary); padding: 8px; text-align: center; }
+table th { background-color: #3498db; color: white; }
+
+/* --- QUEBRA SEMÂNTICA DE EQUAÇÕES (EXPERT MODE) --- */
+
+/* Impede que o navegador quebre as fórmulas de forma irracional */
+.katex-html {
+    white-space: nowrap; 
+}
+.katex-html .base {
+    white-space: normal; /* Permite que o display: block injetado pelo JS funcione */
+}
+
+/* Classe injetada via JS para forçar a quebra de linha matematicamente correta */
+.math-dynamic-break {
+    display: block !important;
+    width: 100%;
+    height: 0;
+    content: "";
+}
+
+/* Recuo para a continuação da fórmula, mostrando ao aluno que é a mesma linha */
+.math-indented {
+    padding-left: 1.5em !important;
+    display: inline-block; 
+}
