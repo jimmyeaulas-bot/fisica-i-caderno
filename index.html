@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Física Interativa - Cinemática</title>
-    
-    <!-- CSS Customizado -->
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Biblioteca KaTeX para Fórmulas Matemáticas -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '\\[', right: '\\]', display: true}, {left: '\\(', right: '\\)', display: false}]}); setTimeout(applySemanticMathWrap, 200);"></script>
@@ -27,38 +23,42 @@
 
     <main id="app-container">
 
-        <!-- ========================================== -->
-        <!-- MÓDULO 1: INTRODUÇÃO À FÍSICA (PDF 1)      -->
-        <!-- ========================================== -->
+        <!-- ================= MÓDULO 1 ================= -->
         <section class="module active" id="modulo-1">
             
             <div class="step active" id="step-1">
                 <h1>Introdução a Física</h1>
-                <p>A palavra Física origina-se da palavra grega <strong>Physiké</strong>, que significa a ciência das coisas naturais. As coisas naturais são acontecimentos da natureza, tais como vôo de um pássaro, queda de um fruto, etc.</p>
+                <p>A palavra Física origina-se da palavra grega <strong>Physiké</strong>, que significa a ciência das coisas naturais. As coisas naturais são acontecimentos da natureza, tais como o voo de um pássaro, queda de um fruto, etc.</p>
                 <p>Os acontecimentos em Física são chamados de fenômenos físicos e temos como exemplos o aquecimento de um corpo próximo a uma chama, movimento de uma bola, etc.</p>
                 <p>Ao estudar os fenômenos físicos, o homem consegue entender e pesquisar a natureza, dessa forma está sempre realizando novas descobertas e ampliando o campo de estudo da física.</p>
-                <p>As leis físicas são muitas e por esse fato, para melhor estudar, a física foi dividida em vários ramos.</p>
-                <button class="btn-next-step" onclick="nextStep(1, 2)">Continuar lendo ➔</button>
+                
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(1, 2)">Continuar lendo ➔</button>
+                </div>
             </div>
 
             <div class="step" id="step-2">
-                <h2>I- MECÂNICA:</h2>
+                <h2>I - MECÂNICA:</h2>
                 <p>A mecânica se subdivide em três partes:</p>
                 <div class="info-box">
                     <ul>
-                        <li><strong>1 - Cinemática:</strong> estuda os movimentos sem considerar suas causas;</li>
-                        <li><strong>2 - Dinâmica:</strong> estuda os movimentos relacionados com as forças que os provocam;</li>
-                        <li><strong>3 - Estática:</strong> estuda o equilíbrio dos corpos.</li>
+                        <li><strong>\( 1 \) - Cinemática:</strong> estuda os movimentos sem considerar suas causas;</li>
+                        <li><strong>\( 2 \) - Dinâmica:</strong> estuda os movimentos relacionados com as forças que os provocam;</li>
+                        <li><strong>\( 3 \) - Estática:</strong> estuda o equilíbrio dos corpos.</li>
                     </ul>
                 </div>
                 <h2>CINEMÁTICA:</h2>
                 <p>Partindo do fato de que o corpo está em movimento, a cinemática se propõe a determinar, em cada instante a <strong>posição, a velocidade e a aceleração</strong> do mesmo.</p>
-                <button class="btn-next-step" onclick="nextStep(2, 3)">Continuar lendo ➔</button>
+                
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(2, 3)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevStep(2, 1)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-3">
                 <h2>CONCEITOS BÁSICOS:</h2>
-                <p><strong>MOVIMENTO E REPOUSO:</strong> É importante realçar que tanto a noção de movimento como a de repouso <strong>depende do referencial adotado.</strong></p>
+                <p><strong>MOVIMENTO E REPOUSO:</strong> É importante realçar que tanto a noção de movimento como a de repouso <strong>dependem do referencial adotado.</strong></p>
                 <p>Por exemplo, considere um trem passando por uma estação. Em relação ao trem, a lâmpada presa ao teto do trem está em repouso. Em relação à estação, a lâmpada presa ao teto do trem está em movimento.</p>
                 
                 <div class="quiz-box">
@@ -68,93 +68,74 @@
                     <button class="btn-quiz" onclick="checkAnswer(this, false)">Em movimento (em relação ao ônibus)</button>
                     <p class="feedback"></p>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(3, 4)">Continuar lendo ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(3, 4)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevStep(3, 2)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-4">
-                <p><strong>PONTO MATERIAL:</strong> É o nome dado a todo corpo cujas dimensões são consideradas desprezíveis, quando comparadas as demais dimensões envolvidas no fenômeno estudado. Ex: Um veículo que se move de Botucatu a São Paulo.</p>
-                <p><strong>CORPO EXTENSO:</strong> É o nome dado a todo corpo cujas dimensões devem ser consideradas. Ex: Um veículo estacionando em uma garagem, onde seu tamanho importa.</p>
+                <p><strong>PONTO MATERIAL:</strong> Todo corpo cujas dimensões são consideradas desprezíveis, quando comparadas as demais dimensões do fenômeno. Ex: Um veículo que se move de Botucatu a São Paulo.</p>
+                <p><strong>CORPO EXTENSO:</strong> Todo corpo cujas dimensões devem ser consideradas. Ex: Um veículo estacionando em uma garagem, onde seu tamanho importa.</p>
                 <p><strong>TRAJETÓRIA:</strong> É o caminho descrito pelo móvel em relação a um dado referencial (Ex: sulcos deixados na neve por um esquiador).</p>
-                <button class="btn-next-step" onclick="nextStep(4, 5)">Continuar lendo ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(4, 5)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevStep(4, 3)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-5">
-                <p><strong>POSIÇÃO ou ESPAÇO \( (S) \):</strong> Determinamos a posição a partir de um referencial adotado como origem (zero). No momento em que o tempo começar a ser contado \( (t=0) \), a posição é chamada de posição inicial \( S_0 \).</p>
+                <p><strong>POSIÇÃO ou ESPAÇO \( (S) \):</strong> Determinamos a posição a partir de um referencial adotado como origem \( (0) \). No momento em que o tempo começar a ser contado \( (t=0) \), a posição é chamada de posição inicial \( (S_0) \).</p>
                 
                 <div class="svg-container">
                     <svg viewBox="0 0 400 120" width="100%" height="100%">
                         <line x1="20" y1="80" x2="380" y2="80" stroke-width="2" marker-end="url(#arrow)" />
-                        <line x1="50" y1="75" x2="50" y2="85" stroke-width="2" />
-                        <text x="45" y="100">0</text>
-                        <line x1="120" y1="75" x2="120" y2="85" stroke-width="2" />
-                        <text x="110" y="100">100</text>
-                        <text x="105" y="115" fill="#e74c3c" font-weight="bold">t₀=0h</text>
-                        <line x1="190" y1="75" x2="190" y2="85" stroke-width="2" />
-                        <text x="180" y="100">200</text>
-                        <line x1="260" y1="75" x2="260" y2="85" stroke-width="2" />
-                        <text x="250" y="100">300</text>
-                        <text x="245" y="115" fill="#e74c3c">t=0,5h</text>
-                        <text x="340" y="100">S (Km)</text>
-                        
-                        <rect x="105" y="55" width="30" height="20" fill="#3498db" rx="3" />
-                        <line x1="110" y1="45" x2="135" y2="45" stroke-width="2" stroke="#2ecc71" marker-end="url(#arrow-green)" />
-                        <text x="118" y="38" fill="#2ecc71">v</text>
-
-                        <rect x="245" y="55" width="30" height="20" fill="#3498db" rx="3" />
-                        <line x1="250" y1="45" x2="275" y2="45" stroke-width="2" stroke="#2ecc71" marker-end="url(#arrow-green)" />
-                        <text x="258" y="38" fill="#2ecc71">v</text>
-
-                        <defs>
-                            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-                            </marker>
-                            <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#2ecc71" />
-                            </marker>
-                        </defs>
+                        <line x1="50" y1="75" x2="50" y2="85" stroke-width="2" /> <text x="45" y="100">0</text>
+                        <line x1="120" y1="75" x2="120" y2="85" stroke-width="2" /> <text x="110" y="100">100</text> <text x="105" y="115" fill="#e74c3c" font-weight="bold">t₀=0h</text>
+                        <line x1="190" y1="75" x2="190" y2="85" stroke-width="2" /> <text x="180" y="100">200</text>
+                        <line x1="260" y1="75" x2="260" y2="85" stroke-width="2" /> <text x="250" y="100">300</text> <text x="245" y="115" fill="#e74c3c">t=0,5h</text>
+                        <text x="340" y="100">S (km)</text>
+                        <rect x="105" y="55" width="30" height="20" fill="#3498db" rx="3" /> <line x1="110" y1="45" x2="135" y2="45" stroke-width="2" stroke="#2ecc71" marker-end="url(#arrow-green)" /> <text x="118" y="38" fill="#2ecc71">v</text>
+                        <rect x="245" y="55" width="30" height="20" fill="#3498db" rx="3" /> <line x1="250" y1="45" x2="275" y2="45" stroke-width="2" stroke="#2ecc71" marker-end="url(#arrow-green)" /> <text x="258" y="38" fill="#2ecc71">v</text>
+                        <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" /></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2ecc71" /></marker></defs>
                     </svg>
                 </div>
 
                 <p><strong>VARIAÇÃO DA POSIÇÃO ou DO ESPAÇO \( (\Delta S) \):</strong> A variação do espaço num intervalo de tempo \( (\Delta t) \) é determinada por:</p>
-                
-                <div class="formula-box">
-                    \[ \Delta S = S - S_0 \]
-                </div>
+                <div class="formula-box"> \[ \Delta S = S - S_0 \] </div>
                 <p style="text-align: center; font-size: 0.95rem;">Sendo \( S \) = posição final e \( S_0 \) = posição inicial.</p>
-                <button class="btn-next-step" onclick="nextStep(5, 6)">Continuar lendo ➔</button>
+                
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(5, 6)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevStep(5, 4)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-6">
                 <div class="svg-container">
                     <svg viewBox="0 0 400 120" width="100%" height="100%">
                         <line x1="20" y1="80" x2="380" y2="80" stroke-width="2" marker-end="url(#arrow)" />
-                        <line x1="80" y1="75" x2="80" y2="85" stroke-width="2" />
-                        <text x="75" y="100">0</text>
-                        <line x1="160" y1="75" x2="160" y2="85" stroke-width="2" />
-                        <text x="155" y="100">A</text>
-                        <line x1="280" y1="75" x2="280" y2="85" stroke-width="2" />
-                        <text x="275" y="100">B</text>
-                        <text x="340" y="100">S (Km)</text>
-                        
-                        <rect x="65" y="55" width="30" height="20" fill="#95a5a6" rx="3" />
-                        <rect x="145" y="55" width="30" height="20" fill="#3498db" rx="3" />
-                        <rect x="265" y="55" width="30" height="20" fill="#3498db" rx="3" />
-                        
-                        <line x1="160" y1="78" x2="280" y2="78" stroke-width="4" stroke="#e74c3c" />
-                        <text x="210" y="115" fill="#e74c3c" font-weight="bold">ΔS</text>
+                        <line x1="80" y1="75" x2="80" y2="85" stroke-width="2" /> <text x="75" y="100">0</text>
+                        <line x1="160" y1="75" x2="160" y2="85" stroke-width="2" /> <text x="155" y="100">A</text>
+                        <line x1="280" y1="75" x2="280" y2="85" stroke-width="2" /> <text x="275" y="100">B</text>
+                        <text x="340" y="100">S (km)</text>
+                        <rect x="65" y="55" width="30" height="20" fill="#95a5a6" rx="3" /> <rect x="145" y="55" width="30" height="20" fill="#3498db" rx="3" /> <rect x="265" y="55" width="30" height="20" fill="#3498db" rx="3" />
+                        <line x1="160" y1="78" x2="280" y2="78" stroke-width="4" stroke="#e74c3c" /> <text x="210" y="115" fill="#e74c3c" font-weight="bold">ΔS</text>
                     </svg>
                 </div>
                 
                 <p>Seja \( S_A = 10 \text{ km} \) e \( S_B = 30 \text{ km} \):</p>
-                <ul>
-                    <li>Indo de A para B: \[ \Delta S_{AB} = S_B - S_A \Rightarrow 30 - 10 = \mathbf{20 \text{ km}} \]</li>
-                    <li>Indo de B para A: \[ \Delta S_{BA} = S_A - S_B \Rightarrow 10 - 30 = \mathbf{-20 \text{ km}} \]</li>
-                </ul>
+                <p>Indo de A para B: \[ \Delta S_{AB} = 30 - 10 = \mathbf{20 \text{ km}} \]</p>
+                <p>Indo de B para A: \[ \Delta S_{BA} = 10 - 30 = \mathbf{-20 \text{ km}} \]</p>
 
                 <div class="info-box">
-                    <p><strong>OBS: DESLOCAMENTO</strong>. Caso o corpo retorne a mesma posição, o deslocamento sofrido pelo corpo é nulo \( (\Delta S = 0) \).</p>
+                    <p><strong>OBS: DESLOCAMENTO</strong>. Caso o corpo retorne a mesma posição \( (\Delta S = S - S_0) \), o deslocamento sofrido pelo corpo é nulo \( (\Delta S = 0) \).</p>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(6, 7)">Continuar lendo ➔</button>
+                
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(6, 7)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevStep(6, 5)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-7">
@@ -162,103 +143,113 @@
                 <div class="svg-container">
                     <svg viewBox="0 0 400 90" width="100%" height="100%">
                         <line x1="20" y1="60" x2="380" y2="60" stroke-width="2" marker-end="url(#arrow)" />
-                        <text x="45" y="80">0</text>
-                        <text x="95" y="80">10</text> <text x="95" y="95" fill="#e74c3c">A</text>
-                        <text x="165" y="80">20</text>
-                        <text x="235" y="80">30</text> <text x="235" y="95" fill="#e74c3c">C</text>
-                        <text x="305" y="80">40</text> <text x="305" y="95" fill="#e74c3c">B</text>
-                        <text x="345" y="80">S (km)</text>
+                        <text x="45" y="80">0</text> <text x="95" y="80">10</text> <text x="95" y="95" fill="#e74c3c">A</text>
+                        <text x="165" y="80">20</text> <text x="235" y="80">30</text> <text x="235" y="95" fill="#e74c3c">C</text>
+                        <text x="305" y="80">40</text> <text x="305" y="95" fill="#e74c3c">B</text> <text x="345" y="80">S (km)</text>
                     </svg>
                 </div>
                 
-                <p><strong>a) Deslocamento no trecho AB:</strong><br> \( \Delta S = S_B - S_A = 40 - 10 = \mathbf{30 \text{ km}} \)</p>
-                <p><strong>b) Deslocamento no trecho ABC:</strong><br> \( \Delta S = S_C - S_A = 30 - 10 = \mathbf{20 \text{ km}} \)</p>
-                <p><strong>c) Deslocamento no trecho BC:</strong><br> \( \Delta S = S_C - S_B = 30 - 40 = \mathbf{-10 \text{ km}} \)</p>
-                <p><strong>d) Espaço percorrido no trecho AB:</strong><br> \( |\Delta S_{AB}| = |40 - 10| = \mathbf{30 \text{ km}} \)</p>
-                <p><strong>e) Espaço percorrido no trecho ABC:</strong><br> \( |\Delta S_{AB}| + |\Delta S_{BC}| = |30| + |-10| = \mathbf{40 \text{ km}} \)</p>
+                <p><strong>a) Deslocamento no trecho AB:</strong><br> \( \Delta S = S_B - S_A = \mathbf{30 \text{ km}} \)</p>
+                <p><strong>b) Deslocamento no trecho ABC:</strong><br> \( \Delta S = S_C - S_A = \mathbf{20 \text{ km}} \)</p>
+                <p><strong>c) Deslocamento no trecho BC:</strong><br> \( \Delta S = S_C - S_B = \mathbf{-10 \text{ km}} \)</p>
+                <p><strong>d) Espaço percorrido no trecho ABC:</strong> (Soma dos módulos)<br> \( |\Delta S| = |30| + |-10| = \mathbf{40 \text{ km}} \)</p>
                 
-                <button class="btn-next-step" onclick="nextStep(7, 8)">Continuar lendo ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(7, 8)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevStep(7, 6)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-8">
                 <h2>VELOCIDADE ESCALAR MÉDIA \( (V_m) \)</h2>
-                <div class="formula-box">
-                    \[ V_m = \frac{\Delta S}{\Delta t} \]
-                </div>
+                <div class="formula-box"> \[ V_m = \cfrac{\Delta S}{\Delta t} \] </div>
                 <div class="info-box">
                     <p><strong>Regra prática para conversão:</strong></p>
                     <ul>
-                        <li>De \(\text{km/h}\) para \(\text{m/s}\): <strong>Dividir por 3,6</strong></li>
-                        <li>De \(\text{m/s}\) para \(\text{km/h}\): <strong>Multiplicar por 3,6</strong></li>
+                        <li>De \( \text{km/h} \) para \( \text{m/s} \): <strong>Dividir por \( 3,6 \)</strong></li>
+                        <li>De \( \text{m/s} \) para \( \text{km/h} \): <strong>Multiplicar por \( 3,6 \)</strong></li>
                     </ul>
                 </div>
-                <p>Exemplos:<br>
-                \( V = 72 \text{ km/h} \Rightarrow \frac{72}{3,6} = \mathbf{20 \text{ m/s}} \)<br>
-                \( V = 20 \text{ m/s} \Rightarrow 20 \times 3,6 = \mathbf{72 \text{ km/h}} \)</p>
-                <button class="btn-next-step" onclick="nextStep(8, 9)">Continuar lendo ➔</button>
+                <p>Exemplos:</p>
+                <p>\[ V = 72 \text{ km/h} \Rightarrow \cfrac{72}{3,6} = \mathbf{20 \text{ m/s}} \]</p>
+                <p>\[ V = 20 \text{ m/s} \Rightarrow 20 \times 3,6 = \mathbf{72 \text{ km/h}} \]</p>
+                
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(8, 9)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevStep(8, 7)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-9">
                 <h2>Sistemas de Medidas:</h2>
-                
                 <table>
                     <tr>
-                        <th>Sistema</th>
-                        <th>Tempo</th>
-                        <th>Massa</th>
-                        <th>Posição \( (S) \)</th>
-                        <th>Velocidade \( (V) \)</th>
+                        <th>Sistema</th><th>Tempo</th><th>Massa</th><th>Posição \( (S) \)</th><th>Velocidade \( (V) \)</th>
                     </tr>
-                    <tr><td><strong>S.I. / MKS</strong></td><td>s (segundos)</td><td>kg</td><td>m (metros)</td><td>m/s</td></tr>
-                    <tr><td><strong>CGS</strong></td><td>s</td><td>g</td><td>cm</td><td>cm/s</td></tr>
-                    <tr><td><strong>Usual</strong></td><td>h (horas)</td><td>kg</td><td>km</td><td>km/h</td></tr>
+                    <tr><td><strong>S.I.</strong></td><td>\( \text{s} \)</td><td>\( \text{kg} \)</td><td>\( \text{m} \)</td><td>\( \text{m/s} \)</td></tr>
+                    <tr><td><strong>CGS</strong></td><td>\( \text{s} \)</td><td>\( \text{g} \)</td><td>\( \text{cm} \)</td><td>\( \text{cm/s} \)</td></tr>
+                    <tr><td><strong>Usual</strong></td><td>\( \text{h} \)</td><td>\( \text{kg} \)</td><td>\( \text{km} \)</td><td>\( \text{km/h} \)</td></tr>
                 </table>
-
-                <button class="btn-next-step" onclick="nextStep(9, 10)">Última etapa ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(9, 10)">Última etapa ➔</button>
+                    <button class="btn-prev" onclick="prevStep(9, 8)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-10">
                 <h2>ACELERAÇÃO ESCALAR MÉDIA \( (a_m) \)</h2>
-                <p>A aceleração escalar média determina a rapidez com que a velocidade varia no tempo.</p>
-                <div class="formula-box">
-                    \[ a_m = \frac{\Delta V}{\Delta t} \]
+                <div class="formula-box"> \[ a_m = \cfrac{\Delta V}{\Delta t} \] </div>
+                <p>Unidade de aceleração no S.I.: \( \mathbf{m/s^2} \)</p>
+                
+                <div class="nav-buttons">
+                    <!-- BOTÃO DO VISTO GAMIFICADO -->
+                    <button class="btn-next-module" onclick="mostrarVisto('visto-1', this)">✅ Solicitar Visto do Módulo 1</button>
+                    
+                    <div id="visto-1" class="visto-box">
+                        <h3>🎉 Posto de Comando 1 Alcançado!</h3>
+                        <p>Você dominou perfeitamente os conceitos de referencial, espaço e velocidade. Preparado para a próxima missão?</p>
+                        <button class="btn-next-step" onclick="vistoConcluido(1, 10, 11)">Avançar para o Módulo 2 ➔</button>
+                    </div>
+
+                    <button class="btn-prev" onclick="prevStep(10, 9)">⬅ Voltar</button>
                 </div>
-                <p>Sendo \( \Delta V = V - V_0 \) e \( \Delta t = t - t_0 \).</p>
-                <p>Unidade de aceleração no S.I.: <strong>m/s²</strong></p>
-                <button class="btn-next-module" onclick="vistoConcluido(1, 10, 11)">✅ Vale Visto! Concluir Módulo 1</button>
             </div>
 
         </section>
 
-        <!-- ========================================== -->
-        <!-- MÓDULO 2: MOVIMENTO RETILÍNEO UNIFORME     -->
-        <!-- ========================================== -->
+        <!-- ================= MÓDULO 2 ================= -->
         <section class="module" id="modulo-2">
             
             <div class="step" id="step-11">
                 <h1>Movimento Retilíneo Uniforme (M.R.U.)</h1>
-                <p>Um ponto material em movimento uniforme possui <strong>velocidade escalar constante</strong>, portanto percorre distâncias iguais em intervalos de tempos iguais \( (V \neq 0 = \text{constante}) \).</p>
+                <p>Um ponto material em movimento uniforme possui <strong>velocidade escalar constante</strong>, ou seja:</p>
+                
+                <p style="text-align: center; font-size: 1.2rem; margin: 15px 0;">
+				\( V \) <strong>≠</strong> \( 0 \quad (\text{velocidade constante}) \)
+				</p>
                 
                 <h2>Velocidade \( (V) \)</h2>
                 <p>Como o móvel não acelera, a velocidade média é igual à velocidade em qualquer instante.</p>
+                <div class="formula-box"> \[ V = V_m = \cfrac{\Delta S}{\Delta t} \] </div>
                 
-                <div class="formula-box">
-                    \[ V = V_m = \frac{\Delta S}{\Delta t} \]
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(11, 12)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevModule(2, 11, 10)">⬅ Voltar ao Módulo 1</button>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(11, 12)">Continuar lendo ➔</button>
             </div>
 
             <div class="step" id="step-12">
                 <h2>Equação horária do espaço:</h2>
                 <p>A função horária determina a posição do móvel para cada instante de tempo.</p>
-                <p>Partindo de \( V = \frac{S - S_0}{t - t_0} \), e considerando tempo inicial \( t_0 = 0 \):</p>
+                <p>Partindo de \( V = \cfrac{S - S_0}{t - t_0} \), e considerando tempo inicial \( t_0 = 0 \):</p>
                 
-                <div class="formula-box">
-                    \[ S = S_0 + V \cdot t \]
-                </div>
+                <div class="formula-box"> \[ S = S_0 + V \cdot t \] </div>
                 <p>Onde: \( S \) = posição final, \( S_0 \) = posição inicial, \( V \) = velocidade e \( t \) = tempo.</p>
                 
-                <button class="btn-next-step" onclick="nextStep(12, 13)">Continuar lendo ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(12, 13)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevStep(12, 11)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-13">
@@ -290,12 +281,15 @@
                         <p style="text-align: center; font-weight: bold;">\( V < 0 \) (Movimento Retrógrado)</p>
                     </div>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(13, 14)">Continuar lendo ➔</button>
+                
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(13, 14)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevStep(13, 12)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-14">
                 <h2>Gráfico da Velocidade \( (V \times t) \)</h2>
-                <p>A velocidade é representada por uma reta horizontal paralela ao eixo do tempo.</p>
                 <div class="svg-container">
                     <svg viewBox="0 0 300 150" width="100%" height="150">
                         <line x1="30" y1="20" x2="30" y2="120" stroke-width="2" marker-end="url(#arrow)" />
@@ -308,9 +302,12 @@
                     </svg>
                 </div>
                 <div class="info-box">
-                    <p style="text-align: center; font-weight: bold; margin: 0;">O deslocamento numérico equivale à ÁREA: \[ \Delta S = \text{Área} = b \cdot h \]</p>
+                    <p style="text-align: center; font-weight: bold; margin: 0;">O deslocamento numérico equivale à ÁREA: \[ \Delta S = \text{Área} \]</p>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(14, 15)">Continuar lendo ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(14, 15)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevStep(14, 13)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-15">
@@ -324,72 +321,62 @@
                     </svg>
                 </div>
                 <p><strong>Observação:</strong> A aceleração do corpo em MRU é <strong>nula</strong> \( (a = 0) \), pois sua velocidade é constante.</p>
-                <button class="btn-next-step" onclick="nextStep(15, 16)">Ir para os Exercícios ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(15, 16)">Ir para os Exercícios ➔</button>
+                    <button class="btn-prev" onclick="prevStep(15, 14)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-16">
                 <h2>Exercício Resolvido 1</h2>
                 <p>Dada a função horária \( S = 10 - 2t \) (no S.I.), pede-se:</p>
                 <ul>
-                    <li><strong>a) Posição inicial:</strong> \( \Rightarrow S_0 = \mathbf{10 \text{ m}} \)</li>
-                    <li><strong>b) Velocidade em \( t=5 \text{s} \):</strong> \( \Rightarrow V = \mathbf{-2 \text{ m/s}} \) (Constante)</li>
-                    <li><strong>c) Posição em \( t=2 \text{s} \):</strong> \( \Rightarrow S = 10 - 2(2) = \mathbf{6 \text{ m}} \)</li>
-                    <li><strong>d) Instante em que passa no marco 5m:</strong> \( \Rightarrow 5 = 10 - 2t \Rightarrow 2t = 5 \Rightarrow \mathbf{t = 2,5 \text{ s}} \)</li>
-                    <li><strong>e) Instante na origem \( (S=0) \):</strong> \( \Rightarrow 0 = 10 - 2t \Rightarrow \mathbf{t = 5 \text{ s}} \)</li>
-                    <li><strong>f) Aceleração:</strong> \( \Rightarrow \mathbf{a = 0 \text{ m/s}^2} \)</li>
+                    <li><strong>a) Posição inicial:</strong> \( S_0 = \mathbf{10 \text{ m}} \)</li>
+                    <li><strong>b) Velocidade em \( t=5 \text{s} \):</strong> \( V = \mathbf{-2 \text{ m/s}} \)</li>
+                    <li><strong>c) Posição em \( t=2 \text{s} \):</strong> \( S = 10 - 2(2) = \mathbf{6 \text{ m}} \)</li>
+                    <li><strong>d) Instante no marco 5m:</strong> \( 5 = 10 - 2t \Rightarrow \mathbf{t = 2,5 \text{ s}} \)</li>
+                    <li><strong>e) Instante na origem:</strong> \( 0 = 10 - 2t \Rightarrow \mathbf{t = 5 \text{ s}} \)</li>
+                    <li><strong>f) Aceleração:</strong> \( \mathbf{a = 0 \text{ m/s}^2} \)</li>
                 </ul>
-                <button class="btn-next-step" onclick="nextStep(16, 17)">Ver Construção Gráfica ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(16, 17)">Ver Construção Gráfica ➔</button>
+                    <button class="btn-prev" onclick="prevStep(16, 15)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-17">
                 <p><strong>Gráficos da Equação \( S = 10 - 2t \)</strong></p>
-                
                 <table>
-                    <tr><th>Tempo t (s)</th><td>0</td><td>1</td><td>2</td><td>3</td></tr>
-                    <tr><th>Posição S (m)</th><td>10</td><td>8</td><td>6</td><td>4</td></tr>
+                    <tr><th>Tempo \( (s) \)</th><td>\( 0 \)</td><td>\( 1 \)</td><td>\( 2 \)</td><td>\( 3 \)</td></tr>
+                    <tr><th>Posição \( (m) \)</th><td>\( 10 \)</td><td>\( 8 \)</td><td>\( 6 \)</td><td>\( 4 \)</td></tr>
                 </table>
                 <div class="svg-container">
                     <svg viewBox="0 0 300 120" width="100%" height="120">
                         <line x1="30" y1="10" x2="30" y2="100" stroke-width="2" marker-end="url(#arrow)" />
                         <line x1="30" y1="100" x2="280" y2="100" stroke-width="2" marker-end="url(#arrow)" />
                         <text x="5" y="20">S</text> <text x="260" y="115">t</text>
-                        <line x1="30" y1="20" x2="180" y2="100" stroke="#e74c3c" stroke-width="3" />
-                        <text x="10" y="25">10</text>
+                        <line x1="30" y1="20" x2="180" y2="100" stroke="#e74c3c" stroke-width="3" /> <text x="10" y="25">10</text>
                     </svg>
                 </div>
+                <div class="nav-buttons">
+                    <button class="btn-next-module" onclick="mostrarVisto('visto-2', this)">✅ Solicitar Visto do Módulo 2</button>
+                    
+                    <div id="visto-2" class="visto-box">
+                        <h3>🚀 Posto de Comando 2 Conquistado!</h3>
+                        <p>Brilhante! Você construiu tabelas, gráficos e extraiu os dados das equações do MRU com precisão tática. Vamos ao próximo posto?</p>
+                        <button class="btn-next-step" onclick="vistoConcluido(2, 17, 18)">Avançar para o Módulo 3 ➔</button>
+                    </div>
 
-                <div style="display:flex; gap: 10px; margin-top:20px;">
-                    <div class="svg-container" style="flex:1;">
-                        <p style="font-weight:bold;">Gráfico \( V \times t \)</p>
-                        <svg viewBox="0 0 150 80" width="100%" height="80">
-                            <line x1="30" y1="10" x2="30" y2="60" stroke-width="2" />
-                            <line x1="30" y1="35" x2="140" y2="35" stroke-width="2" />
-                            <text x="10" y="20">V</text> <text x="10" y="65">-2</text>
-                            <line x1="30" y1="60" x2="130" y2="60" stroke="#27ae60" stroke-width="3" />
-                        </svg>
-                    </div>
-                    <div class="svg-container" style="flex:1;">
-                        <p style="font-weight:bold;">Gráfico \( a \times t \)</p>
-                        <svg viewBox="0 0 150 80" width="100%" height="80">
-                            <line x1="30" y1="10" x2="30" y2="60" stroke-width="2" />
-                            <line x1="30" y1="60" x2="140" y2="60" stroke-width="2" />
-                            <text x="10" y="20">a</text>
-                            <line x1="30" y1="58" x2="130" y2="58" stroke="#27ae60" stroke-width="4" />
-                        </svg>
-                    </div>
+                    <button class="btn-prev" onclick="prevStep(17, 16)">⬅ Voltar</button>
                 </div>
-
-                <button class="btn-next-module" onclick="vistoConcluido(2, 17, 18)">✅ Vale Visto! Concluir Módulo 2</button>
             </div>
         </section>
 
-        <!-- ========================================== -->
-        <!-- MÓDULO 3: VELOCIDADE MÉDIA (PDF 3)         -->
-        <!-- ========================================== -->
+        <!-- ================= MÓDULO 3 ================= -->
         <section class="module" id="modulo-3">
             <div class="step" id="step-18">
                 <h1>Velocidade Média Vetorial x Escalar</h1>
-                <p>Durante uma corrida de Fórmula 1, os carros desenvolvem altíssimas velocidades. No entanto, ao final da corrida, terão voltado à posição inicial. Desse modo, sua <strong>velocidade média durante todo o percurso foi igual a zero</strong>.</p>
+                <p>Durante uma corrida de Fórmula 1, os carros desenvolvem altíssimas velocidades. No entanto, ao final da corrida, terão voltado à posição inicial. Desse modo, sua <strong>velocidade média vetorial durante todo o percurso foi igual a zero</strong>.</p>
                 
                 <div class="svg-container svg-bg-white">
                     <svg viewBox="0 0 350 250" width="100%" height="200">
@@ -399,73 +386,78 @@
                             <line x1="120" y1="10" x2="120" y2="230" /> <line x1="180" y1="10" x2="180" y2="230" />
                             <line x1="240" y1="10" x2="240" y2="230" /> <line x1="300" y1="10" x2="300" y2="230" />
                         </g>
-                        <line x1="60" y1="230" x2="60" y2="20" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrow-red)" />
-                        <line x1="30" y1="190" x2="330" y2="190" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrow-red)" />
-                        <text x="70" y="30" fill="#2980b9" font-weight="bold" font-size="16">x (m)</text>
-                        <text x="300" y="180" fill="#2980b9" font-weight="bold" font-size="16">t (s)</text>
-                        
-                        <text x="50" y="205" fill="#c0392b" font-weight="bold">0</text>
-                        <text x="110" y="210" fill="#2980b9" font-weight="bold">0.5</text>
-                        <text x="175" y="210" fill="#2980b9" font-weight="bold">1</text>
-                        
-                        <text x="40" y="95" fill="#c0392b" font-weight="bold">1</text>
-                        <text x="30" y="45" fill="#c0392b" font-weight="bold">1.5</text>
-
+                        <line x1="60" y1="230" x2="60" y2="20" stroke="#e74c3c" stroke-width="3" />
+                        <line x1="30" y1="190" x2="330" y2="190" stroke="#e74c3c" stroke-width="3" />
+                        <text x="70" y="30" fill="#2980b9" font-weight="bold" font-size="16">x (m)</text> <text x="300" y="180" fill="#2980b9" font-weight="bold" font-size="16">t (s)</text>
+                        <text x="50" y="205" fill="#c0392b" font-weight="bold">0</text> <text x="110" y="210" fill="#2980b9" font-weight="bold">0.5</text> <text x="175" y="210" fill="#2980b9" font-weight="bold">1</text>
+                        <text x="40" y="95" fill="#c0392b" font-weight="bold">1</text> <text x="30" y="45" fill="#c0392b" font-weight="bold">1.5</text>
                         <line x1="45" y1="240" x2="105" y2="40" stroke="#2c3e50" stroke-width="4" />
-                        <defs>
-                            <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e74c3c" />
-                            </marker>
-                        </defs>
                     </svg>
                 </div>
                 
-                <p>Observe no gráfico: Entre \( t_1 = 0 \text{ s} \) e \( t_2 = 0,5 \text{ s} \), as posições são \( x_1 = 0 \) e \( x_2 = 1,5 \text{ m} \). Logo: \[ V_m = \frac{1,5 - 0}{0,5 - 0} = \mathbf{3 \text{ m/s}} \]</p>
-                <button class="btn-next-step" onclick="nextStep(18, 19)">Continuar lendo ➔</button>
+                <p>Observe no gráfico: Entre \( t_1 = 0 \text{ s} \) e \( t_2 = 0,5 \text{ s} \), as posições são \( x_1 = 0 \) e \( x_2 = 1,5 \text{ m} \). Logo:</p>
+                <p>\[ V_m = \cfrac{1,5 - 0}{0,5 - 0} \]</p>
+                <p>\[ V_m = \mathbf{3 \text{ m/s}} \]</p>
+                
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(18, 19)">Continuar lendo ➔</button>
+                    <button class="btn-prev" onclick="prevModule(3, 18, 17)">⬅ Voltar ao Módulo 2</button>
+                </div>
             </div>
 
             <div class="step" id="step-19">
                 <h2>Exercícios Resolvidos (PDF 3)</h2>
                 <p><strong>Questão 1:</strong> Roberto caminhou \( 2000 \text{ m} \) com \( V_m = 5 \text{ km/h} \). Tempo gasto?</p>
-                <p>\( \Delta S = 2000 \text{ m} = \mathbf{2 \text{ km}} \). Substituindo: \[ 5 = \frac{2}{\Delta t} \Rightarrow \Delta t = \frac{2}{5} = \mathbf{0,4 \text{ h}} \]</p>
-                <p>Convertendo: \( 0,4 \times 60 = \mathbf{24 \text{ min}} \).</p>
-
+                <p>\[ \Delta S = 2000 \text{ m} = \mathbf{2 \text{ km}} \]</p>
+                <p>\[ 5 = \cfrac{2}{\Delta t} \Rightarrow \Delta t = \cfrac{2}{5} \]</p>
+                <p>\[ \Delta t = \mathbf{0,4 \text{ h}} \]</p>
+                
                 <hr style="margin: 20px 0;">
 
-                <p><strong>Questão 2:</strong> Carro sai às 10h, anda \( 75 \text{ km} \) até Bauru e volta ao ponto de partida às 13h.</p>
+                <p><strong>Questão 2:</strong> Carro sai às 10h, anda \( 75 \text{ km} \) e volta ao início às 13h.</p>
                 <div class="info-box">
                     <p>Tempo total \( \Delta t = 3 \text{ h} \).</p>
-                    <p><strong>Velocidade Escalar Média</strong> (espaço percorrido importa):<br>
-                    \[ V_{esc} = \frac{75 + 75}{3} = \frac{150}{3} = \mathbf{50 \text{ km/h}} \]</p>
-                    <p><strong>Velocidade Média Vetorial</strong> (apenas variação final - inicial):<br>
-                    \[ V_{vet} = \frac{S_{fim} - S_{inicio}}{3} = \frac{0}{3} = \mathbf{0 \text{ km/h}} \]</p>
+                    <p><strong>Velocidade Escalar Média:</strong></p>
+                    <p>\[ V_{\text{esc}} = \cfrac{75 + 75}{3} \Rightarrow V_{\text{esc}} = \mathbf{50 \text{ km/h}} \]</p>
+                    
+                    <p><strong>Velocidade Média Vetorial:</strong></p>
+                    <p>\[ V_{\text{vet}} = \cfrac{0}{3} \Rightarrow V_{\text{vet}} = \mathbf{0 \text{ km/h}} \]</p>
                 </div>
 
-                <button class="btn-next-module" onclick="vistoConcluido(3, 19, 20)">✅ Vale Visto! Concluir Módulo 3</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-module" onclick="mostrarVisto('visto-3', this)">✅ Solicitar Visto do Módulo 3</button>
+                    
+                    <div id="visto-3" class="visto-box">
+                        <h3>⚡ Posto de Comando 3 Dominado!</h3>
+                        <p>Incrível! Você compreendeu a diferença entre caminho percorrido e deslocamento vetorial. Chegou a hora do Desafio Final!</p>
+                        <button class="btn-next-step" onclick="vistoConcluido(3, 19, 20)">Avançar para o Módulo 4 ➔</button>
+                    </div>
+
+                    <button class="btn-prev" onclick="prevStep(19, 18)">⬅ Voltar</button>
+                </div>
             </div>
         </section>
 
-        <!-- ========================================== -->
-        <!-- MÓDULO 4: 10 EXERCÍCIOS DE FIXAÇÃO         -->
-        <!-- ========================================== -->
+        <!-- ================= MÓDULO 4: EXERCÍCIOS ================= -->
         <section class="module" id="modulo-4">
             
             <div class="step" id="step-20">
                 <h1>Módulo 4: Lista de Fixação 🚀</h1>
-                <p>São 10 exercícios baseados na teoria. Tente resolver sozinho antes de olhar o gabarito!</p>
+                <p>Tente resolver sozinho antes de olhar o gabarito!</p>
 
                 <div class="quiz-box">
-                    <h3>Questão 1: Conversão (km/h e m/s)</h3>
-                    <p>Um guepardo atinge a velocidade de \( 108 \text{ km/h} \). Qual é a sua velocidade em metros por segundo \( (\text{m/s}) \)?</p>
-                    
+                    <h3>Questão 1: Conversão</h3>
+                    <p>Um guepardo atinge a velocidade de \( 108 \text{ km/h} \). Qual é a sua velocidade em \( \text{m/s} \)?</p>
                     <button class="btn-quiz" onclick="mostrarGabarito('gab-q1', this)">👀 Ver Gabarito</button>
-                    
                     <div id="gab-q1" class="gabarito-box">
-                        <p>Para converter de \(\text{km/h}\) para \(\text{m/s}\), basta dividir por \( 3,6 \).</p>
-                        <p>\[ \frac{108}{3,6} = \mathbf{30 \text{ m/s}} \]</p>
+                        <p>\[ V = \cfrac{108}{3,6} \]</p>
+                        <p>\[ V = \mathbf{30 \text{ m/s}} \]</p>
                     </div>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(20, 21)">Próxima Questão ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(20, 21)">Próxima Questão ➔</button>
+                    <button class="btn-prev" onclick="prevModule(4, 20, 19)">⬅ Voltar ao Módulo 3</button>
+                </div>
             </div>
 
             <div class="step" id="step-21">
@@ -474,38 +466,52 @@
                     <p>Um automóvel viaja com velocidade constante de \( 80 \text{ km/h} \). Quantas horas ele gastará para percorrer \( 320 \text{ km} \)?</p>
                     <button class="btn-quiz" onclick="mostrarGabarito('gab-q2', this)">👀 Ver Gabarito</button>
                     <div id="gab-q2" class="gabarito-box">
-                        <p>Fórmula: \( V = \frac{\Delta S}{\Delta t} \)</p>
-                        <p>\[ 80 = \frac{320}{\Delta t} \Rightarrow \Delta t = \frac{320}{80} = \mathbf{4 \text{ horas}} \]</p>
+                        <p>\[ 80 = \cfrac{320}{\Delta t} \]</p>
+                        <p>\[ \Delta t = \cfrac{320}{80} \]</p>
+                        <p>\[ \Delta t = \mathbf{4 \text{ horas}} \]</p>
                     </div>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(21, 22)">Próxima Questão ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(21, 22)">Próxima Questão ➔</button>
+                    <button class="btn-prev" onclick="prevStep(21, 20)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-22">
                 <div class="quiz-box">
                     <h3>Questão 3: Encontro de Móveis</h3>
-                    <p>Dois carros, A e B, movem-se na mesma estrada. A equação do carro A é \( S_A = 20 + 5t \) e a do carro B é \( S_B = 100 - 3t \) (no S.I.). Em que instante \( (t) \) eles se encontram?</p>
+                    <p>A equação do carro A é \( S_A = 20 + 5t \) e do carro B é \( S_B = 100 - 3t \). Em que instante \( (t) \) eles se encontram?</p>
                     <button class="btn-quiz" onclick="mostrarGabarito('gab-q3', this)">👀 Ver Gabarito</button>
                     <div id="gab-q3" class="gabarito-box">
-                        <p>No momento do encontro, as posições são iguais: \( S_A = S_B \).</p>
+                        <p>\[ S_A = S_B \]</p>
                         <p>\[ 20 + 5t = 100 - 3t \]</p>
-                        <p>\[ 5t + 3t = 100 - 20 \Rightarrow 8t = 80 \Rightarrow \mathbf{t = 10 \text{ s}} \]</p>
+                        <p>\[ 5t + 3t = 100 - 20 \]</p>
+                        <p>\[ 8t = 80 \]</p>
+                        <p>\[ \mathbf{t = 10 \text{ s}} \]</p>
                     </div>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(22, 23)">Próxima Questão ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(22, 23)">Próxima Questão ➔</button>
+                    <button class="btn-prev" onclick="prevStep(22, 21)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-23">
                 <div class="quiz-box">
                     <h3>Questão 4: Passagem pela origem</h3>
-                    <p>Um móvel obedece à equação \( S = 20 - 4t \) (no SI). Qual o instante em que ele passa pela origem dos espaços?</p>
+                    <p>Um móvel obedece à equação \( S = 20 - 4t \). Qual o instante em que ele passa pela origem dos espaços?</p>
                     <button class="btn-quiz" onclick="mostrarGabarito('gab-q4', this)">👀 Ver Gabarito</button>
                     <div id="gab-q4" class="gabarito-box">
-                        <p>A origem dos espaços significa posição zero, ou seja, \( S = 0 \).</p>
-                        <p>\[ 0 = 20 - 4t \Rightarrow 4t = 20 \Rightarrow \mathbf{t = 5 \text{ s}} \]</p>
+                        <p>A origem dos espaços significa \( (S = 0) \).</p>
+                        <p>\[ 0 = 20 - 4t \]</p>
+                        <p>\[ 4t = 20 \]</p>
+                        <p>\[ \mathbf{t = 5 \text{ s}} \]</p>
                     </div>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(23, 24)">Próxima Questão ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(23, 24)">Próxima Questão ➔</button>
+                    <button class="btn-prev" onclick="prevStep(23, 22)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-24">
@@ -514,50 +520,64 @@
                     <p>Ao analisar um gráfico de Velocidade x Tempo \( (V \times t) \) em um MRU, que ferramenta geométrica nos permite descobrir o deslocamento \( (\Delta S) \) do móvel?</p>
                     <button class="btn-quiz" onclick="mostrarGabarito('gab-q5', this)">👀 Ver Gabarito</button>
                     <div id="gab-q5" class="gabarito-box">
-                        <p>O deslocamento numérico equivale ao cálculo da <strong>ÁREA</strong> da figura formada sob a reta do gráfico.</p>
-                        <p>\[ \Delta S = \text{Área do Retângulo} \]</p>
+                        <p>O deslocamento numérico equivale ao cálculo da <strong>ÁREA</strong> geométrica da figura.</p>
                     </div>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(24, 25)">Próxima Questão ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(24, 25)">Próxima Questão ➔</button>
+                    <button class="btn-prev" onclick="prevStep(24, 23)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-25">
                 <div class="quiz-box">
                     <h3>Questão 6: Conceito de Referencial</h3>
-                    <p>Um professor caminha pela sala de aula. Para um aluno sentado, o professor está em movimento. Para a caneta que o professor segura, o professor está em repouso. O conceito físico ilustrado aqui dita que repouso e movimento dependem de que?</p>
+                    <p>Para um aluno sentado, o professor está em movimento. Para a caneta que o professor segura, ele está em repouso. O conceito físico ilustrado aqui dita que repouso e movimento dependem de que?</p>
                     <button class="btn-quiz" onclick="mostrarGabarito('gab-q6', this)">👀 Ver Gabarito</button>
                     <div id="gab-q6" class="gabarito-box">
                         <p>Depende estritamente do <strong>Referencial adotado</strong> pelo observador.</p>
                     </div>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(25, 26)">Próxima Questão ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(25, 26)">Próxima Questão ➔</button>
+                    <button class="btn-prev" onclick="prevStep(25, 24)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-26">
                 <div class="quiz-box">
                     <h3>Questão 7: Corpo Extenso</h3>
-                    <p>Um trem de \( 100 \text{ m} \) de comprimento atravessa uma ponte de \( 200 \text{ m} \) com velocidade constante de \( 15 \text{ m/s} \). Quanto tempo o trem leva para atravessar completamente a ponte?</p>
+                    <p>Um trem de \( 100 \text{ m} \) atravessa uma ponte de \( 200 \text{ m} \) com velocidade constante de \( 15 \text{ m/s} \). Quanto tempo o trem leva para atravessar completamente a ponte?</p>
                     <button class="btn-quiz" onclick="mostrarGabarito('gab-q7', this)">👀 Ver Gabarito</button>
                     <div id="gab-q7" class="gabarito-box">
-                        <p>Como o trem é um corpo extenso, o espaço total a ser percorrido é a ponte + o próprio trem.</p>
-                        <p>\[ \Delta S = 200 + 100 = 300 \text{ m} \]</p>
-                        <p>\[ V = \frac{\Delta S}{\Delta t} \Rightarrow 15 = \frac{300}{\Delta t} \Rightarrow \mathbf{\Delta t = 20 \text{ s}} \]</p>
+                        <p>\[ \Delta S = 200 + 100 \Rightarrow \Delta S = \mathbf{300 \text{ m}} \]</p>
+                        <p>\[ 15 = \cfrac{300}{\Delta t} \]</p>
+                        <p>\[ \Delta t = \cfrac{300}{15} \]</p>
+                        <p>\[ \mathbf{\Delta t = 20 \text{ s}} \]</p>
                     </div>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(26, 27)">Próxima Questão ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(26, 27)">Próxima Questão ➔</button>
+                    <button class="btn-prev" onclick="prevStep(26, 25)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-27">
                 <div class="quiz-box">
                     <h3>Questão 8: Distância Percorrida x Deslocamento</h3>
-                    <p>Uma pessoa caminha \( 40 \text{ m} \) para a direita e, em seguida, caminha \( 30 \text{ m} \) para a esquerda (no mesmo eixo). Qual é, respectivamente, o <strong>Espaço Percorrido</strong> total e o seu <strong>Deslocamento Vetorial</strong> resultante da origem?</p>
+                    <p>Uma pessoa caminha \( 40 \text{ m} \) para a direita e, em seguida, caminha \( 30 \text{ m} \) para a esquerda. Qual é o seu <strong>Espaço Percorrido</strong> total e o seu <strong>Deslocamento Vetorial</strong>?</p>
                     <button class="btn-quiz" onclick="mostrarGabarito('gab-q8', this)">👀 Ver Gabarito</button>
                     <div id="gab-q8" class="gabarito-box">
-                        <p><strong>Espaço Percorrido (Escalar):</strong> Tudo que ela andou sem ligar pro sentido. \( 40 + 30 = \mathbf{70 \text{ m}} \)</p>
-                        <p><strong>Deslocamento (Vetor):</strong> Distância do ponto final até a origem. Ela foi pro +40 e voltou 30. Ficou no marco \( +10 \). Deslocamento = \(\mathbf{10 \text{ m}} \)</p>
+                        <p><strong>Espaço Percorrido (Escalar):</strong> Tudo que andou.</p>
+                        <p>\[ 40 + 30 = \mathbf{70 \text{ m}} \]</p>
+                        <p><strong>Deslocamento Vetorial:</strong> Posição final menos inicial.</p>
+                        <p>\[ 40 - 30 = \mathbf{10 \text{ m}} \]</p>
                     </div>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(27, 28)">Próxima Questão ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(27, 28)">Próxima Questão ➔</button>
+                    <button class="btn-prev" onclick="prevStep(27, 26)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-28">
@@ -566,34 +586,44 @@
                     <p>O que caracteriza perfeitamente o Movimento Retilíneo Uniforme em relação à velocidade e à aceleração?</p>
                     <button class="btn-quiz" onclick="mostrarGabarito('gab-q9', this)">👀 Ver Gabarito</button>
                     <div id="gab-q9" class="gabarito-box">
-                        <p><strong>A velocidade é constante</strong> e diferente de zero, e a <strong>aceleração é nula</strong> \( (a = 0) \).</p>
+                        <p><strong>Velocidade constante</strong> \( (V \) <strong>≠</strong> \( 0) \)</p>
+                        <p><strong>Aceleração nula</strong> \( (a = 0) \)</p>
                     </div>
                 </div>
-                <button class="btn-next-step" onclick="nextStep(28, 29)">Última Questão ➔</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(28, 29)">Última Questão ➔</button>
+                    <button class="btn-prev" onclick="prevStep(28, 27)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-29">
                 <div class="quiz-box">
                     <h3>Questão 10: Extração de Dados da Equação</h3>
-                    <p>Dada a função horária do espaço de um ciclista: \( S = -50 + 12t \) (no SI). Diga se o movimento é progressivo ou retrógrado e indique o local (marco zero) de onde ele partiu.</p>
+                    <p>Dada a função horária do ciclista \( S = -50 + 12t \). Diga se o movimento é progressivo ou retrógrado e indique o local de onde ele partiu.</p>
                     <button class="btn-quiz" onclick="mostrarGabarito('gab-q10', this)">👀 Ver Gabarito</button>
                     <div id="gab-q10" class="gabarito-box">
-                        <p>O modelo é \( S = S_0 + Vt \).</p>
-                        <p>Velocidade \( V = +12 \text{ m/s} \) (Positiva = Movimento <strong>Progressivo</strong>).</p>
-                        <p>Posição Inicial \( S_0 = \mathbf{-50 \text{ m}} \) (Ele partiu da posição negativa do marco zero).</p>
+                        <p>Velocidade \( V = \mathbf{+12 \text{ m/s}} \) (Movimento <strong>Progressivo</strong>).</p>
+                        <p>Posição Inicial \( S_0 = \mathbf{-50 \text{ m}} \) (Partiu do lado negativo).</p>
                     </div>
                 </div>
-                
-                <button class="btn-next-step" onclick="nextStep(29, 30)">🏁 Finalizar o Curso</button>
+                <div class="nav-buttons">
+                    <button class="btn-next-step" onclick="nextStep(29, 30)">🏁 Finalizar o Curso</button>
+                    <button class="btn-prev" onclick="prevStep(29, 28)">⬅ Voltar</button>
+                </div>
             </div>
 
             <div class="step" id="step-30">
                 <div style="text-align: center; margin-top: 40px; background-color: #fcf3cf; padding: 20px; border-radius: 10px;">
                     <h1 style="color: #f39c12; font-size: 2.5rem; border: none;">🏆 SENSACIONAL!</h1>
-                    <p style="font-size: 1.2rem;">Você concluiu com sucesso todo o conteúdo de Cinemática Básica, estudou todos os gráficos e resolveu 10 exercícios de fixação!</p>
+                    <p style="font-size: 1.2rem; color: #333;">Você concluiu com sucesso todo o conteúdo de Cinemática Básica, estudou todos os gráficos e resolveu 10 exercícios de fixação!</p>
                 </div>
-                <div style="text-align: center; margin-top: 20px;">
+                <div class="nav-buttons">
                     <button class="btn-next-module" onclick="alert('Certificado Simbólico Gerado! Você é nota 10!'); document.getElementById('progress-bar').style.width = '100%'; document.getElementById('progress-text').innerText = 'Progresso: 100%';" style="background-color: #8e44ad; box-shadow: 0 4px 15px rgba(142, 68, 173, 0.4);">🎓 Comemorar e Fechar</button>
+                    
+                    <!-- NOVO BOTÃO: REINICIAR CURSO (APAGA A MEMÓRIA) -->
+                    <button class="btn-prev" onclick="reiniciarCurso()" style="margin-top: 15px; color: #e74c3c; border-color: #e74c3c;">🔄 Refazer todo o curso (Zerar Progresso)</button>
+                    
+                    <button class="btn-prev" onclick="prevStep(30, 29)" style="margin-top: 15px;">⬅ Voltar à Questão 10</button>
                 </div>
             </div>
 

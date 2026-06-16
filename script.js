@@ -1,16 +1,59 @@
 let totalSteps = 0;
 let currentStepGlobal = 1;
+let currentModuleGlobal = 1;
+
+// 1. SISTEMA DE MEMÓRIA PERSISTENTE
+window.onload = () => {
+    // Restaura o Tema
+    const savedTheme = localStorage.getItem('fisicaTheme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('theme-toggle').innerText = savedTheme === 'dark' ? '☀️ Modo Claro' : '🌙 Modo Escuro';
+    }
+
+    // Restaura o Progresso
+    const savedStep = localStorage.getItem('fisicaActiveStep');
+    const savedModule = localStorage.getItem('fisicaActiveModule');
+
+    if (savedStep && savedModule) {
+        document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+
+        const modEl = document.getElementById(`modulo-${savedModule}`);
+        const stepEl = document.getElementById(`step-${savedStep}`);
+
+        if (modEl && stepEl) {
+            modEl.classList.add('active');
+            stepEl.classList.add('active');
+            currentStepGlobal = parseInt(savedStep);
+            currentModuleGlobal = parseInt(savedModule);
+        }
+    }
+    
+    updateProgress();
+    setTimeout(applySemanticMathWrap, 300); // Garante a quebra de fórmulas no recarregamento
+};
+
+function saveProgress() {
+    localStorage.setItem('fisicaActiveStep', currentStepGlobal);
+    localStorage.setItem('fisicaActiveModule', currentModuleGlobal);
+}
 
 function toggleTheme() {
     const htmlElement = document.documentElement;
     const themeBtn = document.getElementById('theme-toggle');
+    let newTheme = 'light';
+    
     if (htmlElement.getAttribute('data-theme') === 'light') {
-        htmlElement.setAttribute('data-theme', 'dark');
+        newTheme = 'dark';
         themeBtn.innerText = '☀️ Modo Claro';
     } else {
-        htmlElement.setAttribute('data-theme', 'light');
+        newTheme = 'light';
         themeBtn.innerText = '🌙 Modo Escuro';
     }
+    
+    htmlElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('fisicaTheme', newTheme);
 }
 
 function updateProgress() {
@@ -21,30 +64,68 @@ function updateProgress() {
     document.getElementById('progress-text').innerText = `Progresso: ${Math.round(percentage)}%`;
 }
 
-// Inicializa a barra ao abrir
-window.onload = () => {
-    updateProgress();
-};
-
+// 2. NAVEGAÇÃO DE PASSOS
 function nextStep(current, next) {
     document.getElementById(`step-${current}`).classList.remove('active');
     document.getElementById(`step-${next}`).classList.add('active');
     currentStepGlobal++;
+    saveProgress();
     updateProgress();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function prevStep(current, prev) {
+    document.getElementById(`step-${current}`).classList.remove('active');
+    document.getElementById(`step-${prev}`).classList.add('active');
+    currentStepGlobal--;
+    saveProgress();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 3. GAMIFICAÇÃO DO VISTO
+function mostrarVisto(idVisto, btn) {
+    document.getElementById(idVisto).style.display = 'block';
+    btn.style.display = 'none'; // Esconde o botão original
+}
+
+// 4. NAVEGAÇÃO DE MÓDULOS
 function vistoConcluido(moduloAtual, currentStepNum, nextStepNum) {
-    alert("Parabéns! Visto registrado com sucesso! \nVamos continuar o aprendizado.");
     document.getElementById(`modulo-${moduloAtual}`).classList.remove('active');
     document.getElementById(`modulo-${moduloAtual + 1}`).classList.add('active');
     document.getElementById(`step-${currentStepNum}`).classList.remove('active');
     document.getElementById(`step-${nextStepNum}`).classList.add('active');
+    
     currentStepGlobal++;
+    currentModuleGlobal++;
+    saveProgress();
     updateProgress();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function prevModule(moduloAtual, currentStepNum, prevStepNum) {
+    document.getElementById(`modulo-${moduloAtual}`).classList.remove('active');
+    document.getElementById(`modulo-${moduloAtual - 1}`).classList.add('active');
+    document.getElementById(`step-${currentStepNum}`).classList.remove('active');
+    document.getElementById(`step-${prevStepNum}`).classList.add('active');
+    
+    currentStepGlobal--;
+    currentModuleGlobal--;
+    saveProgress();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 5. ZERAR MEMÓRIA DO CURSO
+function reiniciarCurso() {
+    if(confirm("Tem certeza que deseja reiniciar o curso? Seu progresso será apagado.")) {
+        localStorage.removeItem('fisicaActiveModule');
+        localStorage.removeItem('fisicaActiveStep');
+        window.location.reload();
+    }
+}
+
+// 6. QUIZ E GABARITO
 function checkAnswer(button, isCorrect) {
     let feedback = button.parentElement.querySelector('.feedback');
     if (isCorrect) {
@@ -71,61 +152,35 @@ function mostrarGabarito(idGabarito, btn) {
     }
 }
 
-/**
- * ===================================================================
- * EXPERT MATH WRAP: Sistema dinâmico de quebra semântica de equações
- * ===================================================================
- */
+// 7. QUEBRA DE LINHAS KATEX (EXPERT MODE)
 function applySemanticMathWrap() {
-    // 1. Limpeza: Removemos quebras anteriores se o usuário virou a tela do celular (Resize)
     document.querySelectorAll('.math-dynamic-break').forEach(el => el.remove());
     document.querySelectorAll('.math-indented').forEach(el => el.classList.remove('math-indented'));
 
-    // 2. Coletamos todos os containers de fórmulas (Modo Display)
-    const mathDisplays = document.querySelectorAll('.katex-display');
-
-    mathDisplays.forEach(display => {
-        // Encontra o container pai visível e pega sua largura útil (descontando margens)
+    document.querySelectorAll('.katex-display').forEach(display => {
         const formulaBox = display.closest('.formula-box') || display.parentElement;
         const maxWidth = formulaBox.clientWidth - 40; 
-        
         const katexHtml = display.querySelector('.katex-html');
         if (!katexHtml) return;
 
-        // Pega todos os "tokens" matemáticos renderizados pelo KaTeX
         const tokens = katexHtml.querySelectorAll('.base > *');
         let currentWidth = 0;
 
         tokens.forEach(token => {
             const width = token.getBoundingClientRect().width;
-            
-            // Se o tamanho acumulado estourar a tela E não for o primeiro item
             if (currentWidth + width > maxWidth && currentWidth > 0) {
-                
-                // Regra de Ouro: Só quebrar ANTES de Operadores Binários (+) ou Relação (=, <)
                 if (token.classList.contains('mrel') || token.classList.contains('mbin')) {
-                    
-                    // Injeta a quebra de linha estrutural
                     const breakElement = document.createElement('span');
                     breakElement.className = 'math-dynamic-break';
                     token.parentNode.insertBefore(breakElement, token);
-                    
-                    // Aplica o recuo visual para UX
                     token.classList.add('math-indented');
-                    
-                    // Reseta o contador de largura com o tamanho do recuo (~30px) + token atual
                     currentWidth = 30 + width;
-                } else {
-                    currentWidth += width; // Acumula se não puder quebrar aqui
-                }
-            } else {
-                currentWidth += width;
-            }
+                } else { currentWidth += width; }
+            } else { currentWidth += width; }
         });
     });
 }
 
-// 3. Listener otimizado para recalcular quando o aluno girar o celular (Debounce pattern)
 let resizeTimer;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
