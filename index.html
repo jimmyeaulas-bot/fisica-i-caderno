@@ -378,23 +378,31 @@
                 <h1>Velocidade Média Vetorial x Escalar</h1>
                 <p>Durante uma corrida de Fórmula 1, os carros desenvolvem altíssimas velocidades. No entanto, ao final da corrida, terão voltado à posição inicial. Desse modo, sua <strong>velocidade média vetorial durante todo o percurso foi igual a zero</strong>.</p>
                 
-                <div class="svg-container svg-bg-white">
-                    <svg viewBox="0 0 350 250" width="100%" height="200">
-                        <g stroke="#d2d6de" stroke-width="1">
-                            <line x1="20" y1="40" x2="330" y2="40" /> <line x1="20" y1="90" x2="330" y2="90" />
-                            <line x1="20" y1="140" x2="330" y2="140" /> <line x1="20" y1="190" x2="330" y2="190" />
-                            <line x1="120" y1="10" x2="120" y2="230" /> <line x1="180" y1="10" x2="180" y2="230" />
-                            <line x1="240" y1="10" x2="240" y2="230" /> <line x1="300" y1="10" x2="300" y2="230" />
-                        </g>
-                        <line x1="60" y1="230" x2="60" y2="20" stroke="#e74c3c" stroke-width="3" />
-                        <line x1="30" y1="190" x2="330" y2="190" stroke="#e74c3c" stroke-width="3" />
-                        <text x="70" y="30" fill="#2980b9" font-weight="bold" font-size="16">x (m)</text> <text x="300" y="180" fill="#2980b9" font-weight="bold" font-size="16">t (s)</text>
-                        <text x="50" y="205" fill="#c0392b" font-weight="bold">0</text> <text x="110" y="210" fill="#2980b9" font-weight="bold">0.5</text> <text x="175" y="210" fill="#2980b9" font-weight="bold">1</text>
-                        <text x="40" y="95" fill="#c0392b" font-weight="bold">1</text> <text x="30" y="45" fill="#c0392b" font-weight="bold">1.5</text>
-                        <line x1="45" y1="240" x2="105" y2="40" stroke="#2c3e50" stroke-width="4" />
-                    </svg>
-                </div>
-                
+                <div class="svg-container">
+					<svg viewBox="0 0 350 250" width="100%" height="200">
+        
+						<!-- Camada 1: Grid de Fundo -->
+						<g class="chart-grid" stroke-width="1">
+							<line x1="20" y1="40" x2="330" y2="40"></line> <line x1="20" y1="90" x2="330" y2="90"></line>
+							<line x1="20" y1="140" x2="330" y2="140"></line> <line x1="20" y1="190" x2="330" y2="190"></line>
+							<line x1="120" y1="10" x2="120" y2="230"></line> <line x1="180" y1="10" x2="180" y2="230"></line>
+							<line x1="240" y1="10" x2="240" y2="230"></line> <line x1="300" y1="10" x2="300" y2="230"></line>
+						</g>
+        
+						<!-- Camada 2: Eixos X e Y -->
+						<line class="chart-axis" x1="60" y1="230" x2="60" y2="20" stroke-width="3"></line>
+						<line class="chart-axis" x1="30" y1="190" x2="330" y2="190" stroke-width="3"></line>
+        
+						<!-- Camada 3: Textos e Rótulos (O CSS global já cuida da cor deles) -->
+						<text x="70" y="30" font-weight="bold" font-size="16">x (m)</text> <text x="300" y="180" font-weight="bold" font-size="16">t (s)</text>
+						<text x="50" y="205" font-weight="bold">0</text> <text x="110" y="210" font-weight="bold">0.5</text> <text x="175" y="210" font-weight="bold">1</text>
+						<text x="40" y="95" font-weight="bold">1</text> <text x="30" y="45" font-weight="bold">1.5</text>
+        
+						<!-- Camada 4: A Reta de Movimento (Em Vermelho Destaque) -->
+						<line class="chart-data" x1="45" y1="240" x2="105" y2="40" stroke-width="4"></line>
+					</svg>
+				</div>
+				
                 <p>Observe no gráfico: Entre \( t_1 = 0 \text{ s} \) e \( t_2 = 0,5 \text{ s} \), as posições são \( x_1 = 0 \) e \( x_2 = 1,5 \text{ m} \). Logo:</p>
                 <p>\[ V_m = \cfrac{1,5 - 0}{0,5 - 0} \]</p>
                 <p>\[ V_m = \mathbf{3 \text{ m/s}} \]</p>
