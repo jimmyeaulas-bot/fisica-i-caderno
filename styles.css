@@ -104,3 +104,15 @@ table th { background-color: #3498db; color: white; }
 .katex-html .base { white-space: normal; }
 .math-dynamic-break { display: block !important; width: 100%; height: 0; content: ""; }
 .math-indented { padding-left: 1.5em !important; display: inline-block; }
+
+/* --- CORES INTELIGENTES PARA GRÁFICOS CARTESIANOS --- */
+.chart-grid line {
+    stroke: var(--text-secondary) !important;
+    opacity: 0.3; /* Deixa o grid como marca d'água */
+}
+.chart-axis {
+    stroke: var(--text-main) !important; /* Eixos acompanham a cor do texto */
+}
+.chart-data {
+    stroke: #e74c3c !important; /* Reta do movimento em vermelho (destaque nos 2 temas) */
+}
